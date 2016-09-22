@@ -1,6 +1,0 @@
-framework module Pods_NYT_Best {
-  umbrella header "Pods-NYT Best-umbrella.h"
-
-  export *
-  module * { export * }
-}

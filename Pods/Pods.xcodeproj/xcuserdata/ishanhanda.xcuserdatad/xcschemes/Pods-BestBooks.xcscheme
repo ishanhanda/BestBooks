@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '9CF411E2D0F9899EEC576224'
-               BlueprintName = 'Pods-NYT Best'
+               BlueprintIdentifier = '4BC437A263432FD90A341C79'
+               BlueprintName = 'Pods-BestBooks'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'Pods_NYT_Best.framework'>
+               BuildableName = 'Pods_BestBooks.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

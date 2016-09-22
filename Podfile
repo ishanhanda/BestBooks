@@ -3,7 +3,7 @@ platform :ios, '9.0'
 # Uncomment this line if you're using Swift
 use_frameworks!
 
-target 'NYT Best' do
+target 'BestBooks' do
     pod 'Alamofire', '~> 3.0'
     pod 'NYTPhotoViewer', '~> 1.1.0'
     

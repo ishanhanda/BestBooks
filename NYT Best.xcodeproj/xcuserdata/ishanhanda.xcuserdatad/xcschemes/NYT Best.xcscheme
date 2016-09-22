@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E3D12A921D9192AA008538B2"
-               BuildableName = "NYT Best.app"
-               BlueprintName = "NYT Best"
+               BuildableName = "BestBooks.app"
+               BlueprintName = "BestBooks"
                ReferencedContainer = "container:NYT Best.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,8 +33,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E3D12A921D9192AA008538B2"
-            BuildableName = "NYT Best.app"
-            BlueprintName = "NYT Best"
+            BuildableName = "BestBooks.app"
+            BlueprintName = "BestBooks"
             ReferencedContainer = "container:NYT Best.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -56,8 +56,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E3D12A921D9192AA008538B2"
-            BuildableName = "NYT Best.app"
-            BlueprintName = "NYT Best"
+            BuildableName = "BestBooks.app"
+            BlueprintName = "BestBooks"
             ReferencedContainer = "container:NYT Best.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -75,8 +75,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E3D12A921D9192AA008538B2"
-            BuildableName = "NYT Best.app"
-            BlueprintName = "NYT Best"
+            BuildableName = "BestBooks.app"
+            BlueprintName = "BestBooks"
             ReferencedContainer = "container:NYT Best.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

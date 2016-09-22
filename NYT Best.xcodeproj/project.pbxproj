@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E30DB05F401EA39166B6B838 /* Pods_NYT_Best.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68FF1AD1823EB81F015F1687 /* Pods_NYT_Best.framework */; };
 		E3316A681D931A1500B4A0D7 /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3316A671D931A1500B4A0D7 /* NibLoadable.swift */; };
 		E3316A751D935E3D00B4A0D7 /* ISHActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3316A701D935E3D00B4A0D7 /* ISHActivityIndicatorView.swift */; };
 		E3316A761D935E3D00B4A0D7 /* ISHActivityIndicatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3316A711D935E3D00B4A0D7 /* ISHActivityIndicatorView.xib */; };
@@ -15,6 +14,8 @@
 		E3316A781D935E3D00B4A0D7 /* ISHTopNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3316A731D935E3D00B4A0D7 /* ISHTopNotificationView.swift */; };
 		E3316A791D935E3D00B4A0D7 /* ISHTopNotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3316A741D935E3D00B4A0D7 /* ISHTopNotificationView.xib */; };
 		E3316A7C1D937AD600B4A0D7 /* MainListsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3316A7B1D937AD600B4A0D7 /* MainListsTableViewCell.swift */; };
+		E359F23B1D93A8B600EF42DC /* Pods-BestBooks.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E359F2391D93A8B600EF42DC /* Pods-BestBooks.debug.xcconfig */; };
+		E359F23C1D93A8B600EF42DC /* Pods-BestBooks.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E359F23A1D93A8B600EF42DC /* Pods-BestBooks.release.xcconfig */; };
 		E363C7791D91C14C001D239A /* BookList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E363C7781D91C14C001D239A /* BookList.swift */; };
 		E363C77B1D91C9DA001D239A /* DictionaryIntializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E363C77A1D91C9DA001D239A /* DictionaryIntializable.swift */; };
 		E363C77D1D91CD0F001D239A /* ListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E363C77C1D91CD0F001D239A /* ListResponse.swift */; };
@@ -32,10 +33,11 @@
 		E3D12AAC1D919568008538B2 /* ApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D12AAB1D919568008538B2 /* ApiResponse.swift */; };
 		E3D12AAF1D9197AF008538B2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D12AAE1D9197AF008538B2 /* Constants.swift */; };
 		E3EE82101D92FBA6002EF06C /* NYTBCachingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3EE820F1D92FBA6002EF06C /* NYTBCachingManager.swift */; };
+		FA1EEB42DF2DC8EE92D535EC /* Pods_BestBooks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13CDD47D68F09EB840B55501 /* Pods_BestBooks.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		209BC8E7034B858660FB7DCE /* Pods-NYT Best.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NYT Best.release.xcconfig"; path = "Pods/Target Support Files/Pods-NYT Best/Pods-NYT Best.release.xcconfig"; sourceTree = "<group>"; };
+		13CDD47D68F09EB840B55501 /* Pods_BestBooks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BestBooks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		68FF1AD1823EB81F015F1687 /* Pods_NYT_Best.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NYT_Best.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3316A671D931A1500B4A0D7 /* NibLoadable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
 		E3316A701D935E3D00B4A0D7 /* ISHActivityIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISHActivityIndicatorView.swift; sourceTree = "<group>"; };
@@ -44,6 +46,8 @@
 		E3316A731D935E3D00B4A0D7 /* ISHTopNotificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISHTopNotificationView.swift; sourceTree = "<group>"; };
 		E3316A741D935E3D00B4A0D7 /* ISHTopNotificationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ISHTopNotificationView.xib; sourceTree = "<group>"; };
 		E3316A7B1D937AD600B4A0D7 /* MainListsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainListsTableViewCell.swift; sourceTree = "<group>"; };
+		E359F2391D93A8B600EF42DC /* Pods-BestBooks.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-BestBooks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BestBooks/Pods-BestBooks.debug.xcconfig"; sourceTree = "<group>"; };
+		E359F23A1D93A8B600EF42DC /* Pods-BestBooks.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-BestBooks.release.xcconfig"; path = "Pods/Target Support Files/Pods-BestBooks/Pods-BestBooks.release.xcconfig"; sourceTree = "<group>"; };
 		E363C7781D91C14C001D239A /* BookList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookList.swift; sourceTree = "<group>"; };
 		E363C77A1D91C9DA001D239A /* DictionaryIntializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryIntializable.swift; sourceTree = "<group>"; };
 		E363C77C1D91CD0F001D239A /* ListResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListResponse.swift; sourceTree = "<group>"; };
@@ -53,7 +57,7 @@
 		E36B76691D92644600AB06FE /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		E3CF4D6F1D926A0400804AB0 /* BooksResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooksResponse.swift; sourceTree = "<group>"; };
 		E3CF4D721D927C9C00804AB0 /* BestsellerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BestsellerTableViewCell.swift; sourceTree = "<group>"; };
-		E3D12A931D9192AA008538B2 /* NYT Best.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NYT Best.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3D12A931D9192AA008538B2 /* BestBooks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BestBooks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3D12A961D9192AA008538B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E3D12A9B1D9192AA008538B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E3D12A9D1D9192AA008538B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -63,7 +67,6 @@
 		E3D12AAB1D919568008538B2 /* ApiResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiResponse.swift; sourceTree = "<group>"; };
 		E3D12AAE1D9197AF008538B2 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E3EE820F1D92FBA6002EF06C /* NYTBCachingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NYTBCachingManager.swift; sourceTree = "<group>"; };
-		F60E68772B502A49E3C7E515 /* Pods-NYT Best.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NYT Best.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NYT Best/Pods-NYT Best.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E30DB05F401EA39166B6B838 /* Pods_NYT_Best.framework in Frameworks */,
+				FA1EEB42DF2DC8EE92D535EC /* Pods_BestBooks.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,8 +84,8 @@
 		9A833F8779B91EADAAFE63EB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				F60E68772B502A49E3C7E515 /* Pods-NYT Best.debug.xcconfig */,
-				209BC8E7034B858660FB7DCE /* Pods-NYT Best.release.xcconfig */,
+				E359F2391D93A8B600EF42DC /* Pods-BestBooks.debug.xcconfig */,
+				E359F23A1D93A8B600EF42DC /* Pods-BestBooks.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -156,7 +159,7 @@
 		E3D12A941D9192AA008538B2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E3D12A931D9192AA008538B2 /* NYT Best.app */,
+				E3D12A931D9192AA008538B2 /* BestBooks.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				68FF1AD1823EB81F015F1687 /* Pods_NYT_Best.framework */,
+				13CDD47D68F09EB840B55501 /* Pods_BestBooks.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -228,9 +232,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E3D12A921D9192AA008538B2 /* NYT Best */ = {
+		E3D12A921D9192AA008538B2 /* BestBooks */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E3D12AA51D9192AA008538B2 /* Build configuration list for PBXNativeTarget "NYT Best" */;
+			buildConfigurationList = E3D12AA51D9192AA008538B2 /* Build configuration list for PBXNativeTarget "BestBooks" */;
 			buildPhases = (
 				ABE667D0D9F4BC7A193A5814 /* Check Pods Manifest.lock */,
 				E3D12A8F1D9192AA008538B2 /* Sources */,
@@ -243,9 +247,9 @@
 			);
 			dependencies = (
 			);
-			name = "NYT Best";
+			name = BestBooks;
 			productName = "NYT Best";
-			productReference = E3D12A931D9192AA008538B2 /* NYT Best.app */;
+			productReference = E3D12A931D9192AA008538B2 /* BestBooks.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -277,7 +281,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E3D12A921D9192AA008538B2 /* NYT Best */,
+				E3D12A921D9192AA008538B2 /* BestBooks */,
 			);
 		};
 /* End PBXProject section */
@@ -289,6 +293,8 @@
 			files = (
 				E3D12AA11D9192AA008538B2 /* LaunchScreen.storyboard in Resources */,
 				E3D12A9E1D9192AA008538B2 /* Assets.xcassets in Resources */,
+				E359F23B1D93A8B600EF42DC /* Pods-BestBooks.debug.xcconfig in Resources */,
+				E359F23C1D93A8B600EF42DC /* Pods-BestBooks.release.xcconfig in Resources */,
 				E3316A791D935E3D00B4A0D7 /* ISHTopNotificationView.xib in Resources */,
 				E3316A761D935E3D00B4A0D7 /* ISHActivityIndicatorView.xib in Resources */,
 				E3D12A9C1D9192AA008538B2 /* Main.storyboard in Resources */,
@@ -310,7 +316,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NYT Best/Pods-NYT Best-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BestBooks/Pods-BestBooks-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A870765238E13D9317238B8E /* Embed Pods Frameworks */ = {
@@ -325,7 +331,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NYT Best/Pods-NYT Best-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BestBooks/Pods-BestBooks-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		ABE667D0D9F4BC7A193A5814 /* Check Pods Manifest.lock */ = {
@@ -481,7 +487,7 @@
 		};
 		E3D12AA61D9192AA008538B2 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F60E68772B502A49E3C7E515 /* Pods-NYT Best.debug.xcconfig */;
+			baseConfigurationReference = E359F2391D93A8B600EF42DC /* Pods-BestBooks.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -497,7 +503,7 @@
 		};
 		E3D12AA71D9192AA008538B2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 209BC8E7034B858660FB7DCE /* Pods-NYT Best.release.xcconfig */;
+			baseConfigurationReference = E359F23A1D93A8B600EF42DC /* Pods-BestBooks.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -523,7 +529,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E3D12AA51D9192AA008538B2 /* Build configuration list for PBXNativeTarget "NYT Best" */ = {
+		E3D12AA51D9192AA008538B2 /* Build configuration list for PBXNativeTarget "BestBooks" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E3D12AA61D9192AA008538B2 /* Debug */,
