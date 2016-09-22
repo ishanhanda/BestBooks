@@ -11,6 +11,7 @@ import SDWebImage
 import ChameleonFramework
 import SafariServices
 import DZNEmptyDataSet
+import AVFoundation
 
 class BestSellerBooksTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -87,6 +88,14 @@ class BestSellerBooksTableViewController: UIViewController, UITableViewDataSourc
         }
     }
 
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let selectedRowIndexPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRowAtIndexPath(selectedRowIndexPath, animated: true)
+        }
+    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -202,13 +211,13 @@ class BestSellerBooksTableViewController: UIViewController, UITableViewDataSourc
         
         let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("idBookDetailViewController") as! BookDetailViewController
         detailVC.book = book
-        detailVC.bookImage = cell.coverImageView.image
+        let image = cell.coverImageView.image!
+        detailVC.bookImage = image
         
-        let aNavVC = UINavigationController(rootViewController: detailVC)
-        aNavVC.navigationBar.barStyle = .Black
-        aNavVC.navigationBar.tintColor = UIColor.flatWhiteColor()
+        let cellImageRect = AVMakeRectWithAspectRatioInsideRect(image.size, cell.coverImageView.frame)
+        let imageRect = cell.contentView.convertRect(cellImageRect, toView: self.view)
         
-        self.presentViewController(aNavVC, animated: true, completion: nil)
+        detailVC.presentFromImageRect(imageRect, fromVC: self, completion: nil)
     }
     
     // MARK: - Button Actions

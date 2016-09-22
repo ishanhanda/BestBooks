@@ -8,6 +8,7 @@
 
 import UIKit
 import DZNEmptyDataSet
+import SafariServices
 
 class MainListsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -473,5 +474,13 @@ extension MainListsTableViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDe
     
     func emptyDataSetShouldAllowScroll(scrollView: UIScrollView!) -> Bool {
         return !refreshControl.refreshing
+    }
+    
+    
+    @IBAction func nytButtonTapped(sender: AnyObject) {
+        if let url = NSURL(string: NYTIMES_LOGO_LINK) {
+            let safariVC = SFSafariViewController(URL: url, entersReaderIfAvailable: false)
+            presentViewController(safariVC, animated: true, completion: nil)
+        }
     }
 }

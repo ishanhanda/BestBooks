@@ -8,6 +8,7 @@
 
 import UIKit
 import SDWebImage
+import SafariServices
 
 class BookDetailViewController: UIViewController {
 
@@ -26,6 +27,10 @@ class BookDetailViewController: UIViewController {
     
     @IBOutlet var coverImageHeightConstraint: NSLayoutConstraint!
     
+    let detailViewControllerTransitioningDelegate = DetailViewControllerTransitioningDelegate()
+    
+//    private var backImageFrame: CGRect!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -39,9 +44,12 @@ class BookDetailViewController: UIViewController {
         bookDescriptionLabel.text = book.description
         bookDescriptionLabel.textColor = UIColor.flatWhiteColor()
         
-        view.backgroundColor = UIColor.flatBlackColor()
+        view.backgroundColor = UIColor.blackColor()
         
-        self.coverImageHeightConstraint.constant = max(250, (self.bookImage.size.height / UIScreen.mainScreen().scale))
+        self.coverImageHeightConstraint.constant = min(250, (self.bookImage.size.height / UIScreen.mainScreen().scale))
+        
+        self.transitioningDelegate = detailViewControllerTransitioningDelegate
+        self.modalPresentationStyle = .Custom
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -61,7 +69,7 @@ class BookDetailViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        scrollView.contentInset = UIEdgeInsetsMake(topLayoutGuide.length, 0, 0, 0)
+        scrollView.contentInset = UIEdgeInsetsMake(70, 0, 0, 0)
     }
     
 
@@ -75,6 +83,32 @@ class BookDetailViewController: UIViewController {
     
     
     @IBAction func closeButtonTapped(sender: AnyObject) {
+        self.detailViewControllerTransitioningDelegate.animator.presenting = false
+        
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    @IBAction func nytButtonTapped(sender: AnyObject) {
+        if let url = NSURL(string: NYTIMES_LOGO_LINK) {
+            let safariVC = SFSafariViewController(URL: url, entersReaderIfAvailable: false)
+            presentViewController(safariVC, animated: true, completion: nil)
+        }
+    }
+}
+
+
+
+extension BookDetailViewController {
+
+    func presentFromImageRect(imageframe: CGRect, fromVC: BestSellerBooksTableViewController, completion: (() -> Void)? ) {
+        self.detailViewControllerTransitioningDelegate.animator.imageOriginFrame = imageframe
+        self.detailViewControllerTransitioningDelegate.animator.presenting = true
+        self.detailViewControllerTransitioningDelegate.animator.previousSelectedIndexPath = fromVC.tableView.indexPathForSelectedRow!
+        fromVC.presentViewController(self, animated: true) {
+            if let givenCompletiton = completion {
+                givenCompletiton()
+            }
+        }
     }
 }
