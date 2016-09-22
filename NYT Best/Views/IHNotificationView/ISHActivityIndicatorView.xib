@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ISHActivityIndicatorView" customModule="NYT_Best" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ISHActivityIndicatorView" customModule="NYT_Best" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="571" height="208"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="rCR-Yb-HPF">
+                    <rect key="frame" x="275.5" y="94" width="20" height="20"/>
+                </activityIndicatorView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oJZ-Jr-YBX">
+                    <rect key="frame" x="15" y="97.5" width="26.5" height="12"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="oJZ-Jr-YBX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="9Km-LB-fRu"/>
+                <constraint firstItem="rCR-Yb-HPF" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Vny-2C-fFb"/>
+                <constraint firstItem="rCR-Yb-HPF" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="YmH-i3-6aZ"/>
+                <constraint firstItem="oJZ-Jr-YBX" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="dtT-dg-AsS"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="activityIndicator" destination="rCR-Yb-HPF" id="ztN-SH-2cR"/>
+                <outlet property="messageLabel" destination="oJZ-Jr-YBX" id="lP0-Ov-AyT"/>
+            </connections>
+            <point key="canvasLocation" x="295.5" y="-320"/>
+        </view>
+    </objects>
+</document>
