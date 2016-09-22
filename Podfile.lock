@@ -3,6 +3,7 @@ PODS:
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
+  - DZNEmptyDataSet (1.8.1)
   - FLAnimatedImage (1.0.12)
   - NVActivityIndicatorView (2.12)
   - NYTPhotoViewer (1.1.0):
@@ -20,6 +21,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 3.0)
   - ChameleonFramework/Swift
+  - DZNEmptyDataSet
   - NVActivityIndicatorView (from `https://github.com/ninjaprox/NVActivityIndicatorView.git`,
     branch `swift2.3`)
   - NYTPhotoViewer (~> 1.1.0)
@@ -39,6 +41,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: b70a7352335f8ea5babd0a923eb7e8eacc67b877
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   NVActivityIndicatorView: de8be03826726ad99cdfacf7fe09e88cbfeef911
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911

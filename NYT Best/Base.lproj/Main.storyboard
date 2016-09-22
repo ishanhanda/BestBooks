@@ -8,7 +8,7 @@
         <!--Main Lists Table View Controller-->
         <scene sceneID="S3a-pl-4fy">
             <objects>
-                <viewController storyboardIdentifier="idMainListsTableViewController" id="OgZ-hm-IF9" customClass="MainListsTableViewController" customModule="NYT_Best" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="idMainListsTableViewController" id="OgZ-hm-IF9" customClass="MainListsTableViewController" customModule="BestBooks" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="VZI-IL-GRg"/>
                         <viewControllerLayoutGuide type="bottom" id="kG4-Df-8cn"/>
@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="idMainListsCell" textLabel="Vy6-7z-mG2" style="IBUITableViewCellStyleDefault" id="skg-Iz-C2m" customClass="MainListsTableViewCell" customModule="NYT_Best" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="idMainListsCell" textLabel="Vy6-7z-mG2" style="IBUITableViewCellStyleDefault" id="skg-Iz-C2m" customClass="MainListsTableViewCell" customModule="BestBooks" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="skg-Iz-C2m" id="o6k-LR-QxT">
@@ -101,7 +101,7 @@
         <!--Best Seller Books Table View Controller-->
         <scene sceneID="W5a-SU-bD9">
             <objects>
-                <viewController storyboardIdentifier="idBestSellerBooksTableViewController" id="pdb-p5-UlN" customClass="BestSellerBooksTableViewController" customModule="NYT_Best" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="idBestSellerBooksTableViewController" id="pdb-p5-UlN" customClass="BestSellerBooksTableViewController" customModule="BestBooks" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Wzn-JB-zSt"/>
                         <viewControllerLayoutGuide type="bottom" id="hgV-Ei-2Va"/>
@@ -114,7 +114,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="idBestsellerCell" id="ZeU-8x-aqG" customClass="BestsellerTableViewCell" customModule="NYT_Best" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="idBestsellerCell" id="ZeU-8x-aqG" customClass="BestsellerTableViewCell" customModule="BestBooks" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZeU-8x-aqG" id="kfl-L6-0Gn">

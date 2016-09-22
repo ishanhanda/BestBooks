@@ -13,5 +13,7 @@ target 'BestBooks' do
     pod 'NVActivityIndicatorView', :git => 'https://github.com/ninjaprox/NVActivityIndicatorView.git', :branch => 'swift2.3'
     
     pod 'ChameleonFramework/Swift'
+    
+    pod 'DZNEmptyDataSet'
 end
 

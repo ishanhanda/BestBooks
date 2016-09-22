@@ -86,6 +86,7 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-BestBooks/Alamofire.framework"
   install_framework "Pods-BestBooks/ChameleonFramework.framework"
+  install_framework "Pods-BestBooks/DZNEmptyDataSet.framework"
   install_framework "Pods-BestBooks/FLAnimatedImage.framework"
   install_framework "Pods-BestBooks/NVActivityIndicatorView.framework"
   install_framework "Pods-BestBooks/NYTPhotoViewer.framework"
@@ -95,6 +96,7 @@ fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-BestBooks/Alamofire.framework"
   install_framework "Pods-BestBooks/ChameleonFramework.framework"
+  install_framework "Pods-BestBooks/DZNEmptyDataSet.framework"
   install_framework "Pods-BestBooks/FLAnimatedImage.framework"
   install_framework "Pods-BestBooks/NVActivityIndicatorView.framework"
   install_framework "Pods-BestBooks/NYTPhotoViewer.framework"

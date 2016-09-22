@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DZNEmptyDataSet
 
 class MainListsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -28,6 +29,8 @@ class MainListsTableViewController: UIViewController, UITableViewDelegate, UITab
     
     var keyBoardHeight: CGFloat = 0
     
+    var askRefresh = false
+    
     var currentTableInsets: UIEdgeInsets {
         let top = !showingAcitvityIndicator ? topLayoutGuide.length + searchBarContainerView.bounds.height : topLayoutGuide.length + searchBarContainerView.bounds.height + self.heightForNotificationView()
         return UIEdgeInsets(top: top, left: 0, bottom: max(footerVEF.bounds.height, keyBoardHeight), right: 0)
@@ -42,6 +45,9 @@ class MainListsTableViewController: UIViewController, UITableViewDelegate, UITab
         
         tableView.dataSource = self
         tableView.delegate = self
+        
+        tableView.emptyDataSetDelegate = self
+        tableView.emptyDataSetSource = self
         
         tableView.tableFooterView = UIView(frame: CGRectZero)
         
@@ -63,11 +69,13 @@ class MainListsTableViewController: UIViewController, UITableViewDelegate, UITab
                     let object = BookListObject()
                     object.bookList = bookList
                     object.displayName = bookList.displayName
+                    self.askRefresh = true
+                    self.tableView.reloadData()
                     return object
                 })
-                
+
+                self.askRefresh = false
                 self.setobjectsInSections(self.listsDataSource)
-                
                 self.tableView.reloadData()
                 
                 if isResponseFromCache {
@@ -95,11 +103,9 @@ class MainListsTableViewController: UIViewController, UITableViewDelegate, UITab
                     hideActivity()
                 }
                 
-            } else if let err = error {
-                self.showSingleAlert(err.localizedDescription) {
-                    self.navigationController?.popViewControllerAnimated(true)
-                }
-                
+            } else if let _ = error {
+                self.askRefresh = true
+                self.tableView.reloadData()
                 hideActivity()
             }
         }
@@ -404,5 +410,40 @@ extension MainListsTableViewController {
     
     func keyboardWillHide(notification: NSNotification) {
         keyBoardHeight = 0
+    }
+}
+
+
+extension MainListsTableViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+    func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
+        return UIImage(named: "logo_small")
+    }
+    
+    
+    func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+        return NSAttributedString(string: "BestBooks", attributes: [
+            NSForegroundColorAttributeName : UIColor.flatPlumColor(),
+            NSFontAttributeName: UIFont.systemFontOfSize(20)
+            ])
+    }
+    
+    
+    func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+        let text = askRefresh ? "An error occured. Pull to refresh." : ""
+        
+        return NSAttributedString(string: text, attributes: [
+            NSForegroundColorAttributeName : UIColor.flatPurpleColor(),
+            NSFontAttributeName: UIFont.systemFontOfSize(14)
+            ])
+    }
+    
+    
+    func verticalOffsetForEmptyDataSet(scrollView: UIScrollView!) -> CGFloat {
+        return  -50
+    }
+    
+    
+    func emptyDataSetShouldAllowScroll(scrollView: UIScrollView!) -> Bool {
+        return true
     }
 }

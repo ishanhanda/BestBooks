@@ -10,6 +10,7 @@ import UIKit
 import SDWebImage
 import ChameleonFramework
 import SafariServices
+import DZNEmptyDataSet
 
 class BestSellerBooksTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -36,6 +37,9 @@ class BestSellerBooksTableViewController: UIViewController, UITableViewDataSourc
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        tableView.emptyDataSetSource = self
+        tableView.emptyDataSetDelegate = self
         
         let indicator = self.showActivityIndicatorView("Loading...", animations: {
             self.showingAcitvityIndicator = true
@@ -231,5 +235,25 @@ extension BestSellerBooksTableViewController: ISHShowsTopActivityIndicator {
     
     func heightForNotificationView() -> CGFloat {
         return 44
+    }
+}
+
+
+extension BestSellerBooksTableViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+    func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
+        return UIImage(named: "logo_small")
+    }
+    
+    
+    func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+        return NSAttributedString(string: "BestBooks", attributes: [
+            NSForegroundColorAttributeName : UIColor.flatPlumColor(),
+            NSFontAttributeName: UIFont.systemFontOfSize(20)
+            ])
+    }
+    
+    
+    func verticalOffsetForEmptyDataSet(scrollView: UIScrollView!) -> CGFloat {
+        return  -50
     }
 }
