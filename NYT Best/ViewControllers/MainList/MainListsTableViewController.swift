@@ -31,6 +31,8 @@ class MainListsTableViewController: UIViewController, UITableViewDelegate, UITab
     
     var askRefresh = false
     
+    var refreshControl: UIRefreshControl!
+    
     var currentTableInsets: UIEdgeInsets {
         let top = !showingAcitvityIndicator ? topLayoutGuide.length + searchBarContainerView.bounds.height : topLayoutGuide.length + searchBarContainerView.bounds.height + self.heightForNotificationView()
         return UIEdgeInsets(top: top, left: 0, bottom: max(footerVEF.bounds.height, keyBoardHeight), right: 0)
@@ -45,15 +47,44 @@ class MainListsTableViewController: UIViewController, UITableViewDelegate, UITab
         
         tableView.dataSource = self
         tableView.delegate = self
-        
         tableView.emptyDataSetDelegate = self
         tableView.emptyDataSetSource = self
-        
         tableView.tableFooterView = UIView(frame: CGRectZero)
-        
         tableView.sectionIndexColor = UIColor.flatPlumColor()
         
-        let indicator = self.showActivityIndicatorView("Loading...", animations: { 
+        refreshControl = UIRefreshControl()
+        tableView.addSubview(refreshControl)
+        refreshControl.addTarget(self, action: #selector(self.refreshControlChanged(_:)), forControlEvents: .ValueChanged)
+        
+        self.refresh()
+    }
+    
+    
+    func refreshControlChanged(refreshControl: UIRefreshControl) {
+        
+        NYTBCachingManager.sharedInstance.listsResponse { (listsResponse, error, isResponseFromCache) in
+            if let response = listsResponse where error == nil {
+                self.listsDataSource = response.lists.map({ (bookList) -> BookListObject in
+                    let object = BookListObject()
+                    object.bookList = bookList
+                    object.displayName = bookList.displayName
+                    return object
+                })
+                
+                self.askRefresh = false
+                self.setobjectsInSections(self.listsDataSource)
+            } else if let _ = error {
+                self.askRefresh = true
+            }
+            
+            self.refreshControl.endRefreshing()
+            self.tableView.reloadData()
+        }
+    }
+    
+    
+    func refresh() {
+        let indicator = self.showActivityIndicatorView("Loading...", animations: {
             self.showingAcitvityIndicator = true
             }, completion: nil)
         
@@ -73,7 +104,7 @@ class MainListsTableViewController: UIViewController, UITableViewDelegate, UITab
                     self.tableView.reloadData()
                     return object
                 })
-
+                
                 self.askRefresh = false
                 self.setobjectsInSections(self.listsDataSource)
                 self.tableView.reloadData()
@@ -109,11 +140,6 @@ class MainListsTableViewController: UIViewController, UITableViewDelegate, UITab
                 hideActivity()
             }
         }
-        
-        // Uncomment the following line to preserve selection between presentations
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
     
@@ -130,6 +156,8 @@ class MainListsTableViewController: UIViewController, UITableViewDelegate, UITab
         if let selectedRowIndexPath = tableView.indexPathForSelectedRow {
             tableView.deselectRowAtIndexPath(selectedRowIndexPath, animated: true)
         }
+        
+        tableView.sendSubviewToBack(refreshControl)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
@@ -444,6 +472,6 @@ extension MainListsTableViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDe
     
     
     func emptyDataSetShouldAllowScroll(scrollView: UIScrollView!) -> Bool {
-        return true
+        return !refreshControl.refreshing
     }
 }
