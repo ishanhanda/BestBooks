@@ -46,7 +46,7 @@ class BookDetailViewController: UIViewController {
         
         view.backgroundColor = UIColor.blackColor()
         
-        self.coverImageHeightConstraint.constant = min(250, (self.bookImage.size.height / UIScreen.mainScreen().scale))
+//        self.coverImageHeightConstraint.constant = min(250, (self.bookImage.size.height / UIScreen.mainScreen().scale))
         
         self.transitioningDelegate = detailViewControllerTransitioningDelegate
         self.modalPresentationStyle = .Custom

@@ -118,6 +118,7 @@
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DJe-r3-ViY">
                                                 <rect key="frame" x="0.0" y="0.0" width="560" height="250"/>
+                                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -191,6 +192,7 @@
                                             </connections>
                                         </button>
                                     </subviews>
+                                    <color key="tintColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="uqy-uX-xA5" secondAttribute="trailing" constant="20" id="7Wj-Ru-M34"/>
                                         <constraint firstItem="F5d-tv-Qjq" firstAttribute="centerY" secondItem="Iyg-Uj-YLw" secondAttribute="centerY" id="7aR-ei-nnJ"/>
@@ -201,7 +203,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="RXQ-t3-3yd"/>
                                 </constraints>
-                                <blurEffect style="dark"/>
+                                <blurEffect style="extraLight"/>
                             </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
