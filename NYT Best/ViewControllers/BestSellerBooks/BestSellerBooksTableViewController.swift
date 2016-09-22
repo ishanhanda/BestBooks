@@ -195,6 +195,22 @@ class BestSellerBooksTableViewController: UIViewController, UITableViewDataSourc
     }
     
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let book = booksDataSource[indexPath.row]
+        
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! BestsellerTableViewCell
+        
+        let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("idBookDetailViewController") as! BookDetailViewController
+        detailVC.book = book
+        detailVC.bookImage = cell.coverImageView.image
+        
+        let aNavVC = UINavigationController(rootViewController: detailVC)
+        aNavVC.navigationBar.barStyle = .Black
+        aNavVC.navigationBar.tintColor = UIColor.flatWhiteColor()
+        
+        self.presentViewController(aNavVC, animated: true, completion: nil)
+    }
+    
     // MARK: - Button Actions
     
     @IBAction func orderSegmentValueChanged(sender: AnyObject) {

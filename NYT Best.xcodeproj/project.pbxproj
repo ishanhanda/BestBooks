@@ -16,6 +16,7 @@
 		E3316A7C1D937AD600B4A0D7 /* MainListsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3316A7B1D937AD600B4A0D7 /* MainListsTableViewCell.swift */; };
 		E359F23B1D93A8B600EF42DC /* Pods-BestBooks.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E359F2391D93A8B600EF42DC /* Pods-BestBooks.debug.xcconfig */; };
 		E359F23C1D93A8B600EF42DC /* Pods-BestBooks.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E359F23A1D93A8B600EF42DC /* Pods-BestBooks.release.xcconfig */; };
+		E359F23F1D9414E500EF42DC /* BookDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359F23E1D9414E500EF42DC /* BookDetailViewController.swift */; };
 		E363C7791D91C14C001D239A /* BookList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E363C7781D91C14C001D239A /* BookList.swift */; };
 		E363C77B1D91C9DA001D239A /* DictionaryIntializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E363C77A1D91C9DA001D239A /* DictionaryIntializable.swift */; };
 		E363C77D1D91CD0F001D239A /* ListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E363C77C1D91CD0F001D239A /* ListResponse.swift */; };
@@ -48,6 +49,7 @@
 		E3316A7B1D937AD600B4A0D7 /* MainListsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainListsTableViewCell.swift; sourceTree = "<group>"; };
 		E359F2391D93A8B600EF42DC /* Pods-BestBooks.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-BestBooks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BestBooks/Pods-BestBooks.debug.xcconfig"; sourceTree = "<group>"; };
 		E359F23A1D93A8B600EF42DC /* Pods-BestBooks.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-BestBooks.release.xcconfig"; path = "Pods/Target Support Files/Pods-BestBooks/Pods-BestBooks.release.xcconfig"; sourceTree = "<group>"; };
+		E359F23E1D9414E500EF42DC /* BookDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailViewController.swift; sourceTree = "<group>"; };
 		E363C7781D91C14C001D239A /* BookList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookList.swift; sourceTree = "<group>"; };
 		E363C77A1D91C9DA001D239A /* DictionaryIntializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryIntializable.swift; sourceTree = "<group>"; };
 		E363C77C1D91CD0F001D239A /* ListResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListResponse.swift; sourceTree = "<group>"; };
@@ -116,6 +118,14 @@
 				E3316A7B1D937AD600B4A0D7 /* MainListsTableViewCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		E359F23D1D9414CC00EF42DC /* BookDetail */ = {
+			isa = PBXGroup;
+			children = (
+				E359F23E1D9414E500EF42DC /* BookDetailViewController.swift */,
+			);
+			path = BookDetail;
 			sourceTree = "<group>";
 		};
 		E363C7751D91C09F001D239A /* Models */ = {
@@ -205,6 +215,7 @@
 		E3D12AB01D91B24E008538B2 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E359F23D1D9414CC00EF42DC /* BookDetail */,
 				E36B76661D9257DD00AB06FE /* BestSellerBooks */,
 				E3D12AB11D91B24E008538B2 /* MainList */,
 			);
@@ -370,6 +381,7 @@
 				E36B76681D9257EC00AB06FE /* BestSellerBooksTableViewController.swift in Sources */,
 				E3D12A971D9192AA008538B2 /* AppDelegate.swift in Sources */,
 				E36B76651D9255B400AB06FE /* MainListsTableViewController.swift in Sources */,
+				E359F23F1D9414E500EF42DC /* BookDetailViewController.swift in Sources */,
 				E3316A771D935E3D00B4A0D7 /* ISHShowsTopNotificationView.swift in Sources */,
 				E3316A7C1D937AD600B4A0D7 /* MainListsTableViewCell.swift in Sources */,
 				E3D12AAA1D91954E008538B2 /* ApiWrapper.swift in Sources */,

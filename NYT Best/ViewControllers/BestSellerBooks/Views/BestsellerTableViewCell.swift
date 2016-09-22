@@ -66,7 +66,7 @@ class BestsellerTableViewCell: UITableViewCell {
     
     func setWeekLabelText(value: Int) {
         if value == 0 {
-            weekLabel.text = "Less than one week on list"
+            weekLabel.text = "New this week"
         } else {
             let week = value > 1 ? "Weeks on list" : "Week on list"
             let weekString = "\(value) \(week)" as NSString
