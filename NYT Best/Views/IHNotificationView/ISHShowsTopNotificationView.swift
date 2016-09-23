@@ -8,23 +8,61 @@
 
 import UIKit
 
+/// This protocol is required for a UIViewController to display ISHTopNotificationView
 protocol ISHShowsTopNotificationView {
+    
+    /**
+     - returns: The view under which the notification view is to be displayed
+    */
     func viewOnTopOfNotificationView() -> UIView
+    
+    /**
+     - returns: The height for ISHTopNotificationView
+     */
     func heightForNotificationView() -> CGFloat
+    
+    /**
+     - returns: The superview which contains the view returned by viewOnTopOfNotificationView() and on which the ISHTopNotificationView will be added.
+     */
     func superViewOfNotificationView() -> UIView
 }
 
+/// Style for notification view message
+enum ISHNotificationStyle {
+    case Normal
+    case Alert
+}
 
+
+/*
+ This extension defines the methods for showing and hiding ISHTopNotificationView
+ */
 extension ISHShowsTopNotificationView where Self: UIViewController {
     
-    func showNotificationView(message: String?, time: NSTimeInterval = -1, animations: (() -> ())? , completion: (() -> ())?) -> ISHTopNotificationView {
+    /**
+    Shows the ISHTopNotificationView on UIViewController
+     - parameter message: The message to be displayed.
+     - parameter style: Style for the notification.
+     - parameter time: The time after which the notificatin is dismissed. Default -1, indicating that the notification will not be dismissed automatically.
+     - parameter animations: Optional animations to run along with presenting of the notification
+     - parameter completion: Block to execute after presentation finishes.
+     -returns: The instance of ISHTopNotificationView which was added.
+     */
+    func showNotificationView(message: String?, style: ISHNotificationStyle = .Normal , time: NSTimeInterval = -1, animations: (() -> ())? = nil, completion: (() -> ())? = nil) -> ISHTopNotificationView {
         let topView = viewOnTopOfNotificationView()
         let superView = superViewOfNotificationView()
         let height = heightForNotificationView()
         
         let notificationView = ISHTopNotificationView.loadFromNib()
         notificationView.messageLabel.text = message
-        notificationView.messageLabel.textColor = UIColor.redColor()
+        
+        switch style {
+        case .Alert:
+            notificationView.messageLabel.textColor = UIColor.redColor()
+        case .Normal:
+            notificationView.messageLabel.textColor = UIColor.whiteColor()
+        }
+        
         notificationView.translatesAutoresizingMaskIntoConstraints = false
         
         let viewsDict = [
@@ -82,15 +120,23 @@ extension ISHShowsTopNotificationView where Self: UIViewController {
                 compBlock()
             }
             
-            delay(time: time, closure: { 
-                self.hideNotificationView(notificationView, animations: nil, completion: nil)
-            })
+            if time >= 0 {
+                delay(time: time, closure: {
+                    self.hideNotificationView(notificationView, animations: nil, completion: nil)
+                })
+            }
         }
         
         return notificationView
     }
     
     
+    /**
+     Removes the ISHTopNotificationView from UIViewController
+     - parameter notificationView: The ISHTopNotificationView to be removed.
+     - parameter animations: Optional animations to run along with removal of the notification
+     - parameter completion: Block to execute after notification is reomved.
+     */
     func hideNotificationView(notificationView: ISHTopNotificationView, animations: (() -> ())? , completion: (() -> ())?) {
         
         let superView = superViewOfNotificationView()
@@ -116,11 +162,24 @@ extension ISHShowsTopNotificationView where Self: UIViewController {
 }
 
 
+/// Inherits from ISHShowsTopNotificationView. Used specifically to display Message notification with activity indicator.
 protocol ISHShowsTopActivityIndicator : ISHShowsTopNotificationView {}
 
+
+/*
+ This extension defines the methods for showing activity indicator based notification
+ */
 extension ISHShowsTopActivityIndicator where Self: UIViewController {
     
-    func showActivityIndicatorView(message: String?, animations: (() -> ())? , completion: (() -> ())?) -> ISHActivityIndicatorView {
+    /**
+     Shows the ISHTopNotificationView on UIViewController
+     - parameter message: The message to be displayed.
+     - parameter style: Style for the notification.
+     - parameter animations: Optional animations to run along with presenting of the notification
+     - parameter completion: Block to execute after presentation finishes.
+     -returns: The instance of ISHActivityIndicatorView which was added.
+     */
+    func showActivityIndicatorView(message: String?, style: ISHNotificationStyle = .Normal , animations: (() -> ())? , completion: (() -> ())?) -> ISHActivityIndicatorView {
         let topView = viewOnTopOfNotificationView()
         let superView = superViewOfNotificationView()
         let height = heightForNotificationView()
@@ -129,6 +188,13 @@ extension ISHShowsTopActivityIndicator where Self: UIViewController {
         activityIndicatorView.messageLabel.text = message
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         
+        switch style {
+        case .Alert:
+            activityIndicatorView.messageLabel.textColor = UIColor.redColor()
+        case .Normal:
+            activityIndicatorView.messageLabel.textColor = UIColor.whiteColor()
+        }
+
         let viewsDict = [
             "activityIndicatorView": activityIndicatorView,
             "topView": topView

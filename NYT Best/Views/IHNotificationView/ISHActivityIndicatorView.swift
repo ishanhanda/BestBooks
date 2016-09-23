@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+/// ISHTopNotificationView subclass to display an activity indicator with a message. Requires conformance to ISHShowsTopNotificationView protocol.
 class ISHActivityIndicatorView: ISHTopNotificationView {
 
     @IBOutlet var activityIndicator: UIActivityIndicatorView!

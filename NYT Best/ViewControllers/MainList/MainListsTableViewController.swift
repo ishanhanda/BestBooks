@@ -63,7 +63,10 @@ class MainListsTableViewController: UIViewController, UITableViewDelegate, UITab
     
     func refreshControlChanged(refreshControl: UIRefreshControl) {
         
-        NYTBCachingManager.sharedInstance.listsResponse { (listsResponse, error, isResponseFromCache) in
+        var updating = true
+        if self.listsDataSource.count == 0 { updating = false }
+        
+        NYTBCachingManager.sharedInstance.updateCacheForLists { (listsResponse, error) in
             if let response = listsResponse where error == nil {
                 self.listsDataSource = response.lists.map({ (bookList) -> BookListObject in
                     let object = BookListObject()
@@ -76,6 +79,12 @@ class MainListsTableViewController: UIViewController, UITableViewDelegate, UITab
                 self.setobjectsInSections(self.listsDataSource)
             } else if let _ = error {
                 self.askRefresh = true
+            }
+            
+            if error != nil {
+                self.showNotificationView(error?.localizedDescription, style: .Alert, time: 3, animations: nil, completion: nil)
+            } else if updating {
+                self.showNotificationView("List updated", style: .Normal, time: 3, animations: nil, completion: nil)
             }
             
             self.refreshControl.endRefreshing()
@@ -125,7 +134,7 @@ class MainListsTableViewController: UIViewController, UITableViewDelegate, UITab
                             self.setobjectsInSections(self.listsDataSource)
                             self.tableView.reloadData()
                         } else {
-                            self.showNotificationView("\(error!.localizedDescription)\nDisplaying cached data.", time: 3, animations: nil, completion: nil)
+                            self.showNotificationView("\(error!.localizedDescription)\nDisplaying cached data.", style: .Alert, time: 3, animations: nil, completion: nil)
                             print(error)
                         }
                         

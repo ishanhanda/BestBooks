@@ -8,7 +8,12 @@
 
 import Foundation
 
-
+/// Protocol to initialize objects with a Dictionary parameter.
 protocol DictionaryInitializable {
+    
+    /**
+     Initializer with a Dictionary parameter.
+     - parameter dictionary: The dicitonary with which the object will be initialized.
+    */
     init?(dictionary: Dictionary<String, AnyObject>)
 }

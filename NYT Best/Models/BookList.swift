@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Model to store Book lists fetched from api
 struct BookList {
     var displayName: String
     var listName: String
@@ -15,11 +16,6 @@ struct BookList {
     var newestPublishedDate: NSDate
     var oldestPublishedDate: NSDate
     var updated: String
-    
-    
-    func sortingFunction() -> String {
-        return displayName
-    }
 }
 
 
@@ -47,10 +43,17 @@ extension BookList: DictionaryInitializable {
     }
 }
 
+
+/// Wrapper around the BookList struct to help with section indexing.
 class BookListObject: NSObject {
     var bookList: BookList!
     var displayName: String!
     
+    
+    /**
+     This function is used to sort the Book lists by the valie returned here.
+     - returns: Key to sort the lists with (Currently the displayName).
+     */
     @objc func sortingFunction() -> String {
         return self.bookList.displayName
     }

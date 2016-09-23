@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// ISHTopNotificationView class to display non-intrusive notifications on UIViewControllers. Requires conformance to ISHShowsTopNotificationView protocol.
 class ISHTopNotificationView: UIView, NibLoadable {
     
     @IBOutlet var messageLabel: UILabel!
