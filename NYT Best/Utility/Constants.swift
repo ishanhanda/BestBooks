@@ -20,3 +20,12 @@ enum NYTimesApiEndPoints: String {
     case NamesList = "/lists/names.json"
     case BestSellers = "/lists.json"
 }
+
+
+// MARK: - User Defaults keys
+enum BooksOrder: String {
+    case Rank = "BooksOrderRank"
+    case Week = "BooksOrderWeek"
+}
+
+let K_UD_BOOKS_ORDER = "K_UD_BOOKS_ORDER"

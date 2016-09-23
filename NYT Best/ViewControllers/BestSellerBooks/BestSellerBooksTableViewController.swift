@@ -26,6 +26,8 @@ class BestSellerBooksTableViewController: UIViewController {
     @IBOutlet var footerVEF: UIVisualEffectView!
     @IBOutlet var nytButton: UIButton!
     
+    var booksOrder: BooksOrder!
+    
     /// Flag to check if activity indicator is being displayed currently
     var showingAcitvityIndicator = false
     
@@ -48,6 +50,20 @@ class BestSellerBooksTableViewController: UIViewController {
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         
+        if let order = getUserDefault(K_UD_BOOKS_ORDER) as? String {
+            self.booksOrder = BooksOrder(rawValue: order)
+        } else {
+            self.booksOrder = .Rank
+            setUserDefault(K_UD_BOOKS_ORDER, value: self.booksOrder.rawValue)
+        }
+        
+        switch self.booksOrder! {
+        case .Rank:
+            self.orderSegmentControl.selectedSegmentIndex = 0
+        case .Week:
+            self.orderSegmentControl.selectedSegmentIndex = 1
+        }
+        
         self.fetchBooks()
     }
     
@@ -67,9 +83,7 @@ class BestSellerBooksTableViewController: UIViewController {
         NYTBCachingManager.sharedInstance.bookResponse(bookList.listNameEchoed) { (bookResposne, error, isResponseFromCache) in
             if let response = bookResposne where error == nil {
                 self.booksDataSource = response.books
-                self.booksDataSource.sortInPlace { $0.rank < $1.rank }
-                self.orderSegmentControl.setEnabled(true, forSegmentAtIndex: 0)
-                self.tableView.reloadData()
+                self.sortBooks()
                 
                 // If response was loaded from cache. Make request to update cache.
                 if isResponseFromCache {
@@ -77,9 +91,7 @@ class BestSellerBooksTableViewController: UIViewController {
                     NYTBCachingManager.sharedInstance.updateCacheForBook(self.bookList.listNameEchoed, completion: { (bookResposne, error) in
                         if let response = bookResposne where error == nil {
                             self.booksDataSource = response.books
-                            self.booksDataSource.sortInPlace { $0.rank < $1.rank }
-                            self.orderSegmentControl.setEnabled(true, forSegmentAtIndex: 0)
-                            self.tableView.reloadData()
+                            self.sortBooks()
                         } else {
                             self.showNotificationView("\(error!.localizedDescription)\nDisplaying cached data.", time: 3, animations: nil, completion: nil)
                             print(error)
@@ -126,6 +138,21 @@ class BestSellerBooksTableViewController: UIViewController {
     // MARK: - Button Actions
     
     @IBAction func orderSegmentValueChanged(sender: AnyObject) {
+        switch orderSegmentControl.selectedSegmentIndex {
+        case 0:
+            self.booksOrder = .Rank
+        case 1:
+            self.booksOrder = .Week
+        default:
+            break
+        }
+        
+        setUserDefault(K_UD_BOOKS_ORDER, value: self.booksOrder.rawValue)
+        self.sortBooks()
+    }
+    
+    
+    func sortBooks() {
         switch orderSegmentControl.selectedSegmentIndex {
         case 0:
             booksDataSource.sortInPlace { $0.rank < $1.rank }
