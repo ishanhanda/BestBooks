@@ -29,11 +29,13 @@ class BookDetailViewController: UIViewController {
     
     @IBOutlet var coverImageHeightConstraint: NSLayoutConstraint!
     
+    @IBOutlet var amazonButton: UIButton!
+    
+    @IBOutlet var reviewButton: UIButton!
+    
     let detailViewControllerTransitioningDelegate = DetailViewControllerTransitioningDelegate()
     
     var gradientLayer: CAGradientLayer!
-    
-//    private var backImageFrame: CGRect!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,6 +67,21 @@ class BookDetailViewController: UIViewController {
         bookDescriptionLabel.text = book.description
         bookDescriptionLabel.textColor = UIColor.lightGrayColor()
         bookDescriptionLabel.font = UIFont(name: BBFonts.JosefinSlab_SemiBold.rawValue, size: 17)
+        
+        if let _ = book.amazonProductURLString {
+            amazonButton.tintColor = UIColor.flatOrangeColor()
+            amazonButton.titleLabel?.font = UIFont(name: BBFonts.JosefinSlab_SemiBold.rawValue, size: 14)
+        } else {
+            amazonButton.hidden = true
+        }
+        
+        if book.bookReviewURLString != nil || book.sundayReviewURLSring != nil {
+            reviewButton.tintColor = UIColor.lightGrayColor()
+            reviewButton.titleLabel?.font = UIFont(name: BBFonts.JosefinSlab_SemiBold.rawValue, size: 14)
+        } else {
+            reviewButton.hidden = true
+        }
+        
         
         view.backgroundColor = UIColor.blackColor()
         
@@ -101,6 +118,7 @@ class BookDetailViewController: UIViewController {
             view.bringSubviewToFront(topHeaderView)
         }
         
+        scrollView.flashScrollIndicators()
     }
     
     
@@ -129,6 +147,26 @@ class BookDetailViewController: UIViewController {
     
     @IBAction func nytButtonTapped(sender: AnyObject) {
         if let url = NSURL(string: NYTIMES_LOGO_LINK) {
+            let safariVC = SFSafariViewController(URL: url, entersReaderIfAvailable: false)
+            presentViewController(safariVC, animated: true, completion: nil)
+        }
+    }
+    
+    
+    @IBAction func readReviewButtonTapped(sender: AnyObject) {
+        var urlString = book.bookReviewURLString
+        
+        if urlString ==  nil { urlString = book.sundayReviewURLSring }
+        
+        if let url = NSURL(string: urlString!) {
+            let safariVC = SFSafariViewController(URL: url, entersReaderIfAvailable: false)
+            presentViewController(safariVC, animated: true, completion: nil)
+        }
+    }
+    
+    
+    @IBAction func buyButtonTapped(sender: AnyObject) {
+        if let url = NSURL(string: book.amazonProductURLString!) {
             let safariVC = SFSafariViewController(URL: url, entersReaderIfAvailable: false)
             presentViewController(safariVC, animated: true, completion: nil)
         }

@@ -110,7 +110,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7bS-z6-HdH">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" translatesAutoresizingMaskIntoConstraints="NO" id="7bS-z6-HdH">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5U1-hu-EMj">
@@ -148,13 +148,49 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RMJ-m5-2eH">
+                                        <rect key="frame" x="237" y="463" width="126" height="30"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="BUY ON AMAZON">
+                                                    <attributes>
+                                                        <font key="NSFont" size="15" name="HelveticaNeue"/>
+                                                        <integer key="NSUnderline" value="1"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="buyButtonTapped:" destination="aUq-nP-lVi" eventType="touchUpInside" id="wFR-8X-hBY"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G3g-YX-E4C">
+                                        <rect key="frame" x="250" y="423" width="100" height="30"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="READ REVIEW">
+                                                    <attributes>
+                                                        <font key="NSFont" size="15" name="HelveticaNeue"/>
+                                                        <integer key="NSUnderline" value="1"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="readReviewButtonTapped:" destination="aUq-nP-lVi" eventType="touchUpInside" id="aRM-GA-JSL"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="oRH-bS-TGX" firstAttribute="leading" secondItem="7bS-z6-HdH" secondAttribute="leading" constant="20" id="1MZ-ba-f0o"/>
+                                    <constraint firstItem="RMJ-m5-2eH" firstAttribute="top" secondItem="G3g-YX-E4C" secondAttribute="bottom" constant="10" id="1cS-Eo-sMR"/>
                                     <constraint firstItem="5U1-hu-EMj" firstAttribute="top" secondItem="7bS-z6-HdH" secondAttribute="top" constant="20" id="3Zl-rD-xHz"/>
+                                    <constraint firstItem="G3g-YX-E4C" firstAttribute="centerX" secondItem="7bS-z6-HdH" secondAttribute="centerX" id="6Ts-b0-Fif"/>
                                     <constraint firstItem="IDb-5L-EEC" firstAttribute="leading" secondItem="7bS-z6-HdH" secondAttribute="leading" constant="20" id="BgO-Ne-G3E"/>
-                                    <constraint firstAttribute="bottom" secondItem="IDb-5L-EEC" secondAttribute="bottom" constant="20" id="VeI-b7-zE5"/>
+                                    <constraint firstAttribute="bottom" secondItem="RMJ-m5-2eH" secondAttribute="bottom" constant="20" id="CCM-Dm-8ps"/>
+                                    <constraint firstItem="G3g-YX-E4C" firstAttribute="top" secondItem="IDb-5L-EEC" secondAttribute="bottom" constant="10" id="Mh1-A8-WQS"/>
                                     <constraint firstItem="Zjv-LP-LRf" firstAttribute="leading" secondItem="7bS-z6-HdH" secondAttribute="leading" constant="20" id="We3-vE-SAm"/>
+                                    <constraint firstItem="RMJ-m5-2eH" firstAttribute="centerX" secondItem="7bS-z6-HdH" secondAttribute="centerX" id="bAd-jJ-juh"/>
                                     <constraint firstAttribute="trailing" secondItem="IDb-5L-EEC" secondAttribute="trailing" constant="20" id="hmG-X6-6Vx"/>
                                     <constraint firstItem="oRH-bS-TGX" firstAttribute="top" secondItem="Zjv-LP-LRf" secondAttribute="bottom" constant="20" id="obK-yj-7VH"/>
                                     <constraint firstItem="IDb-5L-EEC" firstAttribute="top" secondItem="oRH-bS-TGX" secondAttribute="bottom" constant="20" id="pbu-0i-jv1"/>
@@ -212,11 +248,13 @@
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="amazonButton" destination="RMJ-m5-2eH" id="7T8-ce-YNI"/>
                         <outlet property="authorLabel" destination="oRH-bS-TGX" id="fgq-f6-3ec"/>
                         <outlet property="bookDescriptionLabel" destination="IDb-5L-EEC" id="teh-EF-jKD"/>
                         <outlet property="bookTitle" destination="Zjv-LP-LRf" id="BWq-zN-cwh"/>
                         <outlet property="coverImageHeightConstraint" destination="tOb-2b-QGm" id="l3Z-JR-wI8"/>
                         <outlet property="coverImageView" destination="DJe-r3-ViY" id="OjN-qE-JQV"/>
+                        <outlet property="reviewButton" destination="G3g-YX-E4C" id="OY8-Rn-ukg"/>
                         <outlet property="scrollView" destination="7bS-z6-HdH" id="Kxt-Vd-iCb"/>
                         <outlet property="topHeaderView" destination="cVY-Sl-iRb" id="x0F-Sx-2tR"/>
                     </connections>

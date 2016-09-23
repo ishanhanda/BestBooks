@@ -22,7 +22,7 @@ struct Book {
     var rank: Int
     var rankLastWeek: Int
     var bookReviewURLString: String?
-    var sundayReviewURLSrring: String?
+    var sundayReviewURLSring: String?
     var weeksOnList: Int
     
     var imageURLString: NSURL? {
@@ -82,9 +82,11 @@ extension Book: DictionaryInitializable {
             self.author = nil
         }
         
-        if let reviews = dictionary["reviews"] as? Dictionary<String, String> {
-            self.bookReviewURLString = reviews["book_review_link"]
-            self.sundayReviewURLSrring = reviews["sunday_review_link"]
+        if let reviewsArray = dictionary["reviews"] as? [Dictionary<String, String>] {
+            if let first = reviewsArray.first {
+                self.bookReviewURLString = first["book_review_link"]
+                self.sundayReviewURLSring = first["sunday_review_link"]
+            }
         }
     }
 }
