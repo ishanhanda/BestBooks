@@ -47,7 +47,6 @@
 
 /* Begin PBXFileReference section */
 		13CDD47D68F09EB840B55501 /* Pods_BestBooks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BestBooks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		68FF1AD1823EB81F015F1687 /* Pods_NYT_Best.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NYT_Best.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E30C06841D9429290045FEB7 /* DetailViewControllerTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewControllerTransitioningDelegate.swift; sourceTree = "<group>"; };
 		E30C06861D942A170045FEB7 /* BookDetailAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailAnimator.swift; sourceTree = "<group>"; };
 		E3316A671D931A1500B4A0D7 /* NibLoadable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
@@ -286,7 +285,6 @@
 		F6054F9DD1ACD45F5E02930F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				68FF1AD1823EB81F015F1687 /* Pods_NYT_Best.framework */,
 				13CDD47D68F09EB840B55501 /* Pods_BestBooks.framework */,
 			);
 			name = Frameworks;

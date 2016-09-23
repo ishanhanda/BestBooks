@@ -4,48 +4,20 @@ PODS:
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
   - DZNEmptyDataSet (1.8.1)
-  - FLAnimatedImage (1.0.12)
-  - NVActivityIndicatorView (2.12)
-  - NYTPhotoViewer (1.1.0):
-    - NYTPhotoViewer/AnimatedGifSupport (= 1.1.0)
-    - NYTPhotoViewer/Core (= 1.1.0)
-  - NYTPhotoViewer/AnimatedGifSupport (1.1.0):
-    - FLAnimatedImage (~> 1.0.8)
-    - NYTPhotoViewer/Core
-  - NYTPhotoViewer/Core (1.1.0)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
-  - SVProgressHUD (2.0.3)
 
 DEPENDENCIES:
   - Alamofire (~> 3.0)
   - ChameleonFramework/Swift
   - DZNEmptyDataSet
-  - NVActivityIndicatorView (from `https://github.com/ninjaprox/NVActivityIndicatorView.git`,
-    branch `swift2.3`)
-  - NYTPhotoViewer (~> 1.1.0)
   - SDWebImage (~> 3.8)
-  - SVProgressHUD
-
-EXTERNAL SOURCES:
-  NVActivityIndicatorView:
-    :branch: swift2.3
-    :git: https://github.com/ninjaprox/NVActivityIndicatorView.git
-
-CHECKOUT OPTIONS:
-  NVActivityIndicatorView:
-    :commit: ac4325492550b9ec9516e3a9b6e28b2c07faa1c6
-    :git: https://github.com/ninjaprox/NVActivityIndicatorView.git
 
 SPEC CHECKSUMS:
   Alamofire: b70a7352335f8ea5babd0a923eb7e8eacc67b877
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
-  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
-  NVActivityIndicatorView: de8be03826726ad99cdfacf7fe09e88cbfeef911
-  NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
-  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
 
 COCOAPODS: 0.39.0

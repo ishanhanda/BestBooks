@@ -66,7 +66,7 @@ class BookDetailViewController: UIViewController {
         bookDescriptionLabel.font = UIFont(name: BBFonts.JosefinSlab_SemiBold.rawValue, size: 17)
         
         // Display amazon button only if link exists in model.
-        if let _ = book.amazonProductURLString {
+        if let url = book.amazonProductURLString where url != "" {
             amazonButton.tintColor = UIColor.flatOrangeColor()
             amazonButton.titleLabel?.font = UIFont(name: BBFonts.JosefinSlab_SemiBold.rawValue, size: 14)
         } else {
@@ -74,7 +74,7 @@ class BookDetailViewController: UIViewController {
         }
         
         // Display Review button only if link exists in model.
-        if book.bookReviewURLString != nil || book.sundayReviewURLSring != nil {
+        if (book.bookReviewURLString != nil && book.bookReviewURLString != "") || (book.sundayReviewURLSring != nil && book.bookReviewURLString != "") {
             reviewButton.tintColor = UIColor.lightGrayColor()
             reviewButton.titleLabel?.font = UIFont(name: BBFonts.JosefinSlab_SemiBold.rawValue, size: 14)
         } else {
