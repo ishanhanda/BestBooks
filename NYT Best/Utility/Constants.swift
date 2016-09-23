@@ -18,7 +18,6 @@ let NYTIMES_LIST_PARAM = "list"
 let NYTIMES_LOGO_LINK = "https://developer.nytimes.com"
 
 // MARK: - End points
-
 enum NYTimesApiEndPoints: String {
     case NamesList = "/lists/names.json"
     case BestSellers = "/lists.json"

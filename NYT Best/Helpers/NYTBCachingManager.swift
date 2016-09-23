@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Class to manage caching of api responses.
 class NYTBCachingManager: NSObject {
     
     static let sharedInstance = NYTBCachingManager()
@@ -66,7 +67,7 @@ class NYTBCachingManager: NSObject {
     }
     
     
-    func cachedJSONURL(listName: String?) -> NSURL? {
+    private func cachedJSONURL(listName: String?) -> NSURL? {
         let fileURL = self.createCacheURL(listName)
         
         if NSFileManager.defaultManager().fileExistsAtPath((fileURL.path)!) {
@@ -96,7 +97,6 @@ class NYTBCachingManager: NSObject {
         let expirationDate = NSDate(timeIntervalSinceNow: -self.maxCacheAge)
         
         // Enumerate all of the files in the cache directory.
-        //
         // Removing files that are older than the expiration date.
         var urlsToDelete: [NSURL] = []
         
@@ -161,6 +161,8 @@ class NYTBCachingManager: NSObject {
 }
 
 
+
+// MARK: - Public methods Book Response
 extension NYTBCachingManager {
     func bookResponse(listName: String, completion: (bookResposne: BooksResponse?, error: NSError?, isResponseFromCache: Bool) -> ()) {
         if let url = self.cachedJSONURL(listName) {
@@ -194,7 +196,7 @@ extension NYTBCachingManager {
 }
 
 
-
+// MARK: - Lists Response caching and public methods
 extension NYTBCachingManager {
     private func createAllListsCacheURL() -> NSURL {
         return  self.diskCachePath.URLByAppendingPathComponent(ALL_LISTS)

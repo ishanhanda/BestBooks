@@ -27,19 +27,11 @@
 		E36B76651D9255B400AB06FE /* MainListsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36B76641D9255B400AB06FE /* MainListsTableViewController.swift */; };
 		E36B76681D9257EC00AB06FE /* BestSellerBooksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36B76671D9257EC00AB06FE /* BestSellerBooksTableViewController.swift */; };
 		E36B766A1D92644600AB06FE /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36B76691D92644600AB06FE /* Book.swift */; };
-		E3B60F6D1D94A41500F06E26 /* Cinzel-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F5D1D94A41500F06E26 /* Cinzel-Black.ttf */; };
 		E3B60F6E1D94A41500F06E26 /* Cinzel-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F5E1D94A41500F06E26 /* Cinzel-Bold.ttf */; };
 		E3B60F6F1D94A41500F06E26 /* Cinzel-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F5F1D94A41500F06E26 /* Cinzel-Regular.ttf */; };
 		E3B60F711D94A41500F06E26 /* JosefinSlab-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F621D94A41500F06E26 /* JosefinSlab-Bold.ttf */; };
-		E3B60F721D94A41500F06E26 /* JosefinSlab-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F631D94A41500F06E26 /* JosefinSlab-BoldItalic.ttf */; };
-		E3B60F731D94A41500F06E26 /* JosefinSlab-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F641D94A41500F06E26 /* JosefinSlab-Italic.ttf */; };
-		E3B60F741D94A41500F06E26 /* JosefinSlab-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F651D94A41500F06E26 /* JosefinSlab-Light.ttf */; };
-		E3B60F751D94A41500F06E26 /* JosefinSlab-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F661D94A41500F06E26 /* JosefinSlab-LightItalic.ttf */; };
 		E3B60F761D94A41500F06E26 /* JosefinSlab-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F671D94A41500F06E26 /* JosefinSlab-Regular.ttf */; };
 		E3B60F771D94A41500F06E26 /* JosefinSlab-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F681D94A41500F06E26 /* JosefinSlab-SemiBold.ttf */; };
-		E3B60F781D94A41500F06E26 /* JosefinSlab-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F691D94A41500F06E26 /* JosefinSlab-SemiBoldItalic.ttf */; };
-		E3B60F791D94A41500F06E26 /* JosefinSlab-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F6A1D94A41500F06E26 /* JosefinSlab-Thin.ttf */; };
-		E3B60F7A1D94A41500F06E26 /* JosefinSlab-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F6B1D94A41500F06E26 /* JosefinSlab-ThinItalic.ttf */; };
 		E3CF4D701D926A0400804AB0 /* BooksResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CF4D6F1D926A0400804AB0 /* BooksResponse.swift */; };
 		E3CF4D731D927C9C00804AB0 /* BestsellerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CF4D721D927C9C00804AB0 /* BestsellerTableViewCell.swift */; };
 		E3D12A971D9192AA008538B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D12A961D9192AA008538B2 /* AppDelegate.swift */; };
@@ -76,20 +68,12 @@
 		E36B76641D9255B400AB06FE /* MainListsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainListsTableViewController.swift; sourceTree = "<group>"; };
 		E36B76671D9257EC00AB06FE /* BestSellerBooksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BestSellerBooksTableViewController.swift; sourceTree = "<group>"; };
 		E36B76691D92644600AB06FE /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
-		E3B60F5D1D94A41500F06E26 /* Cinzel-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cinzel-Black.ttf"; sourceTree = "<group>"; };
 		E3B60F5E1D94A41500F06E26 /* Cinzel-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cinzel-Bold.ttf"; sourceTree = "<group>"; };
 		E3B60F5F1D94A41500F06E26 /* Cinzel-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cinzel-Regular.ttf"; sourceTree = "<group>"; };
 		E3B60F601D94A41500F06E26 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
 		E3B60F621D94A41500F06E26 /* JosefinSlab-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-Bold.ttf"; sourceTree = "<group>"; };
-		E3B60F631D94A41500F06E26 /* JosefinSlab-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-BoldItalic.ttf"; sourceTree = "<group>"; };
-		E3B60F641D94A41500F06E26 /* JosefinSlab-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-Italic.ttf"; sourceTree = "<group>"; };
-		E3B60F651D94A41500F06E26 /* JosefinSlab-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-Light.ttf"; sourceTree = "<group>"; };
-		E3B60F661D94A41500F06E26 /* JosefinSlab-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-LightItalic.ttf"; sourceTree = "<group>"; };
 		E3B60F671D94A41500F06E26 /* JosefinSlab-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-Regular.ttf"; sourceTree = "<group>"; };
 		E3B60F681D94A41500F06E26 /* JosefinSlab-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-SemiBold.ttf"; sourceTree = "<group>"; };
-		E3B60F691D94A41500F06E26 /* JosefinSlab-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
-		E3B60F6A1D94A41500F06E26 /* JosefinSlab-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-Thin.ttf"; sourceTree = "<group>"; };
-		E3B60F6B1D94A41500F06E26 /* JosefinSlab-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-ThinItalic.ttf"; sourceTree = "<group>"; };
 		E3B60F6C1D94A41500F06E26 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
 		E3CF4D6F1D926A0400804AB0 /* BooksResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooksResponse.swift; sourceTree = "<group>"; };
 		E3CF4D721D927C9C00804AB0 /* BestsellerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BestsellerTableViewCell.swift; sourceTree = "<group>"; };
@@ -196,7 +180,6 @@
 		E3B60F5C1D94A41500F06E26 /* Cinzel */ = {
 			isa = PBXGroup;
 			children = (
-				E3B60F5D1D94A41500F06E26 /* Cinzel-Black.ttf */,
 				E3B60F5E1D94A41500F06E26 /* Cinzel-Bold.ttf */,
 				E3B60F5F1D94A41500F06E26 /* Cinzel-Regular.ttf */,
 				E3B60F601D94A41500F06E26 /* OFL.txt */,
@@ -208,15 +191,8 @@
 			isa = PBXGroup;
 			children = (
 				E3B60F621D94A41500F06E26 /* JosefinSlab-Bold.ttf */,
-				E3B60F631D94A41500F06E26 /* JosefinSlab-BoldItalic.ttf */,
-				E3B60F641D94A41500F06E26 /* JosefinSlab-Italic.ttf */,
-				E3B60F651D94A41500F06E26 /* JosefinSlab-Light.ttf */,
-				E3B60F661D94A41500F06E26 /* JosefinSlab-LightItalic.ttf */,
 				E3B60F671D94A41500F06E26 /* JosefinSlab-Regular.ttf */,
 				E3B60F681D94A41500F06E26 /* JosefinSlab-SemiBold.ttf */,
-				E3B60F691D94A41500F06E26 /* JosefinSlab-SemiBoldItalic.ttf */,
-				E3B60F6A1D94A41500F06E26 /* JosefinSlab-Thin.ttf */,
-				E3B60F6B1D94A41500F06E26 /* JosefinSlab-ThinItalic.ttf */,
 				E3B60F6C1D94A41500F06E26 /* OFL.txt */,
 			);
 			path = Josefin_Slab;
@@ -378,26 +354,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E3B60F791D94A41500F06E26 /* JosefinSlab-Thin.ttf in Resources */,
-				E3B60F7A1D94A41500F06E26 /* JosefinSlab-ThinItalic.ttf in Resources */,
 				E3D12AA11D9192AA008538B2 /* LaunchScreen.storyboard in Resources */,
-				E3B60F751D94A41500F06E26 /* JosefinSlab-LightItalic.ttf in Resources */,
-				E3B60F721D94A41500F06E26 /* JosefinSlab-BoldItalic.ttf in Resources */,
 				E3D12A9E1D9192AA008538B2 /* Assets.xcassets in Resources */,
 				E359F23B1D93A8B600EF42DC /* Pods-BestBooks.debug.xcconfig in Resources */,
-				E3B60F6D1D94A41500F06E26 /* Cinzel-Black.ttf in Resources */,
 				E3B60F761D94A41500F06E26 /* JosefinSlab-Regular.ttf in Resources */,
-				E3B60F741D94A41500F06E26 /* JosefinSlab-Light.ttf in Resources */,
 				E359F23C1D93A8B600EF42DC /* Pods-BestBooks.release.xcconfig in Resources */,
 				E3B60F771D94A41500F06E26 /* JosefinSlab-SemiBold.ttf in Resources */,
 				E3316A791D935E3D00B4A0D7 /* ISHTopNotificationView.xib in Resources */,
 				E3B60F6E1D94A41500F06E26 /* Cinzel-Bold.ttf in Resources */,
 				E3316A761D935E3D00B4A0D7 /* ISHActivityIndicatorView.xib in Resources */,
-				E3B60F781D94A41500F06E26 /* JosefinSlab-SemiBoldItalic.ttf in Resources */,
 				E3B60F6F1D94A41500F06E26 /* Cinzel-Regular.ttf in Resources */,
 				E3B60F711D94A41500F06E26 /* JosefinSlab-Bold.ttf in Resources */,
 				E3D12A9C1D9192AA008538B2 /* Main.storyboard in Resources */,
-				E3B60F731D94A41500F06E26 /* JosefinSlab-Italic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,11 +8,11 @@
 
 import Foundation
 
+/// Fonts used in application
 enum BBFonts: String {
     case Cinzel_Regular = "Cinzel-Regular"
     case Cinzel_Bold = "Cinzel-Bold"
     case JosefinSlab = "JosefinSlab"
-    case JosefinSlab_Light = "JosefinSlab-Light"
     case JosefinSlab_SemiBold = "JosefinSlab-SemiBold"
     case JosefinSlab_Bold = "JosefinSlab-Bold"
 }

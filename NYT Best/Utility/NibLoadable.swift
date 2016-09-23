@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Protocol to laod UIViews from xib files.
 protocol NibLoadable {}
 
 extension NibLoadable where Self: UIView {

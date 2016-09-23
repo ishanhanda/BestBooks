@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 /// Response instance used to communicate with the api.
 struct AlamofireAPIResponse {
     let errorMsg: String?

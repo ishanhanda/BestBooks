@@ -10,34 +10,46 @@ import UIKit
 import DZNEmptyDataSet
 import SafariServices
 
-class MainListsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MainListsTableViewController: UIViewController {
 
     var listsDataSource = [BookListObject]()
-    
+
     @IBOutlet var footerVEF: UIVisualEffectView!
     @IBOutlet var searchBarContainerView: UIView!
-    
     @IBOutlet var tableView: UITableView!
     
+    /// Falg to check if activity indicator is being displayed on view controller
     var showingAcitvityIndicator = false
     
     var searchController: UISearchController!
     var searchBar: UISearchBar!
+    
+    /// Section headers generated for Indexed sections
     var sectionHeaders: [String]!
+    
+    /// Books to displayed in each section.
     var tableSections: [[BookListObject]]!
+    
+    ///Search results.
     var searchResults: [BookListObject]!
+
+    /// Flag to check if Search is active.
     var isSearching = false
     
+    /// keyboard height used to adjust table view content insets
     var keyBoardHeight: CGFloat = 0
     
+    /// Flag to check if the empty tableview should display message asking for pull to refresh
     var askRefresh = false
     
     var refreshControl: UIRefreshControl!
     
+    /// The current computed content insets for the tableview
     var currentTableInsets: UIEdgeInsets {
         let top = !showingAcitvityIndicator ? topLayoutGuide.length + searchBarContainerView.bounds.height : topLayoutGuide.length + searchBarContainerView.bounds.height + self.heightForNotificationView()
         return UIEdgeInsets(top: top, left: 0, bottom: max(footerVEF.bounds.height, keyBoardHeight), right: 0)
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,38 +73,7 @@ class MainListsTableViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     
-    func refreshControlChanged(refreshControl: UIRefreshControl) {
-        
-        var updating = true
-        if self.listsDataSource.count == 0 { updating = false }
-        
-        NYTBCachingManager.sharedInstance.updateCacheForLists { (listsResponse, error) in
-            if let response = listsResponse where error == nil {
-                self.listsDataSource = response.lists.map({ (bookList) -> BookListObject in
-                    let object = BookListObject()
-                    object.bookList = bookList
-                    object.displayName = bookList.displayName
-                    return object
-                })
-                
-                self.askRefresh = false
-                self.setobjectsInSections(self.listsDataSource)
-            } else if let _ = error {
-                self.askRefresh = true
-            }
-            
-            if error != nil {
-                self.showNotificationView(error?.localizedDescription, style: .Alert, time: 3, animations: nil, completion: nil)
-            } else if updating {
-                self.showNotificationView("List updated", style: .Normal, time: 3, animations: nil, completion: nil)
-            }
-            
-            self.refreshControl.endRefreshing()
-            self.tableView.reloadData()
-        }
-    }
-    
-    
+    // Fetch lists from api and update table view.
     func refresh() {
         let indicator = self.showActivityIndicatorView("Loading...", animations: {
             self.showingAcitvityIndicator = true
@@ -119,6 +100,7 @@ class MainListsTableViewController: UIViewController, UITableViewDelegate, UITab
                 self.setobjectsInSections(self.listsDataSource)
                 self.tableView.reloadData()
                 
+                // If response was loaded from cache. Make request to update cache.
                 if isResponseFromCache {
                     indicator.messageLabel.text = "Updating..."
                     
@@ -155,7 +137,6 @@ class MainListsTableViewController: UIViewController, UITableViewDelegate, UITab
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         tableView.contentInset = currentTableInsets
     }
     
@@ -186,9 +167,192 @@ class MainListsTableViewController: UIViewController, UITableViewDelegate, UITab
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    // MARK: - Button Action Methods
+    
+    @IBAction func nytButtonTapped(sender: AnyObject) {
+        if let url = NSURL(string: NYTIMES_LOGO_LINK) {
+            let safariVC = SFSafariViewController(URL: url, entersReaderIfAvailable: false)
+            presentViewController(safariVC, animated: true, completion: nil)
+        }
+    }
+    
+    func refreshControlChanged(refreshControl: UIRefreshControl) {
+        
+        var updating = true
+        if self.listsDataSource.count == 0 { updating = false }
+        
+        NYTBCachingManager.sharedInstance.updateCacheForLists { (listsResponse, error) in
+            if let response = listsResponse where error == nil {
+                self.listsDataSource = response.lists.map({ (bookList) -> BookListObject in
+                    let object = BookListObject()
+                    object.bookList = bookList
+                    object.displayName = bookList.displayName
+                    return object
+                })
+                
+                self.askRefresh = false
+                self.setobjectsInSections(self.listsDataSource)
+            } else if let _ = error {
+                self.askRefresh = true
+            }
+            
+            if error != nil {
+                self.showNotificationView(error?.localizedDescription, style: .Alert, time: 3, animations: nil, completion: nil)
+            } else if updating {
+                self.showNotificationView("List updated", style: .Normal, time: 3, animations: nil, completion: nil)
+            }
+            
+            self.refreshControl.endRefreshing()
+            self.tableView.reloadData()
+        }
+    }
+}
 
-    // MARK: - Table view data source
 
+// MARK: - ISHShowsTopActivityIndicator protocol Methods
+extension MainListsTableViewController: ISHShowsTopActivityIndicator {
+    func viewOnTopOfNotificationView() -> UIView {
+        return self.searchBarContainerView
+    }
+    
+    func superViewOfNotificationView() -> UIView {
+        return self.view
+    }
+    
+    
+    func heightForNotificationView() -> CGFloat {
+        return 44
+    }
+}
+
+
+// MARK: - Search handling
+extension MainListsTableViewController: UISearchResultsUpdating, UISearchBarDelegate, UISearchControllerDelegate {
+
+    private func setUpSearchController() {
+        self.searchController = UISearchController(searchResultsController: nil)
+        self.searchController.searchResultsUpdater = self
+        self.searchController.delegate = self
+        
+        self.searchController.dimsBackgroundDuringPresentation = false
+        self.searchController.searchBar.delegate = self
+        self.searchController.hidesNavigationBarDuringPresentation = false
+        
+        self.definesPresentationContext = true
+        
+        self.searchBar = self.searchController.searchBar
+        self.searchBar.searchBarStyle = .Minimal
+
+        self.searchBar.frame = self.searchBarContainerView.bounds
+        searchBar.autoresizingMask = .FlexibleWidth
+        self.searchBarContainerView.addSubview(self.searchBar)
+        self.searchBar.sizeToFit()
+        self.searchBar.tintColor = UIColor.purpleColor()
+    }
+    
+    
+    /// Set Book lists in sections for indexed display.
+    private func setobjectsInSections(objects: [BookListObject]) {
+        let selector = #selector(BookListObject.sortingFunction)
+        let sectionTitlesCount = UILocalizedIndexedCollation.currentCollation().sectionTitles.count
+        
+        var mutableSections: [[BookListObject]] = []
+        for _ in 0...sectionTitlesCount {
+            mutableSections.append([BookListObject]())
+        }
+        
+        for object in objects {
+            UILocalizedIndexedCollation.currentCollation()
+            let sectionNumber = UILocalizedIndexedCollation.currentCollation().sectionForObject(object, collationStringSelector: selector)
+            mutableSections[sectionNumber].append(object)
+        }
+        
+        for idx in 0...sectionTitlesCount {
+            let objectsForSection = mutableSections[idx] as [BookListObject]
+            let sortedObjs = UILocalizedIndexedCollation.currentCollation().sortedArrayFromArray(objectsForSection, collationStringSelector: selector) as! [BookListObject]
+            mutableSections.replaceRange(idx...idx, with: [sortedObjs])
+        }
+        
+        //Adding to Data Source if count is greater than zero
+        let localizedHeaders = UILocalizedIndexedCollation.currentCollation().sectionTitles
+        var validHeaders: [String] = []
+        var validSections: [[BookListObject]] = []
+        
+        for idx in 0...sectionTitlesCount {
+            let objectsForSection = mutableSections[idx]
+            if objectsForSection.count > 0 {
+                validHeaders.append(localizedHeaders[idx])
+                validSections.append(objectsForSection)
+            }
+        }
+        
+        self.sectionHeaders = validHeaders
+        self.tableSections = validSections
+        
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            self.tableView.reloadData()
+        }
+    }
+    
+    
+    // MARK: - UISearchControllerDelegate Protocol Functions
+    
+    func didPresentSearchController(searchController: UISearchController) {
+        self.isSearching = true
+        self.tableView.reloadData()
+    }
+    
+    
+    func didDismissSearchController(searchController: UISearchController) {
+        self.isSearching = false
+        self.tableView.reloadData()
+    }
+    
+    // MARK: - ISearchResultsUpdating Protocol Functions
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        let searchText = searchController.searchBar.text
+        var searchResults = self.listsDataSource
+        
+        // strip out all the leading and trailing spaces
+        let strippedString = searchText?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        // break up the search terms (separated by spaces)
+        var searchItems: [String]? = nil
+        
+        if strippedString?.characters.count > 0 {
+            searchItems = strippedString?.componentsSeparatedByString(" ")
+        }
+        
+        var andMatchPredicates: [NSPredicate] = []
+        
+        searchItems?.forEach({ (searchString) -> () in
+            var searchItemsPredicate: [NSPredicate] = []
+            
+            let lhs = NSExpression(forKeyPath: "displayName")   /// searching with book display name
+            let rhs = NSExpression(forConstantValue: searchString)
+            let finalPredicate = NSComparisonPredicate(leftExpression: lhs, rightExpression: rhs, modifier: .DirectPredicateModifier, type: .ContainsPredicateOperatorType, options: .CaseInsensitivePredicateOption)
+            
+            searchItemsPredicate.append(finalPredicate)
+            
+            let orMatchPredicates = NSCompoundPredicate(orPredicateWithSubpredicates: searchItemsPredicate)
+            andMatchPredicates.append(orMatchPredicates)
+        })
+        
+        // match up the Book
+        let finalCompoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: andMatchPredicates)
+        searchResults = searchResults.filter {finalCompoundPredicate.evaluateWithObject($0)}
+        
+        self.searchResults = searchResults
+        self.tableView.reloadData()
+    }
+}
+
+
+// MARK: - Table view data source
+extension MainListsTableViewController: UITableViewDataSource {
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if isSearching {
             return 1
@@ -198,7 +362,8 @@ class MainListsTableViewController: UIViewController, UITableViewDelegate, UITab
             return 0
         }
     }
-
+    
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isSearching {
             return self.searchResults.count
@@ -206,11 +371,10 @@ class MainListsTableViewController: UIViewController, UITableViewDelegate, UITab
             return self.tableSections[section].count
         }
     }
-
+    
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("idMainListsCell", forIndexPath: indexPath) as! MainListsTableViewCell
-
         let list: BookListObject!
         
         if isSearching {
@@ -220,11 +384,13 @@ class MainListsTableViewController: UIViewController, UITableViewDelegate, UITab
         }
         
         cell.textLabel?.text = list.bookList.displayName.uppercaseString
-
         return cell
     }
- 
-    // MARK: -
+}
+
+
+//MARK: - UITableView Delegate Methods
+extension MainListsTableViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let list: BookListObject!
         
@@ -250,7 +416,7 @@ class MainListsTableViewController: UIViewController, UITableViewDelegate, UITab
         return UITableViewAutomaticDimension
     }
     
-
+    
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if (isSearching) {
             return nil
@@ -303,141 +469,6 @@ class MainListsTableViewController: UIViewController, UITableViewDelegate, UITab
 }
 
 
-extension MainListsTableViewController: ISHShowsTopActivityIndicator {
-    func viewOnTopOfNotificationView() -> UIView {
-        return self.searchBarContainerView
-    }
-    
-    func superViewOfNotificationView() -> UIView {
-        return self.view
-    }
-    
-    
-    func heightForNotificationView() -> CGFloat {
-        return 44
-    }
-}
-
-
-extension MainListsTableViewController: UISearchResultsUpdating, UISearchBarDelegate, UISearchControllerDelegate {
-
-    private func setUpSearchController() {
-        self.searchController = UISearchController(searchResultsController: nil)
-        self.searchController.searchResultsUpdater = self
-        self.searchController.delegate = self
-        
-        self.searchController.dimsBackgroundDuringPresentation = false
-        self.searchController.searchBar.delegate = self
-        self.searchController.hidesNavigationBarDuringPresentation = false
-        
-        self.definesPresentationContext = true
-        
-        self.searchBar = self.searchController.searchBar
-        self.searchBar.searchBarStyle = .Minimal
-
-        self.searchBar.frame = self.searchBarContainerView.bounds
-        searchBar.autoresizingMask = .FlexibleWidth
-        self.searchBarContainerView.addSubview(self.searchBar)
-        self.searchBar.sizeToFit()
-        self.searchBar.tintColor = UIColor.purpleColor()
-    }
-    
-    
-    func setobjectsInSections(objects: [BookListObject]) {
-        let selector = #selector(BookListObject.sortingFunction)
-        let sectionTitlesCount = UILocalizedIndexedCollation.currentCollation().sectionTitles.count
-        
-        var mutableSections: [[BookListObject]] = []
-        for _ in 0...sectionTitlesCount {
-            mutableSections.append([BookListObject]())
-        }
-        
-        for object in objects {
-            UILocalizedIndexedCollation.currentCollation()
-            let sectionNumber = UILocalizedIndexedCollation.currentCollation().sectionForObject(object, collationStringSelector: selector)
-            mutableSections[sectionNumber].append(object)
-        }
-        
-        for idx in 0...sectionTitlesCount {
-            let objectsForSection = mutableSections[idx] as [BookListObject]
-            let sortedObjs = UILocalizedIndexedCollation.currentCollation().sortedArrayFromArray(objectsForSection, collationStringSelector: selector) as! [BookListObject]
-            mutableSections.replaceRange(idx...idx, with: [sortedObjs])
-        }
-        
-        //Adding to Data Source if count is greater than zero
-        let localizedHeaders = UILocalizedIndexedCollation.currentCollation().sectionTitles
-        var validHeaders: [String] = []
-        var validSections: [[BookListObject]] = []
-        
-        for idx in 0...sectionTitlesCount {
-            let objectsForSection = mutableSections[idx]
-            if objectsForSection.count > 0 {
-                validHeaders.append(localizedHeaders[idx])
-                validSections.append(objectsForSection)
-            }
-        }
-        
-        self.sectionHeaders = validHeaders
-        self.tableSections = validSections
-        
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            self.tableView.reloadData()
-        }
-    }
-    
-    
-    // MARK: - UISearchControllerDelegate Protocol Functions
-    
-    func didPresentSearchController(searchController: UISearchController) {
-        self.isSearching = true
-        self.tableView.reloadData()
-    }
-    
-    func didDismissSearchController(searchController: UISearchController) {
-        self.isSearching = false
-        self.tableView.reloadData()
-    }
-    
-    // MARK: - ISearchResultsUpdating Protocol Functions
-    
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        let searchText = searchController.searchBar.text
-        var searchResults = self.listsDataSource
-        
-        // strip out all the leading and trailing spaces
-        let strippedString = searchText?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-        // break up the search terms (separated by spaces)
-        var searchItems: [String]? = nil
-        
-        if strippedString?.characters.count > 0 {
-            searchItems = strippedString?.componentsSeparatedByString(" ")
-        }
-        
-        var andMatchPredicates: [NSPredicate] = []
-        
-        searchItems?.forEach({ (searchString) -> () in
-            var searchItemsPredicate: [NSPredicate] = []
-            
-            let lhs = NSExpression(forKeyPath: "displayName")
-            let rhs = NSExpression(forConstantValue: searchString)
-            let finalPredicate = NSComparisonPredicate(leftExpression: lhs, rightExpression: rhs, modifier: .DirectPredicateModifier, type: .ContainsPredicateOperatorType, options: .CaseInsensitivePredicateOption)
-            
-            searchItemsPredicate.append(finalPredicate)
-            
-            let orMatchPredicates = NSCompoundPredicate(orPredicateWithSubpredicates: searchItemsPredicate)
-            andMatchPredicates.append(orMatchPredicates)
-        })
-        
-        // match up the fields of the Product object
-        let finalCompoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: andMatchPredicates)
-        searchResults = searchResults.filter {finalCompoundPredicate.evaluateWithObject($0)}
-        
-        self.searchResults = searchResults
-        self.tableView.reloadData()
-    }
-}
-
-
 // MARK: - Keyboard Notification Functions
 extension MainListsTableViewController {
     
@@ -453,6 +484,7 @@ extension MainListsTableViewController {
 }
 
 
+// MARK: - Empty Data Set Methods
 extension MainListsTableViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
         return UIImage(named: "logo_small")
@@ -484,13 +516,5 @@ extension MainListsTableViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDe
     
     func emptyDataSetShouldAllowScroll(scrollView: UIScrollView!) -> Bool {
         return !refreshControl.refreshing
-    }
-    
-    
-    @IBAction func nytButtonTapped(sender: AnyObject) {
-        if let url = NSURL(string: NYTIMES_LOGO_LINK) {
-            let safariVC = SFSafariViewController(URL: url, entersReaderIfAvailable: false)
-            presentViewController(safariVC, animated: true, completion: nil)
-        }
     }
 }
