@@ -253,8 +253,9 @@ class MainListsTableViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         view.tintColor = UIColor.flatPurpleColorDark()
-        
-        (view as! UITableViewHeaderFooterView).textLabel?.textColor = UIColor.flatWhiteColor()
+        let label = (view as! UITableViewHeaderFooterView).textLabel
+        label?.textColor = UIColor.flatWhiteColor()
+        label?.font = UIFont(name: BBFonts.JosefinSlab_Bold.rawValue, size: 16)
     }
     
     

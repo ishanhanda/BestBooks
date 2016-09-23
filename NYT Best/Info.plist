@@ -2,6 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>JosefinSlab-ThinItalic.ttf</string>
+		<string>JosefinSlab-Thin.ttf</string>
+		<string>JosefinSlab-SemiBoldItalic.ttf</string>
+		<string>JosefinSlab-SemiBold.ttf</string>
+		<string>JosefinSlab-Regular.ttf</string>
+		<string>JosefinSlab-LightItalic.ttf</string>
+		<string>JosefinSlab-Light.ttf</string>
+		<string>JosefinSlab-Italic.ttf</string>
+		<string>JosefinSlab-BoldItalic.ttf</string>
+		<string>JosefinSlab-Bold.ttf</string>
+		<string>Cinzel-Regular.ttf</string>
+		<string>Cinzel-Bold.ttf</string>
+		<string>Cinzel-Black.ttf</string>
+	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>CFBundleDevelopmentRegion</key>

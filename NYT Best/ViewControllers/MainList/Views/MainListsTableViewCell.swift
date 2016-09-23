@@ -15,7 +15,8 @@ class MainListsTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        self.textLabel?.textColor = UIColor.flatPurpleColor()
+        self.textLabel?.textColor = UIColor.flatPlumColorDark()
+        self.textLabel?.font = UIFont(name: BBFonts.Cinzel_Regular.rawValue, size: 16)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

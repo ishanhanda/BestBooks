@@ -126,7 +126,7 @@ class BestSellerBooksTableViewController: UIViewController, UITableViewDataSourc
         let cell = tableView.dequeueReusableCellWithIdentifier("idBestsellerCell", forIndexPath: indexPath) as! BestsellerTableViewCell
         
         let book = booksDataSource[indexPath.row]
-        cell.bookTitleLabel.text = book.title
+        cell.bookTitleLabel.text = book.title.uppercaseString
         
         if let author = book.author {
             cell.setAuthorLabelText(author)

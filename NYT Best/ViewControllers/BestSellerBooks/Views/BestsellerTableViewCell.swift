@@ -22,17 +22,17 @@ class BestsellerTableViewCell: UITableViewCell {
         self.separatorInset = UIEdgeInsetsZero
         self.layoutMargins = UIEdgeInsetsZero
         
-        bookTitleLabel.font = UIFont.systemFontOfSize(18)
-        bookTitleLabel.textColor = UIColor.flatPurpleColor()
+        bookTitleLabel.font = UIFont(name: BBFonts.Cinzel_Regular.rawValue, size: 19)
+        bookTitleLabel.textColor = UIColor.flatPlumColorDark()
         
-        authorLabel.font = UIFont.systemFontOfSize(14)
-        authorLabel.textColor = UIColor.grayColor()
+        authorLabel.font = UIFont(name: BBFonts.JosefinSlab_SemiBold.rawValue, size: 16)
+        authorLabel.textColor = UIColor.flatPlumColorDark()
         
-        rankLabel.font = UIFont.systemFontOfSize(12)
-        rankLabel.textColor = UIColor.grayColor()
+        rankLabel.font = UIFont(name: BBFonts.JosefinSlab_SemiBold.rawValue, size: 15)
+        rankLabel.textColor = UIColor.flatPlumColor()
         
-        weekLabel.font = UIFont.systemFontOfSize(12)
-        weekLabel.textColor = UIColor.grayColor()
+        weekLabel.font = UIFont(name: BBFonts.JosefinSlab_SemiBold.rawValue, size: 14)
+        weekLabel.textColor = UIColor.flatPlumColor()
         
         // Initialization code
     }
@@ -45,12 +45,12 @@ class BestsellerTableViewCell: UITableViewCell {
     
     
     func setAuthorLabelText(text: String) {
-        let author = "Author"
+        let author = "by"
         let authorString = "\(author) \(text)" as NSString
         let authorAttributedText = NSMutableAttributedString(string: authorString as String)
         let range = authorString.rangeOfString(author)
-        authorAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightGrayColor(), range: range)
-        authorAttributedText.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(12), range: range)
+        authorAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.flatPlumColor(), range: range)
+        authorAttributedText.addAttribute(NSFontAttributeName, value: UIFont(name: BBFonts.JosefinSlab.rawValue, size: 13)!, range: range)
         self.authorLabel.attributedText = authorAttributedText
     }
     
@@ -59,7 +59,8 @@ class BestsellerTableViewCell: UITableViewCell {
         let rank = "Rank"
         let rankString = "\(rank) \(value)" as NSString
         let rankAttributedText = NSMutableAttributedString(string: rankString as String)
-        rankAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightGrayColor(), range: rankString.rangeOfString(rank))
+        rankAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.flatPlumColorDark(), range: rankString.rangeOfString(rank))
+        rankAttributedText.addAttribute(NSFontAttributeName, value: UIFont(name: BBFonts.JosefinSlab.rawValue, size: 13)!, range: rankString.rangeOfString(rank))
         self.rankLabel.attributedText = rankAttributedText        
     }
     
@@ -71,7 +72,8 @@ class BestsellerTableViewCell: UITableViewCell {
             let week = value > 1 ? "Weeks on list" : "Week on list"
             let weekString = "\(value) \(week)" as NSString
             let weekAttributedText = NSMutableAttributedString(string: weekString as String)
-            weekAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightGrayColor(), range: weekString.rangeOfString(week))
+            weekAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.flatPlumColorDark(), range: weekString.rangeOfString(week))
+            weekAttributedText.addAttribute(NSFontAttributeName, value: UIFont(name: BBFonts.JosefinSlab.rawValue, size: 13)!, range: weekString.rangeOfString(week))
             weekLabel.attributedText = weekAttributedText
         }
     }

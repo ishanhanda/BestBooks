@@ -16,6 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName : UIFont.init(name: BBFonts.Cinzel_Bold.rawValue, size: 17)!]
+        
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName : UIFont.init(name: BBFonts.JosefinSlab_SemiBold.rawValue, size: 17)!], forState: .Normal)
+        
         return true
     }
 

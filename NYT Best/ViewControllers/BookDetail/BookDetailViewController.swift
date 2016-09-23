@@ -15,6 +15,8 @@ class BookDetailViewController: UIViewController {
     var book: Book!
     var bookImage: UIImage!
     
+    @IBOutlet var topHeaderView: UIView!
+    
     @IBOutlet var coverImageView: UIImageView!
     
     @IBOutlet var bookTitle: UILabel!
@@ -29,6 +31,8 @@ class BookDetailViewController: UIViewController {
     
     let detailViewControllerTransitioningDelegate = DetailViewControllerTransitioningDelegate()
     
+    var gradientLayer: CAGradientLayer!
+    
 //    private var backImageFrame: CGRect!
     
     override func viewDidLoad() {
@@ -37,16 +41,32 @@ class BookDetailViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         coverImageView.image = self.bookImage
-        bookTitle.text = book.title
+        
+        bookTitle.text = book.title.uppercaseString
         bookTitle.textColor = UIColor.flatWhiteColor()
-        authorLabel.text = book.author
-        authorLabel.textColor = UIColor.flatWhiteColor()
+        bookTitle.font = UIFont(name: BBFonts.Cinzel_Bold.rawValue, size: 22)
+        
+        if let authorName = book.author {
+            authorLabel.hidden = false
+            authorLabel.textColor = UIColor.flatWhiteColor()
+            authorLabel.font = UIFont(name: BBFonts.Cinzel_Bold.rawValue, size: 17)
+            
+            let author = "by"
+            let authorString = "\(author) \(authorName)" as NSString
+            let authorAttributedText = NSMutableAttributedString(string: authorString as String)
+            let range = authorString.rangeOfString(author)
+            authorAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.flatGrayColor(), range: range)
+            authorAttributedText.addAttribute(NSFontAttributeName, value: UIFont(name: BBFonts.JosefinSlab.rawValue, size: 16)!, range: range)
+            self.authorLabel.attributedText = authorAttributedText
+        } else {
+            authorLabel.hidden = true
+        }
+        
         bookDescriptionLabel.text = book.description
-        bookDescriptionLabel.textColor = UIColor.flatWhiteColor()
+        bookDescriptionLabel.textColor = UIColor.lightGrayColor()
+        bookDescriptionLabel.font = UIFont(name: BBFonts.JosefinSlab_SemiBold.rawValue, size: 17)
         
         view.backgroundColor = UIColor.blackColor()
-        
-//        self.coverImageHeightConstraint.constant = min(250, (self.bookImage.size.height / UIScreen.mainScreen().scale))
         
         self.transitioningDelegate = detailViewControllerTransitioningDelegate
         self.modalPresentationStyle = .Custom
@@ -63,6 +83,24 @@ class BookDetailViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
+    }
+    
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if self.gradientLayer == nil {
+            gradientLayer = CAGradientLayer()
+            gradientLayer.colors = [UIColor.blackColor().CGColor, UIColor.clearColor().CGColor]
+            gradientLayer.locations = [0.0 , 1.0]
+            gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.3)
+            gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+            gradientLayer.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 80)
+            
+            view.layer.addSublayer(gradientLayer)
+            view.bringSubviewToFront(topHeaderView)
+        }
+        
     }
     
     

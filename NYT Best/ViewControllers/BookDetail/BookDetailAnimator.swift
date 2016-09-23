@@ -11,7 +11,7 @@ import AVFoundation
 
 class BookDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
-    let duration = 0.3
+    let duration = 0.4
     var presenting = true
     var imageOriginFrame = CGRect.zero
     
@@ -57,17 +57,17 @@ class BookDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let selectedCell = fromVC.tableView.cellForRowAtIndexPath(fromVC.tableView.indexPathForSelectedRow!) as! BestsellerTableViewCell
         selectedCell.coverImageView.alpha = 0
         
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animateWithDuration(duration, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
             transitioningImageView.frame = finalImageRect
             toView.alpha = 1
-        }) { (finished) in
-            if finished {
-                toVC.coverImageView.alpha = 1
-                selectedCell.coverImageView.alpha = 1
-                transitioningImageView.removeFromSuperview()
-                transitionContext.completeTransition(true)
-            }
-        }
+            }, completion: { (finished) in
+                if finished {
+                    toVC.coverImageView.alpha = 1
+                    selectedCell.coverImageView.alpha = 1
+                    transitioningImageView.removeFromSuperview()
+                    transitionContext.completeTransition(true)
+                }
+        })
     }
     
     
@@ -95,7 +95,7 @@ class BookDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let selectedCell = toVC.tableView.cellForRowAtIndexPath(previousSelectedIndexPath) as! BestsellerTableViewCell
         selectedCell.coverImageView.alpha = 0
         
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animateWithDuration(duration, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
             transitioningImageView.frame = self.imageOriginFrame
             toView.alpha = 1
         }) { (finished) in

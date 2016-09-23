@@ -19,6 +19,7 @@
 		E359F23B1D93A8B600EF42DC /* Pods-BestBooks.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E359F2391D93A8B600EF42DC /* Pods-BestBooks.debug.xcconfig */; };
 		E359F23C1D93A8B600EF42DC /* Pods-BestBooks.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E359F23A1D93A8B600EF42DC /* Pods-BestBooks.release.xcconfig */; };
 		E359F23F1D9414E500EF42DC /* BookDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359F23E1D9414E500EF42DC /* BookDetailViewController.swift */; };
+		E35AE33E1D94CC6A0079AD84 /* BBFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35AE33D1D94CC6A0079AD84 /* BBFonts.swift */; };
 		E363C7791D91C14C001D239A /* BookList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E363C7781D91C14C001D239A /* BookList.swift */; };
 		E363C77B1D91C9DA001D239A /* DictionaryIntializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E363C77A1D91C9DA001D239A /* DictionaryIntializable.swift */; };
 		E363C77D1D91CD0F001D239A /* ListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E363C77C1D91CD0F001D239A /* ListResponse.swift */; };
@@ -26,6 +27,19 @@
 		E36B76651D9255B400AB06FE /* MainListsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36B76641D9255B400AB06FE /* MainListsTableViewController.swift */; };
 		E36B76681D9257EC00AB06FE /* BestSellerBooksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36B76671D9257EC00AB06FE /* BestSellerBooksTableViewController.swift */; };
 		E36B766A1D92644600AB06FE /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36B76691D92644600AB06FE /* Book.swift */; };
+		E3B60F6D1D94A41500F06E26 /* Cinzel-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F5D1D94A41500F06E26 /* Cinzel-Black.ttf */; };
+		E3B60F6E1D94A41500F06E26 /* Cinzel-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F5E1D94A41500F06E26 /* Cinzel-Bold.ttf */; };
+		E3B60F6F1D94A41500F06E26 /* Cinzel-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F5F1D94A41500F06E26 /* Cinzel-Regular.ttf */; };
+		E3B60F711D94A41500F06E26 /* JosefinSlab-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F621D94A41500F06E26 /* JosefinSlab-Bold.ttf */; };
+		E3B60F721D94A41500F06E26 /* JosefinSlab-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F631D94A41500F06E26 /* JosefinSlab-BoldItalic.ttf */; };
+		E3B60F731D94A41500F06E26 /* JosefinSlab-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F641D94A41500F06E26 /* JosefinSlab-Italic.ttf */; };
+		E3B60F741D94A41500F06E26 /* JosefinSlab-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F651D94A41500F06E26 /* JosefinSlab-Light.ttf */; };
+		E3B60F751D94A41500F06E26 /* JosefinSlab-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F661D94A41500F06E26 /* JosefinSlab-LightItalic.ttf */; };
+		E3B60F761D94A41500F06E26 /* JosefinSlab-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F671D94A41500F06E26 /* JosefinSlab-Regular.ttf */; };
+		E3B60F771D94A41500F06E26 /* JosefinSlab-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F681D94A41500F06E26 /* JosefinSlab-SemiBold.ttf */; };
+		E3B60F781D94A41500F06E26 /* JosefinSlab-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F691D94A41500F06E26 /* JosefinSlab-SemiBoldItalic.ttf */; };
+		E3B60F791D94A41500F06E26 /* JosefinSlab-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F6A1D94A41500F06E26 /* JosefinSlab-Thin.ttf */; };
+		E3B60F7A1D94A41500F06E26 /* JosefinSlab-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3B60F6B1D94A41500F06E26 /* JosefinSlab-ThinItalic.ttf */; };
 		E3CF4D701D926A0400804AB0 /* BooksResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CF4D6F1D926A0400804AB0 /* BooksResponse.swift */; };
 		E3CF4D731D927C9C00804AB0 /* BestsellerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CF4D721D927C9C00804AB0 /* BestsellerTableViewCell.swift */; };
 		E3D12A971D9192AA008538B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D12A961D9192AA008538B2 /* AppDelegate.swift */; };
@@ -54,6 +68,7 @@
 		E359F2391D93A8B600EF42DC /* Pods-BestBooks.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-BestBooks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BestBooks/Pods-BestBooks.debug.xcconfig"; sourceTree = "<group>"; };
 		E359F23A1D93A8B600EF42DC /* Pods-BestBooks.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-BestBooks.release.xcconfig"; path = "Pods/Target Support Files/Pods-BestBooks/Pods-BestBooks.release.xcconfig"; sourceTree = "<group>"; };
 		E359F23E1D9414E500EF42DC /* BookDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailViewController.swift; sourceTree = "<group>"; };
+		E35AE33D1D94CC6A0079AD84 /* BBFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBFonts.swift; sourceTree = "<group>"; };
 		E363C7781D91C14C001D239A /* BookList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookList.swift; sourceTree = "<group>"; };
 		E363C77A1D91C9DA001D239A /* DictionaryIntializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryIntializable.swift; sourceTree = "<group>"; };
 		E363C77C1D91CD0F001D239A /* ListResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListResponse.swift; sourceTree = "<group>"; };
@@ -61,6 +76,21 @@
 		E36B76641D9255B400AB06FE /* MainListsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainListsTableViewController.swift; sourceTree = "<group>"; };
 		E36B76671D9257EC00AB06FE /* BestSellerBooksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BestSellerBooksTableViewController.swift; sourceTree = "<group>"; };
 		E36B76691D92644600AB06FE /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		E3B60F5D1D94A41500F06E26 /* Cinzel-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cinzel-Black.ttf"; sourceTree = "<group>"; };
+		E3B60F5E1D94A41500F06E26 /* Cinzel-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cinzel-Bold.ttf"; sourceTree = "<group>"; };
+		E3B60F5F1D94A41500F06E26 /* Cinzel-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cinzel-Regular.ttf"; sourceTree = "<group>"; };
+		E3B60F601D94A41500F06E26 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
+		E3B60F621D94A41500F06E26 /* JosefinSlab-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-Bold.ttf"; sourceTree = "<group>"; };
+		E3B60F631D94A41500F06E26 /* JosefinSlab-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-BoldItalic.ttf"; sourceTree = "<group>"; };
+		E3B60F641D94A41500F06E26 /* JosefinSlab-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-Italic.ttf"; sourceTree = "<group>"; };
+		E3B60F651D94A41500F06E26 /* JosefinSlab-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-Light.ttf"; sourceTree = "<group>"; };
+		E3B60F661D94A41500F06E26 /* JosefinSlab-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-LightItalic.ttf"; sourceTree = "<group>"; };
+		E3B60F671D94A41500F06E26 /* JosefinSlab-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-Regular.ttf"; sourceTree = "<group>"; };
+		E3B60F681D94A41500F06E26 /* JosefinSlab-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-SemiBold.ttf"; sourceTree = "<group>"; };
+		E3B60F691D94A41500F06E26 /* JosefinSlab-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		E3B60F6A1D94A41500F06E26 /* JosefinSlab-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-Thin.ttf"; sourceTree = "<group>"; };
+		E3B60F6B1D94A41500F06E26 /* JosefinSlab-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-ThinItalic.ttf"; sourceTree = "<group>"; };
+		E3B60F6C1D94A41500F06E26 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
 		E3CF4D6F1D926A0400804AB0 /* BooksResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooksResponse.swift; sourceTree = "<group>"; };
 		E3CF4D721D927C9C00804AB0 /* BestsellerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BestsellerTableViewCell.swift; sourceTree = "<group>"; };
 		E3D12A931D9192AA008538B2 /* BestBooks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BestBooks.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -154,6 +184,44 @@
 			path = BestSellerBooks;
 			sourceTree = "<group>";
 		};
+		E3B60F5B1D94A40000F06E26 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				E3B60F5C1D94A41500F06E26 /* Cinzel */,
+				E3B60F611D94A41500F06E26 /* Josefin_Slab */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		E3B60F5C1D94A41500F06E26 /* Cinzel */ = {
+			isa = PBXGroup;
+			children = (
+				E3B60F5D1D94A41500F06E26 /* Cinzel-Black.ttf */,
+				E3B60F5E1D94A41500F06E26 /* Cinzel-Bold.ttf */,
+				E3B60F5F1D94A41500F06E26 /* Cinzel-Regular.ttf */,
+				E3B60F601D94A41500F06E26 /* OFL.txt */,
+			);
+			path = Cinzel;
+			sourceTree = "<group>";
+		};
+		E3B60F611D94A41500F06E26 /* Josefin_Slab */ = {
+			isa = PBXGroup;
+			children = (
+				E3B60F621D94A41500F06E26 /* JosefinSlab-Bold.ttf */,
+				E3B60F631D94A41500F06E26 /* JosefinSlab-BoldItalic.ttf */,
+				E3B60F641D94A41500F06E26 /* JosefinSlab-Italic.ttf */,
+				E3B60F651D94A41500F06E26 /* JosefinSlab-Light.ttf */,
+				E3B60F661D94A41500F06E26 /* JosefinSlab-LightItalic.ttf */,
+				E3B60F671D94A41500F06E26 /* JosefinSlab-Regular.ttf */,
+				E3B60F681D94A41500F06E26 /* JosefinSlab-SemiBold.ttf */,
+				E3B60F691D94A41500F06E26 /* JosefinSlab-SemiBoldItalic.ttf */,
+				E3B60F6A1D94A41500F06E26 /* JosefinSlab-Thin.ttf */,
+				E3B60F6B1D94A41500F06E26 /* JosefinSlab-ThinItalic.ttf */,
+				E3B60F6C1D94A41500F06E26 /* OFL.txt */,
+			);
+			path = Josefin_Slab;
+			sourceTree = "<group>";
+		};
 		E3CF4D711D927C8600804AB0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -183,6 +251,7 @@
 		E3D12A951D9192AA008538B2 /* NYT Best */ = {
 			isa = PBXGroup;
 			children = (
+				E3B60F5B1D94A40000F06E26 /* Fonts */,
 				E3316A621D9317DA00B4A0D7 /* Views */,
 				E363C7751D91C09F001D239A /* Models */,
 				E3D12AB01D91B24E008538B2 /* ViewControllers */,
@@ -214,6 +283,7 @@
 				E363C77A1D91C9DA001D239A /* DictionaryIntializable.swift */,
 				E36B76601D92541300AB06FE /* Utility.swift */,
 				E3316A671D931A1500B4A0D7 /* NibLoadable.swift */,
+				E35AE33D1D94CC6A0079AD84 /* BBFonts.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -308,13 +378,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3B60F791D94A41500F06E26 /* JosefinSlab-Thin.ttf in Resources */,
+				E3B60F7A1D94A41500F06E26 /* JosefinSlab-ThinItalic.ttf in Resources */,
 				E3D12AA11D9192AA008538B2 /* LaunchScreen.storyboard in Resources */,
+				E3B60F751D94A41500F06E26 /* JosefinSlab-LightItalic.ttf in Resources */,
+				E3B60F721D94A41500F06E26 /* JosefinSlab-BoldItalic.ttf in Resources */,
 				E3D12A9E1D9192AA008538B2 /* Assets.xcassets in Resources */,
 				E359F23B1D93A8B600EF42DC /* Pods-BestBooks.debug.xcconfig in Resources */,
+				E3B60F6D1D94A41500F06E26 /* Cinzel-Black.ttf in Resources */,
+				E3B60F761D94A41500F06E26 /* JosefinSlab-Regular.ttf in Resources */,
+				E3B60F741D94A41500F06E26 /* JosefinSlab-Light.ttf in Resources */,
 				E359F23C1D93A8B600EF42DC /* Pods-BestBooks.release.xcconfig in Resources */,
+				E3B60F771D94A41500F06E26 /* JosefinSlab-SemiBold.ttf in Resources */,
 				E3316A791D935E3D00B4A0D7 /* ISHTopNotificationView.xib in Resources */,
+				E3B60F6E1D94A41500F06E26 /* Cinzel-Bold.ttf in Resources */,
 				E3316A761D935E3D00B4A0D7 /* ISHActivityIndicatorView.xib in Resources */,
+				E3B60F781D94A41500F06E26 /* JosefinSlab-SemiBoldItalic.ttf in Resources */,
+				E3B60F6F1D94A41500F06E26 /* Cinzel-Regular.ttf in Resources */,
+				E3B60F711D94A41500F06E26 /* JosefinSlab-Bold.ttf in Resources */,
 				E3D12A9C1D9192AA008538B2 /* Main.storyboard in Resources */,
+				E3B60F731D94A41500F06E26 /* JosefinSlab-Italic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,6 +463,7 @@
 				E3CF4D701D926A0400804AB0 /* BooksResponse.swift in Sources */,
 				E3CF4D731D927C9C00804AB0 /* BestsellerTableViewCell.swift in Sources */,
 				E3316A781D935E3D00B4A0D7 /* ISHTopNotificationView.swift in Sources */,
+				E35AE33E1D94CC6A0079AD84 /* BBFonts.swift in Sources */,
 				E36B766A1D92644600AB06FE /* Book.swift in Sources */,
 				E3D12AAF1D9197AF008538B2 /* Constants.swift in Sources */,
 				E3D12AAC1D919568008538B2 /* ApiResponse.swift in Sources */,
