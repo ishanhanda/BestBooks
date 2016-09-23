@@ -11,7 +11,15 @@ import Alamofire
 
 class NYTimesAPIWrapper  {
     static let sharedInstance = NYTimesAPIWrapper()
-
+    
+    var NYTIMES_API_KEY: String? {
+        guard let info = NSBundle.mainBundle().infoDictionary else {
+            return nil
+        }
+        
+        return info["nytimes_api_key"] as? String
+    }
+    
     /// Base URL for the New York Times Books api.
     private let baseURL = NYTIMES_BOOKS_API_BASE_URL
 
@@ -66,7 +74,7 @@ extension NYTimesAPIWrapper {
         let urlString = NYTimesApiEndPoints.NamesList.rawValue
         print("Starting List Names request with URL String: \(urlString)")
         
-        let params = [NYTIMES_API_KEY_PARAM: NYTIMES_API_KEY]
+        let params = [NYTIMES_API_KEY_PARAM: NYTIMES_API_KEY ?? ""]
         print("Parameters: \(params)")
         
         let request = Alamofire.request(.GET, self.baseURL + urlString, parameters: params, encoding: .URL)
@@ -80,7 +88,7 @@ extension NYTimesAPIWrapper {
         print("Starting Best Seller request with URL String: \(urlString)")
         
         let params = [
-            NYTIMES_API_KEY_PARAM: NYTIMES_API_KEY,
+            NYTIMES_API_KEY_PARAM: NYTIMES_API_KEY ?? "",
             NYTIMES_LIST_PARAM: listName
         ]
         print("Parameters: \(params)")
