@@ -26,15 +26,33 @@ struct Book {
     var sundayReviewURLSring: String?
     var weeksOnList: Int
     
+    var otherIsbn13: [String]?
     
     /// Computed NSURL to guess the image url for the book from the ISBN number returned from api.
-    var imageURLString: NSURL? {
+    var imageURL: NSURL? {
         if let isbn13 = self.primaryISBN13 {
             if let url = NSURL(string: "https://s1.nyt.com/du/books/images/\(isbn13).jpg") {
                 return url
             } else {
                 return nil
             }
+        } else {
+            return nil
+        }
+    }
+    
+    
+    /// Computed NSURLs to guess the image url for the book from other ISBN numbers returned from api.
+    var otherImageURLs: [NSURL]? {
+        if let otherISBNS = self.otherIsbn13 where otherISBNS.count > 0 {
+            var urls = [NSURL]()
+            otherISBNS.forEach({ (isbn) in
+                if let url = NSURL(string: "https://s1.nyt.com/du/books/images/\(isbn).jpg") {
+                    urls.append(url)
+                }
+            })
+            
+            return urls.count > 0 ? urls : nil
         } else {
             return nil
         }
@@ -74,6 +92,18 @@ extension Book: DictionaryInitializable {
         self.rank = rank
         self.rankLastWeek = rankLastWeek
         self.weeksOnList = weeksOnList
+        
+        if let otherISBNS = dictionary["isbns"] as? [[String: String]] {
+            var isbns = [String]()
+            
+            otherISBNS.forEach({ (aDict) in
+                if let isbn13 = aDict["isbn13"] {
+                    isbns.append(isbn13)
+                }
+            })
+            
+            self.otherIsbn13 = isbns
+        }
         
         self.amazonProductURLString = dictionary["amazon_product_url"] as? String
         self.contributor = detail["contributor"] as? String

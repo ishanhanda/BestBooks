@@ -71,11 +71,38 @@ class BestsellerTableViewCell: UITableViewCell {
     }
     
     
-    func setCoverImage(url: NSURL, placeHolderImage: UIImage) {
-        self.coverImageView.sd_setImageWithURL(url, placeholderImage: placeHolderImage, completed: { (image, error, cacheType, url) in
-            if error == nil && image != nil {
-                self.backgroundColor = UIColor.init(averageColorFromImage: image).colorWithAlphaComponent(0.1)
-            }
-        })
+    func setCoverImage(url: NSURL?, otherURLs: [NSURL]?, placeHolderImage: UIImage) {
+        
+        func setImage(anImageURL: NSURL, completion: (success: Bool) -> ()) {
+            self.coverImageView.sd_setImageWithURL(anImageURL, placeholderImage: placeHolderImage, completed: { (image, error, cacheType, url) in
+                if error == nil && image != nil {
+                    completion(success: true)
+                    self.backgroundColor = UIColor.init(averageColorFromImage: image).colorWithAlphaComponent(0.1)
+                } else {
+                    completion(success: false)
+                }
+            })
+        }
+        
+        var currentURL = 0
+        
+        func tryOtherURLs()  {
+            guard let otherImageUrls = otherURLs else { return }
+            if currentURL == otherImageUrls.count { return }
+            setImage(otherImageUrls[currentURL], completion: { (success) in
+                if success {
+                    return
+                } else {
+                    currentURL += 1
+                    tryOtherURLs()
+                }
+            })
+        }
+        
+        if let aURL = url {
+            setImage(aURL, completion: { (success) in
+                if !success { tryOtherURLs() }
+            })
+        }
     }
 }

@@ -209,9 +209,7 @@ extension BestSellerBooksTableViewController: UITableViewDataSource {
         let placeHolderImage = UIImage(named: "book_cover")!
         cell.backgroundColor = UIColor.init(averageColorFromImage: placeHolderImage).colorWithAlphaComponent(0.1)
         
-        if let imgURL = book.imageURLString {
-            cell.setCoverImage(imgURL, placeHolderImage: placeHolderImage)
-        }
+        cell.setCoverImage(book.imageURL, otherURLs: book.otherImageURLs, placeHolderImage: placeHolderImage)
         
         return cell
     }
