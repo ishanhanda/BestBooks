@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Model to store Books fetched from api
 struct Book {
     var amazonProductURLString: String?
     var bestsellersDate: NSDate
@@ -25,6 +26,8 @@ struct Book {
     var sundayReviewURLSring: String?
     var weeksOnList: Int
     
+    
+    /// Computed NSURL to guess the image url for the book from the ISBN number returned from api.
     var imageURLString: NSURL? {
         if let isbn13 = self.primaryISBN13 {
             if let url = NSURL(string: "https://s1.nyt.com/du/books/images/\(isbn13).jpg") {

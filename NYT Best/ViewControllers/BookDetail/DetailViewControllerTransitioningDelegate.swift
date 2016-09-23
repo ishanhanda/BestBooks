@@ -16,7 +16,6 @@ class DetailViewControllerTransitioningDelegate: NSObject, UIViewControllerTrans
         return animator
     }
     
-    
     func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return animator
     }

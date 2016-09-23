@@ -8,7 +8,7 @@
 
 import Foundation
 
-
+/// Model to store Lists response fetched from api
 struct ListResponse {
     var listCount: Int
     var lists: [BookList]

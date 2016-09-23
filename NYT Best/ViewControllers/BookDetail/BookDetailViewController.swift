@@ -13,34 +13,30 @@ import SafariServices
 class BookDetailViewController: UIViewController {
 
     var book: Book!
+    
+    /// The image of the book that is displayed in the Best Seller list.
     var bookImage: UIImage!
     
+    // MARK: - Outlets
     @IBOutlet var topHeaderView: UIView!
-    
     @IBOutlet var coverImageView: UIImageView!
-    
     @IBOutlet var bookTitle: UILabel!
-    
     @IBOutlet var authorLabel: UILabel!
-    
     @IBOutlet var bookDescriptionLabel: UILabel!
-    
     @IBOutlet var scrollView: UIScrollView!
-    
     @IBOutlet var coverImageHeightConstraint: NSLayoutConstraint!
-    
     @IBOutlet var amazonButton: UIButton!
-    
     @IBOutlet var reviewButton: UIButton!
     
+    /// Transitioning delegate used for custom presentation of this View Controller.
     let detailViewControllerTransitioningDelegate = DetailViewControllerTransitioningDelegate()
     
+    /// Gradient layer added to the top of the view.
     var gradientLayer: CAGradientLayer!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         
         coverImageView.image = self.bookImage
         
@@ -48,6 +44,7 @@ class BookDetailViewController: UIViewController {
         bookTitle.textColor = UIColor.flatWhiteColor()
         bookTitle.font = UIFont(name: BBFonts.Cinzel_Bold.rawValue, size: 22)
         
+        // Display author name label only if it exists in model.
         if let authorName = book.author {
             authorLabel.hidden = false
             authorLabel.textColor = UIColor.flatWhiteColor()
@@ -68,6 +65,7 @@ class BookDetailViewController: UIViewController {
         bookDescriptionLabel.textColor = UIColor.lightGrayColor()
         bookDescriptionLabel.font = UIFont(name: BBFonts.JosefinSlab_SemiBold.rawValue, size: 17)
         
+        // Display amazon button only if link exists in model.
         if let _ = book.amazonProductURLString {
             amazonButton.tintColor = UIColor.flatOrangeColor()
             amazonButton.titleLabel?.font = UIFont(name: BBFonts.JosefinSlab_SemiBold.rawValue, size: 14)
@@ -75,13 +73,13 @@ class BookDetailViewController: UIViewController {
             amazonButton.hidden = true
         }
         
+        // Display Review button only if link exists in model.
         if book.bookReviewURLString != nil || book.sundayReviewURLSring != nil {
             reviewButton.tintColor = UIColor.lightGrayColor()
             reviewButton.titleLabel?.font = UIFont(name: BBFonts.JosefinSlab_SemiBold.rawValue, size: 14)
         } else {
             reviewButton.hidden = true
         }
-        
         
         view.backgroundColor = UIColor.blackColor()
         
@@ -91,14 +89,12 @@ class BookDetailViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
     }
     
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
     }
     
@@ -106,6 +102,7 @@ class BookDetailViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
+        // Adding gradient on top.
         if self.gradientLayer == nil {
             gradientLayer = CAGradientLayer()
             gradientLayer.colors = [UIColor.blackColor().CGColor, UIColor.clearColor().CGColor]
@@ -124,7 +121,6 @@ class BookDetailViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         scrollView.contentInset = UIEdgeInsetsMake(70, 0, 0, 0)
     }
     
@@ -137,10 +133,8 @@ class BookDetailViewController: UIViewController {
     
     // MARK: - Button Action Methods
     
-    
     @IBAction func closeButtonTapped(sender: AnyObject) {
         self.detailViewControllerTransitioningDelegate.animator.presenting = false
-        
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -154,8 +148,8 @@ class BookDetailViewController: UIViewController {
     
     
     @IBAction func readReviewButtonTapped(sender: AnyObject) {
+        // Showing either one of two reviews available
         var urlString = book.bookReviewURLString
-        
         if urlString ==  nil { urlString = book.sundayReviewURLSring }
         
         if let url = NSURL(string: urlString!) {
@@ -174,7 +168,7 @@ class BookDetailViewController: UIViewController {
 }
 
 
-
+// MARK: - Custom presentation
 extension BookDetailViewController {
 
     func presentFromImageRect(imageframe: CGRect, fromVC: BestSellerBooksTableViewController, completion: (() -> Void)? ) {

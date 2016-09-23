@@ -13,22 +13,28 @@ import SafariServices
 import DZNEmptyDataSet
 import AVFoundation
 
-class BestSellerBooksTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class BestSellerBooksTableViewController: UIViewController {
     
     var bookList: BookList!
+    
     var booksDataSource = [Book]()
+    
+    // MARK: - Outlets
     @IBOutlet var orderSegmentControl: UISegmentedControl!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var headerViewVEF: UIVisualEffectView!
     @IBOutlet var footerVEF: UIVisualEffectView!
     @IBOutlet var nytButton: UIButton!
     
+    /// Flag to check if activity indicator is being displayed currently
     var showingAcitvityIndicator = false
     
+    /// The current computed content insets for the tableview
     var currentTableInsets: UIEdgeInsets {
         let top = !self.showingAcitvityIndicator ? topLayoutGuide.length + headerViewVEF.bounds.height : topLayoutGuide.length + headerViewVEF.bounds.height + self.heightForNotificationView()
         return UIEdgeInsets(top: top, left: 0, bottom: footerVEF.bounds.height, right: 0)
     }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,9 +48,15 @@ class BestSellerBooksTableViewController: UIViewController, UITableViewDataSourc
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         
+        self.fetchBooks()
+    }
+    
+    
+    /// Fetch books and update table view.
+    private func fetchBooks() {
         let indicator = self.showActivityIndicatorView("Loading...", animations: {
             self.showingAcitvityIndicator = true
-        }, completion: nil)
+            }, completion: nil)
         
         let hideActivity = {
             self.hideNotificationView(indicator, animations: {
@@ -59,6 +71,7 @@ class BestSellerBooksTableViewController: UIViewController, UITableViewDataSourc
                 self.orderSegmentControl.setEnabled(true, forSegmentAtIndex: 0)
                 self.tableView.reloadData()
                 
+                // If response was loaded from cache. Make request to update cache.
                 if isResponseFromCache {
                     indicator.messageLabel.text = "Updating..."
                     NYTBCachingManager.sharedInstance.updateCacheForBook(self.bookList.listNameEchoed, completion: { (bookResposne, error) in
@@ -109,116 +122,6 @@ class BestSellerBooksTableViewController: UIViewController, UITableViewDataSourc
         // Dispose of any resources that can be recreated.
     }
 
-    // MARK: - Table view data source
-
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return booksDataSource.count
-    }
-
-
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("idBestsellerCell", forIndexPath: indexPath) as! BestsellerTableViewCell
-        
-        let book = booksDataSource[indexPath.row]
-        cell.bookTitleLabel.text = book.title.uppercaseString
-        
-        if let author = book.author {
-            cell.setAuthorLabelText(author)
-            cell.authorLabel.hidden = false
-        } else {
-            cell.authorLabel.hidden = true
-        }
-        
-        cell.setWeekLabelText(book.weeksOnList)
-        cell.setRankLabelText(book.rank)
-        
-        let placeHolderImage = UIImage(named: "book_cover")!
-        cell.backgroundColor = UIColor.init(averageColorFromImage: placeHolderImage).colorWithAlphaComponent(0.1)
-                
-        if let imgURL = book.imageURLString {
-            cell.setCoverImage(imgURL, placeHolderImage: placeHolderImage)
-        }
-        
-        return cell
-    }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-    
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 110
-    }
-    
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
-    }
-    
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let book = booksDataSource[indexPath.row]
-        
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! BestsellerTableViewCell
-        
-        let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("idBookDetailViewController") as! BookDetailViewController
-        detailVC.book = book
-        let image = cell.coverImageView.image!
-        detailVC.bookImage = image
-        
-        let cellImageRect = AVMakeRectWithAspectRatioInsideRect(image.size, cell.coverImageView.frame)
-        let imageRect = cell.contentView.convertRect(cellImageRect, toView: self.view)
-        
-        detailVC.presentFromImageRect(imageRect, fromVC: self, completion: nil)
-    }
     
     // MARK: - Button Actions
     
@@ -246,7 +149,80 @@ class BestSellerBooksTableViewController: UIViewController, UITableViewDataSourc
 }
 
 
+// MARK: - Table view data source Methods
+extension BestSellerBooksTableViewController: UITableViewDataSource {
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return booksDataSource.count
+    }
+    
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("idBestsellerCell", forIndexPath: indexPath) as! BestsellerTableViewCell
+        
+        let book = booksDataSource[indexPath.row]
+        cell.bookTitleLabel.text = book.title.uppercaseString
+        
+        if let author = book.author {
+            cell.setAuthorLabelText(author)
+            cell.authorLabel.hidden = false
+        } else {
+            cell.authorLabel.hidden = true
+        }
+        
+        cell.setWeekLabelText(book.weeksOnList)
+        cell.setRankLabelText(book.rank)
+        
+        let placeHolderImage = UIImage(named: "book_cover")!
+        cell.backgroundColor = UIColor.init(averageColorFromImage: placeHolderImage).colorWithAlphaComponent(0.1)
+        
+        if let imgURL = book.imageURLString {
+            cell.setCoverImage(imgURL, placeHolderImage: placeHolderImage)
+        }
+        
+        return cell
+    }
+}
 
+
+// MARK: - Table View delegate Methods
+extension BestSellerBooksTableViewController: UITableViewDelegate {
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 110
+    }
+    
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let book = booksDataSource[indexPath.row]
+        
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! BestsellerTableViewCell
+        
+        let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("idBookDetailViewController") as! BookDetailViewController
+        detailVC.book = book
+        let image = cell.coverImageView.image!
+        detailVC.bookImage = image
+        
+        // calculate book image frame with respect to self.view
+        let cellImageRect = AVMakeRectWithAspectRatioInsideRect(image.size, cell.coverImageView.frame)
+        let imageRect = cell.contentView.convertRect(cellImageRect, toView: self.view)
+        
+        detailVC.presentFromImageRect(imageRect, fromVC: self, completion: nil)
+    }
+}
+
+
+// MARK: - ISHShowsTopActivityIndicator protocol Methods
 extension BestSellerBooksTableViewController: ISHShowsTopActivityIndicator {
     func viewOnTopOfNotificationView() -> UIView {
         return self.headerViewVEF
@@ -264,6 +240,7 @@ extension BestSellerBooksTableViewController: ISHShowsTopActivityIndicator {
 }
 
 
+// MARK: - Empty Data Set Methods
 extension BestSellerBooksTableViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
         return UIImage(named: "logo_small")

@@ -33,14 +33,6 @@ class BestsellerTableViewCell: UITableViewCell {
         
         weekLabel.font = UIFont(name: BBFonts.JosefinSlab_SemiBold.rawValue, size: 14)
         weekLabel.textColor = UIColor.flatPlumColor()
-        
-        // Initialization code
-    }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     

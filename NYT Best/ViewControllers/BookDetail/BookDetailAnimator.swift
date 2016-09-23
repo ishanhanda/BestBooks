@@ -11,11 +11,18 @@ import AVFoundation
 
 class BookDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
+    /// Duration of presentation.
     let duration = 0.4
+    
+    /// Flag to check if Animator is presenting or dismissing
     var presenting = true
+    
+    /// The frame of the image in the Best sellers list table.
     var imageOriginFrame = CGRect.zero
     
+    /// The index path of the book in the Best sellers list table
     var previousSelectedIndexPath: NSIndexPath!
+    
     
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return duration
@@ -31,6 +38,7 @@ class BookDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     }
     
     
+    /// Presentation for presenting the Detail view
     private func presentingAnimation(transitionContext: UIViewControllerContextTransitioning) {
         let containerView = transitionContext.containerView()!
         let toView = transitionContext.viewForKey(UITransitionContextToViewKey)!
@@ -71,6 +79,7 @@ class BookDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     }
     
     
+    /// Presentation for dismissing the Detail view
     private func dismissingAnimation(transitionContext: UIViewControllerContextTransitioning) {
         let containerView = transitionContext.containerView()!
         let toView = transitionContext.viewForKey(UITransitionContextToViewKey)!
