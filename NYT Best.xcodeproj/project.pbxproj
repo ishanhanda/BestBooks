@@ -16,8 +16,6 @@
 		E3316A781D935E3D00B4A0D7 /* ISHTopNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3316A731D935E3D00B4A0D7 /* ISHTopNotificationView.swift */; };
 		E3316A791D935E3D00B4A0D7 /* ISHTopNotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3316A741D935E3D00B4A0D7 /* ISHTopNotificationView.xib */; };
 		E3316A7C1D937AD600B4A0D7 /* MainListsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3316A7B1D937AD600B4A0D7 /* MainListsTableViewCell.swift */; };
-		E359F23B1D93A8B600EF42DC /* Pods-BestBooks.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E359F2391D93A8B600EF42DC /* Pods-BestBooks.debug.xcconfig */; };
-		E359F23C1D93A8B600EF42DC /* Pods-BestBooks.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E359F23A1D93A8B600EF42DC /* Pods-BestBooks.release.xcconfig */; };
 		E359F23F1D9414E500EF42DC /* BookDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359F23E1D9414E500EF42DC /* BookDetailViewController.swift */; };
 		E35AE33E1D94CC6A0079AD84 /* BBFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35AE33D1D94CC6A0079AD84 /* BBFonts.swift */; };
 		E363C7791D91C14C001D239A /* BookList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E363C7781D91C14C001D239A /* BookList.swift */; };
@@ -320,7 +318,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Ishan Handa";
 				TargetAttributes = {
 					E3D12A921D9192AA008538B2 = {
@@ -354,9 +352,7 @@
 			files = (
 				E3D12AA11D9192AA008538B2 /* LaunchScreen.storyboard in Resources */,
 				E3D12A9E1D9192AA008538B2 /* Assets.xcassets in Resources */,
-				E359F23B1D93A8B600EF42DC /* Pods-BestBooks.debug.xcconfig in Resources */,
 				E3B60F761D94A41500F06E26 /* JosefinSlab-Regular.ttf in Resources */,
-				E359F23C1D93A8B600EF42DC /* Pods-BestBooks.release.xcconfig in Resources */,
 				E3B60F771D94A41500F06E26 /* JosefinSlab-SemiBold.ttf in Resources */,
 				E3316A791D935E3D00B4A0D7 /* ISHTopNotificationView.xib in Resources */,
 				E3B60F6E1D94A41500F06E26 /* Cinzel-Bold.ttf in Resources */,
@@ -484,8 +480,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -530,8 +528,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -550,6 +550,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -559,6 +560,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E359F2391D93A8B600EF42DC /* Pods-BestBooks.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -576,6 +578,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E359F23A1D93A8B600EF42DC /* Pods-BestBooks.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

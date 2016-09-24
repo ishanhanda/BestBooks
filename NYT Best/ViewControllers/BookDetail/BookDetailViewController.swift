@@ -102,20 +102,35 @@ class BookDetailViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        // Adding gradient on top.
         if self.gradientLayer == nil {
-            gradientLayer = CAGradientLayer()
-            gradientLayer.colors = [UIColor.blackColor().CGColor, UIColor.clearColor().CGColor]
-            gradientLayer.locations = [0.0 , 1.0]
-            gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.3)
-            gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
-            gradientLayer.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 80)
-            
-            view.layer.addSublayer(gradientLayer)
-            view.bringSubviewToFront(topHeaderView)
+            addGradient(view.bounds.width)
         }
         
         scrollView.flashScrollIndicators()
+    }
+    
+    
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        
+        if let layer = gradientLayer {
+            layer.removeFromSuperlayer()
+        }
+        
+        // Resizing gradient on top.
+        addGradient(size.width)
+    }
+    
+    
+    private func addGradient(width: CGFloat) {
+        gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [UIColor.blackColor().CGColor, UIColor.clearColor().CGColor]
+        gradientLayer.locations = [0.0 , 1.0]
+        gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.3)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: width, height: 80)
+        
+        view.layer.addSublayer(gradientLayer)
+        view.bringSubviewToFront(topHeaderView)
     }
     
     
