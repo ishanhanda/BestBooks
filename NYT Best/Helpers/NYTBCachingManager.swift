@@ -18,7 +18,7 @@ class NYTBCachingManager: NSObject {
     static let namespace = "default"
     var diskCachePath: NSURL!
     
-    let cacheDirectoryPath: NSURL = NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)[0].URLByAppendingPathComponent(namespace)
+    let cacheDirectoryPath: NSURL = NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)[0].URLByAppendingPathComponent(namespace)!
     
     let fullNamespace = "com.Ishan-Handa.NYT-Best.JSONCache.".stringByAppendingString(namespace)
     
@@ -79,7 +79,7 @@ class NYTBCachingManager: NSObject {
     
     
     private func createCacheURL(listName: String?) -> NSURL {
-        return  self.diskCachePath.URLByAppendingPathComponent((listName?.stringByReplacingOccurrencesOfString("/", withString: "_"))!)
+        return  self.diskCachePath.URLByAppendingPathComponent((listName?.stringByReplacingOccurrencesOfString("/", withString: "_"))!)!
     }
     
     
@@ -199,7 +199,7 @@ extension NYTBCachingManager {
 // MARK: - Lists Response caching and public methods
 extension NYTBCachingManager {
     private func createAllListsCacheURL() -> NSURL {
-        return  self.diskCachePath.URLByAppendingPathComponent(ALL_LISTS)
+        return  self.diskCachePath.URLByAppendingPathComponent(ALL_LISTS)!
     }
     
     

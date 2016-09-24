@@ -40,7 +40,7 @@ class BookDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     /// Presentation for presenting the Detail view
     private func presentingAnimation(transitionContext: UIViewControllerContextTransitioning) {
-        let containerView = transitionContext.containerView()!
+        let containerView = transitionContext.containerView()
         let toView = transitionContext.viewForKey(UITransitionContextToViewKey)!
         
         let toVC = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey) as! BookDetailViewController
@@ -81,7 +81,7 @@ class BookDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     /// Presentation for dismissing the Detail view
     private func dismissingAnimation(transitionContext: UIViewControllerContextTransitioning) {
-        let containerView = transitionContext.containerView()!
+        let containerView = transitionContext.containerView()
         let toView = transitionContext.viewForKey(UITransitionContextToViewKey)!
         
         let toVC = (transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)  as! UINavigationController).viewControllers.last as! BestSellerBooksTableViewController
