@@ -9,30 +9,6 @@
 import UIKit
 import DZNEmptyDataSet
 import SafariServices
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
-
 
 class MainListsTableViewController: UIViewController {
 
@@ -337,16 +313,19 @@ extension MainListsTableViewController: UISearchResultsUpdating, UISearchBarDele
     // MARK: - ISearchResultsUpdating Protocol Functions
     
     func updateSearchResults(for searchController: UISearchController) {
-        let searchText = searchController.searchBar.text
+        guard let searchText = searchController.searchBar.text else {
+            return
+        }
+        
         var searchResults = self.listsDataSource
         
         // strip out all the leading and trailing spaces
-        let strippedString = searchText?.trimmingCharacters(in: CharacterSet.whitespaces)
+        let strippedString = searchText.trimmingCharacters(in: CharacterSet.whitespaces)
         // break up the search terms (separated by spaces)
         var searchItems: [String]? = nil
         
-        if strippedString?.characters.count > 0 {
-            searchItems = strippedString?.components(separatedBy: " ")
+        if strippedString.characters.count > 0 {
+            searchItems = strippedString.components(separatedBy: " ")
         }
         
         var andMatchPredicates: [NSPredicate] = []
