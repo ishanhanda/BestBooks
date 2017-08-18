@@ -9,6 +9,30 @@
 import UIKit
 import DZNEmptyDataSet
 import SafariServices
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class MainListsTableViewController: UIViewController {
 
@@ -62,12 +86,12 @@ class MainListsTableViewController: UIViewController {
         tableView.delegate = self
         tableView.emptyDataSetDelegate = self
         tableView.emptyDataSetSource = self
-        tableView.tableFooterView = UIView(frame: CGRectZero)
-        tableView.sectionIndexColor = UIColor.flatPlumColor()
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
+        tableView.sectionIndexColor = UIColor.flatPlum
         
         refreshControl = UIRefreshControl()
         tableView.addSubview(refreshControl)
-        refreshControl.addTarget(self, action: #selector(self.refreshControlChanged(_:)), forControlEvents: .ValueChanged)
+        refreshControl.addTarget(self, action: #selector(self.refreshControlChanged(_:)), for: .valueChanged)
         
         self.refresh()
     }
@@ -86,7 +110,7 @@ class MainListsTableViewController: UIViewController {
         }
         
         NYTBCachingManager.sharedInstance.listsResponse { (listsResponse, error, isResponseFromCache) in
-            if let response = listsResponse where error == nil {
+            if let response = listsResponse, error == nil {
                 self.listsDataSource = response.lists.map({ (bookList) -> BookListObject in
                     let object = BookListObject()
                     object.bookList = bookList
@@ -104,8 +128,8 @@ class MainListsTableViewController: UIViewController {
                 if isResponseFromCache {
                     indicator.messageLabel.text = "Updating..."
                     
-                    NYTBCachingManager.sharedInstance.updateCacheForLists({ (listsResponse, error) in
-                        if let response = listsResponse where error == nil {
+                    NYTBCachingManager.sharedInstance.updateCacheForLists( { [unowned self] (listsResponse, error) in
+                        if let response = listsResponse, error == nil {
                             self.listsDataSource = response.lists.map({ (bookList) -> BookListObject in
                                 let object = BookListObject()
                                 object.bookList = bookList
@@ -116,8 +140,8 @@ class MainListsTableViewController: UIViewController {
                             self.setobjectsInSections(self.listsDataSource)
                             self.tableView.reloadData()
                         } else {
-                            self.showNotificationView("\(error!.localizedDescription)\nDisplaying cached data.", style: .Alert, time: 3, animations: nil, completion: nil)
-                            print(error)
+                            _ = self.showNotificationView("\(error!.localizedDescription)\nDisplaying cached data.", style: .alert, time: 3, animations: nil, completion: nil)
+                            print(error?.localizedDescription as Any)
                         }
                         
                         hideActivity()
@@ -141,25 +165,25 @@ class MainListsTableViewController: UIViewController {
     }
     
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if let selectedRowIndexPath = tableView.indexPathForSelectedRow {
-            tableView.deselectRowAtIndexPath(selectedRowIndexPath, animated: true)
+            tableView.deselectRow(at: selectedRowIndexPath, animated: true)
         }
         
-        tableView.sendSubviewToBack(refreshControl)
+        tableView.sendSubview(toBack: refreshControl)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
 
 
@@ -171,20 +195,20 @@ class MainListsTableViewController: UIViewController {
     
     // MARK: - Button Action Methods
     
-    @IBAction func nytButtonTapped(sender: AnyObject) {
-        if let url = NSURL(string: NYTIMES_LOGO_LINK) {
-            let safariVC = SFSafariViewController(URL: url, entersReaderIfAvailable: false)
-            presentViewController(safariVC, animated: true, completion: nil)
+    @IBAction func nytButtonTapped(_ sender: AnyObject) {
+        if let url = URL(string: NYTIMES_LOGO_LINK) {
+            let safariVC = SFSafariViewController(url: url, entersReaderIfAvailable: false)
+            present(safariVC, animated: true, completion: nil)
         }
     }
     
-    func refreshControlChanged(refreshControl: UIRefreshControl) {
+    func refreshControlChanged(_ refreshControl: UIRefreshControl) {
         
         var updating = true
         if self.listsDataSource.count == 0 { updating = false }
         
-        NYTBCachingManager.sharedInstance.updateCacheForLists { (listsResponse, error) in
-            if let response = listsResponse where error == nil {
+        NYTBCachingManager.sharedInstance.updateCacheForLists { [unowned self] (listsResponse, error) in
+            if let response = listsResponse, error == nil {
                 self.listsDataSource = response.lists.map({ (bookList) -> BookListObject in
                     let object = BookListObject()
                     object.bookList = bookList
@@ -199,9 +223,9 @@ class MainListsTableViewController: UIViewController {
             }
             
             if error != nil {
-                self.showNotificationView(error?.localizedDescription, style: .Alert, time: 3, animations: nil, completion: nil)
+                _ = self.showNotificationView(error?.localizedDescription, style: .alert, time: 3, animations: nil, completion: nil)
             } else if updating {
-                self.showNotificationView("List updated", style: .Normal, time: 3, animations: nil, completion: nil)
+                _ = self.showNotificationView("List updated", style: .normal, time: 3, animations: nil, completion: nil)
             }
             
             self.refreshControl.endRefreshing()
@@ -231,7 +255,7 @@ extension MainListsTableViewController: ISHShowsTopActivityIndicator {
 // MARK: - Search handling
 extension MainListsTableViewController: UISearchResultsUpdating, UISearchBarDelegate, UISearchControllerDelegate {
 
-    private func setUpSearchController() {
+    fileprivate func setUpSearchController() {
         self.searchController = UISearchController(searchResultsController: nil)
         self.searchController.searchResultsUpdater = self
         self.searchController.delegate = self
@@ -243,20 +267,20 @@ extension MainListsTableViewController: UISearchResultsUpdating, UISearchBarDele
         self.definesPresentationContext = true
         
         self.searchBar = self.searchController.searchBar
-        self.searchBar.searchBarStyle = .Minimal
+        self.searchBar.searchBarStyle = .minimal
 
         self.searchBar.frame = self.searchBarContainerView.bounds
-        searchBar.autoresizingMask = .FlexibleWidth
+        searchBar.autoresizingMask = .flexibleWidth
         self.searchBarContainerView.addSubview(self.searchBar)
         self.searchBar.sizeToFit()
-        self.searchBar.tintColor = UIColor.purpleColor()
+        self.searchBar.tintColor = UIColor.purple
     }
     
     
     /// Set Book lists in sections for indexed display.
-    private func setobjectsInSections(objects: [BookListObject]) {
+    fileprivate func setobjectsInSections(_ objects: [BookListObject]) {
         let selector = #selector(BookListObject.sortingFunction)
-        let sectionTitlesCount = UILocalizedIndexedCollation.currentCollation().sectionTitles.count
+        let sectionTitlesCount = UILocalizedIndexedCollation.current().sectionTitles.count
         
         var mutableSections: [[BookListObject]] = []
         for _ in 0...sectionTitlesCount {
@@ -264,19 +288,19 @@ extension MainListsTableViewController: UISearchResultsUpdating, UISearchBarDele
         }
         
         for object in objects {
-            UILocalizedIndexedCollation.currentCollation()
-            let sectionNumber = UILocalizedIndexedCollation.currentCollation().sectionForObject(object, collationStringSelector: selector)
+            UILocalizedIndexedCollation.current()
+            let sectionNumber = UILocalizedIndexedCollation.current().section(for: object, collationStringSelector: selector)
             mutableSections[sectionNumber].append(object)
         }
         
         for idx in 0...sectionTitlesCount {
             let objectsForSection = mutableSections[idx] as [BookListObject]
-            let sortedObjs = UILocalizedIndexedCollation.currentCollation().sortedArrayFromArray(objectsForSection, collationStringSelector: selector) as! [BookListObject]
-            mutableSections.replaceRange(idx...idx, with: [sortedObjs])
+            let sortedObjs = UILocalizedIndexedCollation.current().sortedArray(from: objectsForSection, collationStringSelector: selector) as! [BookListObject]
+            mutableSections.replaceSubrange(idx...idx, with: [sortedObjs])
         }
         
         //Adding to Data Source if count is greater than zero
-        let localizedHeaders = UILocalizedIndexedCollation.currentCollation().sectionTitles
+        let localizedHeaders = UILocalizedIndexedCollation.current().sectionTitles
         var validHeaders: [String] = []
         var validSections: [[BookListObject]] = []
         
@@ -291,7 +315,7 @@ extension MainListsTableViewController: UISearchResultsUpdating, UISearchBarDele
         self.sectionHeaders = validHeaders
         self.tableSections = validSections
         
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+        DispatchQueue.main.async { () -> Void in
             self.tableView.reloadData()
         }
     }
@@ -299,30 +323,30 @@ extension MainListsTableViewController: UISearchResultsUpdating, UISearchBarDele
     
     // MARK: - UISearchControllerDelegate Protocol Functions
     
-    func didPresentSearchController(searchController: UISearchController) {
+    func didPresentSearchController(_ searchController: UISearchController) {
         self.isSearching = true
         self.tableView.reloadData()
     }
     
     
-    func didDismissSearchController(searchController: UISearchController) {
+    func didDismissSearchController(_ searchController: UISearchController) {
         self.isSearching = false
         self.tableView.reloadData()
     }
     
     // MARK: - ISearchResultsUpdating Protocol Functions
     
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         let searchText = searchController.searchBar.text
         var searchResults = self.listsDataSource
         
         // strip out all the leading and trailing spaces
-        let strippedString = searchText?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        let strippedString = searchText?.trimmingCharacters(in: CharacterSet.whitespaces)
         // break up the search terms (separated by spaces)
         var searchItems: [String]? = nil
         
         if strippedString?.characters.count > 0 {
-            searchItems = strippedString?.componentsSeparatedByString(" ")
+            searchItems = strippedString?.components(separatedBy: " ")
         }
         
         var andMatchPredicates: [NSPredicate] = []
@@ -332,7 +356,7 @@ extension MainListsTableViewController: UISearchResultsUpdating, UISearchBarDele
             
             let lhs = NSExpression(forKeyPath: "displayName")   /// searching with book display name
             let rhs = NSExpression(forConstantValue: searchString)
-            let finalPredicate = NSComparisonPredicate(leftExpression: lhs, rightExpression: rhs, modifier: .DirectPredicateModifier, type: .ContainsPredicateOperatorType, options: .CaseInsensitivePredicateOption)
+            let finalPredicate = NSComparisonPredicate(leftExpression: lhs, rightExpression: rhs, modifier: .direct, type: .contains, options: .caseInsensitive)
             
             searchItemsPredicate.append(finalPredicate)
             
@@ -342,7 +366,7 @@ extension MainListsTableViewController: UISearchResultsUpdating, UISearchBarDele
         
         // match up the Book
         let finalCompoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: andMatchPredicates)
-        searchResults = searchResults.filter {finalCompoundPredicate.evaluateWithObject($0)}
+        searchResults = searchResults.filter {finalCompoundPredicate.evaluate(with: $0)}
         
         self.searchResults = searchResults
         self.tableView.reloadData()
@@ -353,7 +377,7 @@ extension MainListsTableViewController: UISearchResultsUpdating, UISearchBarDele
 // MARK: - Table view data source
 extension MainListsTableViewController: UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         if isSearching {
             return 1
         } else if let sections = self.tableSections {
@@ -364,7 +388,7 @@ extension MainListsTableViewController: UITableViewDataSource {
     }
     
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isSearching {
             return self.searchResults.count
         } else {
@@ -373,8 +397,8 @@ extension MainListsTableViewController: UITableViewDataSource {
     }
     
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("idMainListsCell", forIndexPath: indexPath) as! MainListsTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "idMainListsCell", for: indexPath) as! MainListsTableViewCell
         let list: BookListObject!
         
         if isSearching {
@@ -383,7 +407,7 @@ extension MainListsTableViewController: UITableViewDataSource {
             list = self.tableSections[indexPath.section][indexPath.row]
         }
         
-        cell.textLabel?.text = list.bookList.displayName.uppercaseString
+        cell.textLabel?.text = list.bookList.displayName.uppercased()
         return cell
     }
 }
@@ -391,7 +415,7 @@ extension MainListsTableViewController: UITableViewDataSource {
 
 //MARK: - UITableView Delegate Methods
 extension MainListsTableViewController: UITableViewDelegate {
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let list: BookListObject!
         
         if isSearching {
@@ -400,24 +424,24 @@ extension MainListsTableViewController: UITableViewDelegate {
             list = self.tableSections[indexPath.section][indexPath.row]
         }
         
-        let bestSellerBooksTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("idBestSellerBooksTableViewController") as! BestSellerBooksTableViewController
+        let bestSellerBooksTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "idBestSellerBooksTableViewController") as! BestSellerBooksTableViewController
         bestSellerBooksTableViewController.bookList = list.bookList
         
         self.navigationController?.pushViewController(bestSellerBooksTableViewController, animated: true)
     }
     
     
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 44
     }
     
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
     
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if (isSearching) {
             return nil
         } else {
@@ -426,24 +450,24 @@ extension MainListsTableViewController: UITableViewDelegate {
     }
     
     
-    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        view.tintColor = UIColor.flatPurpleColorDark()
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.tintColor = UIColor.flatPurpleDark
         let label = (view as! UITableViewHeaderFooterView).textLabel
-        label?.textColor = UIColor.flatWhiteColor()
+        label?.textColor = UIColor.flatWhite
         label?.font = UIFont(name: BBFonts.JosefinSlab_Bold.rawValue, size: 16)
     }
     
     
-    func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
+    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         if (isSearching) {
             return nil
         } else {
-            return UILocalizedIndexedCollation.currentCollation().sectionIndexTitles
+            return UILocalizedIndexedCollation.current().sectionIndexTitles
         }
     }
     
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if isSearching {
             return 0
         } else {
@@ -452,7 +476,7 @@ extension MainListsTableViewController: UITableViewDelegate {
     }
     
     
-    func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
+    func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
         var returnVal = index
         
         if returnVal >= self.sectionHeaders.count {
@@ -472,13 +496,13 @@ extension MainListsTableViewController: UITableViewDelegate {
 // MARK: - Keyboard Notification Functions
 extension MainListsTableViewController {
     
-    func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+    func keyboardWillShow(_ notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             keyBoardHeight = keyboardSize.height
         }
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    func keyboardWillHide(_ notification: Notification) {
         keyBoardHeight = 0
     }
 }
@@ -486,35 +510,35 @@ extension MainListsTableViewController {
 
 // MARK: - Empty Data Set Methods
 extension MainListsTableViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
-    func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
+    func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
         return UIImage(named: "logo_small")
     }
     
     
-    func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         return NSAttributedString(string: "BestBooks", attributes: [
-            NSForegroundColorAttributeName : UIColor.flatPlumColor(),
-            NSFontAttributeName: UIFont.systemFontOfSize(20)
+            NSForegroundColorAttributeName : UIColor.flatPlum,
+            NSFontAttributeName: UIFont.systemFont(ofSize: 20)
             ])
     }
     
     
-    func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         let text = askRefresh ? "An error occured. Pull to refresh." : ""
         
         return NSAttributedString(string: text, attributes: [
-            NSForegroundColorAttributeName : UIColor.flatPurpleColor(),
-            NSFontAttributeName: UIFont.systemFontOfSize(14)
+            NSForegroundColorAttributeName : UIColor.flatPurple,
+            NSFontAttributeName: UIFont.systemFont(ofSize: 14)
             ])
     }
     
     
-    func verticalOffsetForEmptyDataSet(scrollView: UIScrollView!) -> CGFloat {
+    func verticalOffset(forEmptyDataSet scrollView: UIScrollView!) -> CGFloat {
         return  -50
     }
     
     
-    func emptyDataSetShouldAllowScroll(scrollView: UIScrollView!) -> Bool {
-        return !refreshControl.refreshing
+    func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView!) -> Bool {
+        return !refreshControl.isRefreshing
     }
 }

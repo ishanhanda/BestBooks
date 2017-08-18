@@ -11,7 +11,7 @@ import Foundation
 /// Model to store Books fetched from api
 struct Book {
     var amazonProductURLString: String?
-    var bestsellersDate: NSDate
+    var bestsellersDate: Date
     var title: String
     var description: String
     var contributor: String?
@@ -19,7 +19,7 @@ struct Book {
     var publisher: String?
     var primaryISBN13: String?
     var primaryISBN10: String?
-    var publishedDate: NSDate
+    var publishedDate: Date
     var rank: Int
     var rankLastWeek: Int
     var bookReviewURLString: String?
@@ -29,9 +29,9 @@ struct Book {
     var otherIsbn13: [String]?
     
     /// Computed NSURL to guess the image url for the book from the ISBN number returned from api.
-    var imageURL: NSURL? {
+    var imageURL: URL? {
         if let isbn13 = self.primaryISBN13 {
-            if let url = NSURL(string: "https://s1.nyt.com/du/books/images/\(isbn13).jpg") {
+            if let url = URL(string: "https://s1.nyt.com/du/books/images/\(isbn13).jpg") {
                 return url
             } else {
                 return nil
@@ -43,11 +43,11 @@ struct Book {
     
     
     /// Computed NSURLs to guess the image url for the book from other ISBN numbers returned from api.
-    var otherImageURLs: [NSURL]? {
-        if let otherISBNS = self.otherIsbn13 where otherISBNS.count > 0 {
-            var urls = [NSURL]()
+    var otherImageURLs: [URL]? {
+        if let otherISBNS = self.otherIsbn13, otherISBNS.count > 0 {
+            var urls = [URL]()
             otherISBNS.forEach({ (isbn) in
-                if let url = NSURL(string: "https://s1.nyt.com/du/books/images/\(isbn).jpg") {
+                if let url = URL(string: "https://s1.nyt.com/du/books/images/\(isbn).jpg") {
                     urls.append(url)
                 }
             })
@@ -65,11 +65,11 @@ extension Book: DictionaryInitializable {
     init?(dictionary: Dictionary<String, AnyObject>) {
         guard let
             bestsellersDate = dictionary["bestsellers_date"] as? String,
-            bookDetails = dictionary["book_details"] as? [Dictionary<String, AnyObject>],
-            publishedDate = dictionary["published_date"] as? String,
-            rank = dictionary["rank"] as? Int,
-            rankLastWeek = dictionary["rank_last_week"] as? Int,
-            weeksOnList = dictionary["weeks_on_list"] as? Int else {
+            let bookDetails = dictionary["book_details"] as? [Dictionary<String, AnyObject>],
+            let publishedDate = dictionary["published_date"] as? String,
+            let rank = dictionary["rank"] as? Int,
+            let rankLastWeek = dictionary["rank_last_week"] as? Int,
+            let weeksOnList = dictionary["weeks_on_list"] as? Int else {
                 return nil
         }
         
@@ -77,18 +77,18 @@ extension Book: DictionaryInitializable {
         
         guard let
             title = detail["title"] as? String,
-            description = detail["description"] as? String else {
+            let description = detail["description"] as? String else {
                 return nil
         }
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYYY-mm-dd"
         
-        self.bestsellersDate = dateFormatter.dateFromString(bestsellersDate)!
-        self.title = title.capitalizedString
+        self.bestsellersDate = dateFormatter.date(from: bestsellersDate)!
+        self.title = title.capitalized
         self.description = description
         self.author = detail["author"] as? String
-        self.publishedDate = dateFormatter.dateFromString(publishedDate)!
+        self.publishedDate = dateFormatter.date(from: publishedDate)!
         self.rank = rank
         self.rankLastWeek = rankLastWeek
         self.weeksOnList = weeksOnList

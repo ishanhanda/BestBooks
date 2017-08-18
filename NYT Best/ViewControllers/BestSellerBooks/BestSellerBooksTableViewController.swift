@@ -42,7 +42,7 @@ class BestSellerBooksTableViewController: UIViewController {
         super.viewDidLoad()
         
         self.title = bookList.displayName
-        tableView.tableFooterView = UIView(frame: CGRectZero)
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -54,7 +54,7 @@ class BestSellerBooksTableViewController: UIViewController {
             self.booksOrder = BooksOrder(rawValue: order)
         } else {
             self.booksOrder = .Rank
-            setUserDefault(K_UD_BOOKS_ORDER, value: self.booksOrder.rawValue)
+            setUserDefault(K_UD_BOOKS_ORDER, value: self.booksOrder.rawValue as AnyObject)
         }
         
         switch self.booksOrder! {
@@ -69,7 +69,7 @@ class BestSellerBooksTableViewController: UIViewController {
     
     
     /// Fetch books and update table view.
-    private func fetchBooks() {
+    fileprivate func fetchBooks() {
         let indicator = self.showActivityIndicatorView("Loading...", animations: {
             self.showingAcitvityIndicator = true
             }, completion: nil)
@@ -81,20 +81,20 @@ class BestSellerBooksTableViewController: UIViewController {
         }
         
         NYTBCachingManager.sharedInstance.bookResponse(bookList.listNameEchoed) { (bookResposne, error, isResponseFromCache) in
-            if let response = bookResposne where error == nil {
+            if let response = bookResposne, error == nil {
                 self.booksDataSource = response.books
                 self.sortBooks()
                 
                 // If response was loaded from cache. Make request to update cache.
                 if isResponseFromCache {
                     indicator.messageLabel.text = "Updating..."
-                    NYTBCachingManager.sharedInstance.updateCacheForBook(self.bookList.listNameEchoed, completion: { (bookResposne, error) in
-                        if let response = bookResposne where error == nil {
-                            self.booksDataSource = response.books
-                            self.sortBooks()
+                    NYTBCachingManager.sharedInstance.updateCacheForBook(self.bookList.listNameEchoed, completion: { [weak self] (bookResposne, error) in
+                        if let response = bookResposne, error == nil {
+                            self?.booksDataSource = response.books
+                            self?.sortBooks()
                         } else {
-                            self.showNotificationView("\(error!.localizedDescription)\nDisplaying cached data.", time: 3, animations: nil, completion: nil)
-                            print(error)
+                            _ = self?.showNotificationView("\(error!.localizedDescription)\nDisplaying cached data.", time: 3, animations: nil, completion: nil)
+                            print(error?.localizedDescription as Any)
                         }
                         
                         hideActivity()
@@ -105,7 +105,7 @@ class BestSellerBooksTableViewController: UIViewController {
                 
             } else if let err = error {
                 self.showSingleAlert(err.localizedDescription) {
-                    self.navigationController?.popViewControllerAnimated(true)
+                    self.navigationController?.popViewController(animated: true)
                 }
                 
                 hideActivity()
@@ -114,11 +114,11 @@ class BestSellerBooksTableViewController: UIViewController {
     }
 
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if let selectedRowIndexPath = tableView.indexPathForSelectedRow {
-            tableView.deselectRowAtIndexPath(selectedRowIndexPath, animated: true)
+            tableView.deselectRow(at: selectedRowIndexPath, animated: true)
         }
     }
     
@@ -137,7 +137,7 @@ class BestSellerBooksTableViewController: UIViewController {
     
     // MARK: - Button Actions
     
-    @IBAction func orderSegmentValueChanged(sender: AnyObject) {
+    @IBAction func orderSegmentValueChanged(_ sender: AnyObject) {
         switch orderSegmentControl.selectedSegmentIndex {
         case 0:
             self.booksOrder = .Rank
@@ -147,7 +147,7 @@ class BestSellerBooksTableViewController: UIViewController {
             break
         }
         
-        setUserDefault(K_UD_BOOKS_ORDER, value: self.booksOrder.rawValue)
+        setUserDefault(K_UD_BOOKS_ORDER, value: self.booksOrder.rawValue as AnyObject)
         self.sortBooks()
     }
     
@@ -155,22 +155,22 @@ class BestSellerBooksTableViewController: UIViewController {
     func sortBooks() {
         switch orderSegmentControl.selectedSegmentIndex {
         case 0:
-            booksDataSource.sortInPlace { $0.rank < $1.rank }
+            booksDataSource.sort { $0.rank < $1.rank }
         case 1:
-            booksDataSource.sortInPlace { $0.weeksOnList > $1.weeksOnList }
+            booksDataSource.sort { $0.weeksOnList > $1.weeksOnList }
         default:
             break
         }
         
         tableView.reloadData()
-        tableView.scrollToRowAtIndexPath(NSIndexPath.init(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: true)
+        tableView.scrollToRow(at: IndexPath.init(row: 0, section: 0), at: .top, animated: true)
     }
     
 
-    @IBAction func nytButtonTapped(sender: AnyObject) {
-        if let url = NSURL(string: NYTIMES_LOGO_LINK) {
-            let safariVC = SFSafariViewController(URL: url, entersReaderIfAvailable: false)
-            presentViewController(safariVC, animated: true, completion: nil)
+    @IBAction func nytButtonTapped(_ sender: AnyObject) {
+        if let url = URL(string: NYTIMES_LOGO_LINK) {
+            let safariVC = SFSafariViewController(url: url, entersReaderIfAvailable: false)
+            present(safariVC, animated: true, completion: nil)
         }
     }
 }
@@ -179,35 +179,35 @@ class BestSellerBooksTableViewController: UIViewController {
 // MARK: - Table view data source Methods
 extension BestSellerBooksTableViewController: UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return booksDataSource.count
     }
     
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("idBestsellerCell", forIndexPath: indexPath) as! BestsellerTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "idBestsellerCell", for: indexPath) as! BestsellerTableViewCell
         
         let book = booksDataSource[indexPath.row]
-        cell.bookTitleLabel.text = book.title.uppercaseString
+        cell.bookTitleLabel.text = book.title.uppercased()
         
         if let author = book.author {
             cell.setAuthorLabelText(author)
-            cell.authorLabel.hidden = false
+            cell.authorLabel.isHidden = false
         } else {
-            cell.authorLabel.hidden = true
+            cell.authorLabel.isHidden = true
         }
         
         cell.setWeekLabelText(book.weeksOnList)
         cell.setRankLabelText(book.rank)
         
         let placeHolderImage = UIImage(named: "book_cover")!
-        cell.backgroundColor = UIColor.init(averageColorFromImage: placeHolderImage).colorWithAlphaComponent(0.1)
+        cell.backgroundColor = UIColor(averageColorFrom: placeHolderImage).withAlphaComponent(0.1)
         
         cell.setCoverImage(book.imageURL, otherURLs: book.otherImageURLs, placeHolderImage: placeHolderImage)
         
@@ -218,29 +218,29 @@ extension BestSellerBooksTableViewController: UITableViewDataSource {
 
 // MARK: - Table View delegate Methods
 extension BestSellerBooksTableViewController: UITableViewDelegate {
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 110
     }
     
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
     
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let book = booksDataSource[indexPath.row]
         
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! BestsellerTableViewCell
+        let cell = tableView.cellForRow(at: indexPath) as! BestsellerTableViewCell
         
-        let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("idBookDetailViewController") as! BookDetailViewController
+        let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "idBookDetailViewController") as! BookDetailViewController
         detailVC.book = book
         let image = cell.coverImageView.image!
         detailVC.bookImage = image
         
         // calculate book image frame with respect to self.view
-        let cellImageRect = AVMakeRectWithAspectRatioInsideRect(image.size, cell.coverImageView.frame)
-        let imageRect = cell.contentView.convertRect(cellImageRect, toView: self.view)
+        let cellImageRect = AVMakeRect(aspectRatio: image.size, insideRect: cell.coverImageView.frame)
+        let imageRect = cell.contentView.convert(cellImageRect, to: self.view)
         
         detailVC.presentFromImageRect(imageRect, fromVC: self, completion: nil)
     }
@@ -267,20 +267,20 @@ extension BestSellerBooksTableViewController: ISHShowsTopActivityIndicator {
 
 // MARK: - Empty Data Set Methods
 extension BestSellerBooksTableViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
-    func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
+    func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
         return UIImage(named: "logo_small")
     }
     
     
-    func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         return NSAttributedString(string: "BestBooks", attributes: [
-            NSForegroundColorAttributeName : UIColor.flatPlumColor(),
-            NSFontAttributeName: UIFont.systemFontOfSize(20)
+            NSForegroundColorAttributeName : UIColor.flatPlum,
+            NSFontAttributeName: UIFont.systemFont(ofSize: 20)
             ])
     }
     
     
-    func verticalOffsetForEmptyDataSet(scrollView: UIScrollView!) -> CGFloat {
+    func verticalOffset(forEmptyDataSet scrollView: UIScrollView!) -> CGFloat {
         return  -50
     }
 }

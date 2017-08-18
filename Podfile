@@ -4,9 +4,9 @@ platform :ios, '9.0'
 use_frameworks!
 
 target 'BestBooks' do
-    pod 'Alamofire', '~> 3.0'
+    pod 'Alamofire', '~> 4.4'
     pod 'SDWebImage', '~>3.8'
-    pod 'ChameleonFramework/Swift'
+    pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
     pod 'DZNEmptyDataSet'
 end
 

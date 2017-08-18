@@ -29,8 +29,8 @@ protocol ISHShowsTopNotificationView {
 
 /// Style for notification view message
 enum ISHNotificationStyle {
-    case Normal
-    case Alert
+    case normal
+    case alert
 }
 
 
@@ -48,7 +48,7 @@ extension ISHShowsTopNotificationView where Self: UIViewController {
      - parameter completion: Block to execute after presentation finishes.
      -returns: The instance of ISHTopNotificationView which was added.
      */
-    func showNotificationView(message: String?, style: ISHNotificationStyle = .Normal , time: NSTimeInterval = -1, animations: (() -> ())? = nil, completion: (() -> ())? = nil) -> ISHTopNotificationView {
+    func showNotificationView(_ message: String?, style: ISHNotificationStyle = .normal , time: TimeInterval = -1, animations: (() -> ())? = nil, completion: (() -> ())? = nil) -> ISHTopNotificationView {
         let topView = viewOnTopOfNotificationView()
         let superView = superViewOfNotificationView()
         let height = heightForNotificationView()
@@ -57,10 +57,10 @@ extension ISHShowsTopNotificationView where Self: UIViewController {
         notificationView.messageLabel.text = message
         
         switch style {
-        case .Alert:
-            notificationView.messageLabel.textColor = UIColor.redColor()
-        case .Normal:
-            notificationView.messageLabel.textColor = UIColor.whiteColor()
+        case .alert:
+            notificationView.messageLabel.textColor = UIColor.red
+        case .normal:
+            notificationView.messageLabel.textColor = UIColor.white
         }
         
         notificationView.translatesAutoresizingMaskIntoConstraints = false
@@ -74,8 +74,8 @@ extension ISHShowsTopNotificationView where Self: UIViewController {
         
         var constraintsToAdd = [NSLayoutConstraint]()
         
-        constraintsToAdd += NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:[topView][notificationView]",
+        constraintsToAdd += NSLayoutConstraint.constraints(
+            withVisualFormat: "V:[topView][notificationView]",
             options: [],
             metrics: nil,
             views: viewsDict
@@ -83,19 +83,19 @@ extension ISHShowsTopNotificationView where Self: UIViewController {
         
         constraintsToAdd += [NSLayoutConstraint(
             item: notificationView,
-            attribute: .Width,
-            relatedBy: .Equal,
+            attribute: .width,
+            relatedBy: .equal,
             toItem: superView,
-            attribute: .Width,
+            attribute: .width,
             multiplier: 1, constant: 0)
         ]
         
         let heightConstraint = NSLayoutConstraint(
             item: notificationView,
-            attribute: .Height,
-            relatedBy: .Equal,
+            attribute: .height,
+            relatedBy: .equal,
             toItem: nil,
-            attribute: .NotAnAttribute,
+            attribute: .notAnAttribute,
             multiplier: 1, constant: 0
         )
         
@@ -107,14 +107,14 @@ extension ISHShowsTopNotificationView where Self: UIViewController {
         
         heightConstraint.constant = height
         notificationView.alpha = 0
-        UIView.animateWithDuration(0.5, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             if let givenAnimations = animations {
                 givenAnimations()
             }
             
             notificationView.alpha = 1
             superView.layoutIfNeeded()
-        }) { (finished) in
+        }, completion: { (finished) in
             
             if let compBlock = completion {
                 compBlock()
@@ -125,7 +125,7 @@ extension ISHShowsTopNotificationView where Self: UIViewController {
                     self.hideNotificationView(notificationView, animations: nil, completion: nil)
                 })
             }
-        }
+        }) 
         
         return notificationView
     }
@@ -137,27 +137,27 @@ extension ISHShowsTopNotificationView where Self: UIViewController {
      - parameter animations: Optional animations to run along with removal of the notification
      - parameter completion: Block to execute after notification is reomved.
      */
-    func hideNotificationView(notificationView: ISHTopNotificationView, animations: (() -> ())? , completion: (() -> ())?) {
+    func hideNotificationView(_ notificationView: ISHTopNotificationView, animations: (() -> ())? , completion: (() -> ())?) {
         
         let superView = superViewOfNotificationView()
         superView.layoutIfNeeded()
         
         notificationView.heightConstraint.constant = 0
-        UIView.animateWithDuration(0.5, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             if let givenAnimations = animations {
                 givenAnimations()
             }
             
             notificationView.alpha = 0
             superView.layoutIfNeeded()
-        }) { (finished) in
+        }, completion: { (finished) in
             if finished {
                 notificationView.removeFromSuperview()
                 if let compBlock = completion {
                     compBlock()
                 }
             }
-        }
+        }) 
     }
 }
 
@@ -179,7 +179,7 @@ extension ISHShowsTopActivityIndicator where Self: UIViewController {
      - parameter completion: Block to execute after presentation finishes.
      -returns: The instance of ISHActivityIndicatorView which was added.
      */
-    func showActivityIndicatorView(message: String?, style: ISHNotificationStyle = .Normal , animations: (() -> ())? , completion: (() -> ())?) -> ISHActivityIndicatorView {
+    func showActivityIndicatorView(_ message: String?, style: ISHNotificationStyle = .normal , animations: (() -> ())? , completion: (() -> ())?) -> ISHActivityIndicatorView {
         let topView = viewOnTopOfNotificationView()
         let superView = superViewOfNotificationView()
         let height = heightForNotificationView()
@@ -189,10 +189,10 @@ extension ISHShowsTopActivityIndicator where Self: UIViewController {
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         
         switch style {
-        case .Alert:
-            activityIndicatorView.messageLabel.textColor = UIColor.redColor()
-        case .Normal:
-            activityIndicatorView.messageLabel.textColor = UIColor.whiteColor()
+        case .alert:
+            activityIndicatorView.messageLabel.textColor = UIColor.red
+        case .normal:
+            activityIndicatorView.messageLabel.textColor = UIColor.white
         }
 
         let viewsDict = [
@@ -204,8 +204,8 @@ extension ISHShowsTopActivityIndicator where Self: UIViewController {
         
         var constraintsToAdd = [NSLayoutConstraint]()
         
-        constraintsToAdd += NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:[topView][activityIndicatorView]",
+        constraintsToAdd += NSLayoutConstraint.constraints(
+            withVisualFormat: "V:[topView][activityIndicatorView]",
             options: [],
             metrics: nil,
             views: viewsDict
@@ -213,19 +213,19 @@ extension ISHShowsTopActivityIndicator where Self: UIViewController {
         
         constraintsToAdd += [NSLayoutConstraint(
             item: activityIndicatorView,
-            attribute: .Width,
-            relatedBy: .Equal,
+            attribute: .width,
+            relatedBy: .equal,
             toItem: superView,
-            attribute: .Width,
+            attribute: .width,
             multiplier: 1, constant: 0)
         ]
         
         let heightConstraint = NSLayoutConstraint(
             item: activityIndicatorView,
-            attribute: .Height,
-            relatedBy: .Equal,
+            attribute: .height,
+            relatedBy: .equal,
             toItem: nil,
-            attribute: .NotAnAttribute,
+            attribute: .notAnAttribute,
             multiplier: 1, constant: 0
         )
         
@@ -237,20 +237,20 @@ extension ISHShowsTopActivityIndicator where Self: UIViewController {
         
         heightConstraint.constant = height
         activityIndicatorView.alpha = 0
-        UIView.animateWithDuration(0.5, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             if let givenAnimations = animations {
                 givenAnimations()
             }
             
             activityIndicatorView.alpha = 1
             superView.layoutIfNeeded()
-        }) { (finished) in
+        }, completion: { (finished) in
             if finished {
                 if let compBlock = completion {
                     compBlock()
                 }
             }
-        }
+        }) 
         
         return activityIndicatorView
     }

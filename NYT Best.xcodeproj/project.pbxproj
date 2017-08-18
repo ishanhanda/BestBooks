@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24611CC9733E831B11FEC8CB /* Pods_BestBooks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E9D5BB6964F3728DF715E97 /* Pods_BestBooks.framework */; };
 		E30C06851D9429290045FEB7 /* DetailViewControllerTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30C06841D9429290045FEB7 /* DetailViewControllerTransitioningDelegate.swift */; };
 		E30C06871D942A170045FEB7 /* BookDetailAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30C06861D942A170045FEB7 /* BookDetailAnimator.swift */; };
 		E3316A681D931A1500B4A0D7 /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3316A671D931A1500B4A0D7 /* NibLoadable.swift */; };
@@ -40,11 +41,11 @@
 		E3D12AAC1D919568008538B2 /* ApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D12AAB1D919568008538B2 /* ApiResponse.swift */; };
 		E3D12AAF1D9197AF008538B2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D12AAE1D9197AF008538B2 /* Constants.swift */; };
 		E3EE82101D92FBA6002EF06C /* NYTBCachingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3EE820F1D92FBA6002EF06C /* NYTBCachingManager.swift */; };
-		FA1EEB42DF2DC8EE92D535EC /* Pods_BestBooks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13CDD47D68F09EB840B55501 /* Pods_BestBooks.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		13CDD47D68F09EB840B55501 /* Pods_BestBooks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BestBooks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E9D5BB6964F3728DF715E97 /* Pods_BestBooks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BestBooks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E05C9B538F4CB38EB5B1EC2B /* Pods-BestBooks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BestBooks.release.xcconfig"; path = "Pods/Target Support Files/Pods-BestBooks/Pods-BestBooks.release.xcconfig"; sourceTree = "<group>"; };
 		E30C06841D9429290045FEB7 /* DetailViewControllerTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewControllerTransitioningDelegate.swift; sourceTree = "<group>"; };
 		E30C06861D942A170045FEB7 /* BookDetailAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailAnimator.swift; sourceTree = "<group>"; };
 		E3316A671D931A1500B4A0D7 /* NibLoadable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
@@ -54,8 +55,6 @@
 		E3316A731D935E3D00B4A0D7 /* ISHTopNotificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISHTopNotificationView.swift; sourceTree = "<group>"; };
 		E3316A741D935E3D00B4A0D7 /* ISHTopNotificationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ISHTopNotificationView.xib; sourceTree = "<group>"; };
 		E3316A7B1D937AD600B4A0D7 /* MainListsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainListsTableViewCell.swift; sourceTree = "<group>"; };
-		E359F2391D93A8B600EF42DC /* Pods-BestBooks.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-BestBooks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BestBooks/Pods-BestBooks.debug.xcconfig"; sourceTree = "<group>"; };
-		E359F23A1D93A8B600EF42DC /* Pods-BestBooks.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-BestBooks.release.xcconfig"; path = "Pods/Target Support Files/Pods-BestBooks/Pods-BestBooks.release.xcconfig"; sourceTree = "<group>"; };
 		E359F23E1D9414E500EF42DC /* BookDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailViewController.swift; sourceTree = "<group>"; };
 		E35AE33D1D94CC6A0079AD84 /* BBFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBFonts.swift; sourceTree = "<group>"; };
 		E363C7781D91C14C001D239A /* BookList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookList.swift; sourceTree = "<group>"; };
@@ -84,6 +83,7 @@
 		E3D12AAB1D919568008538B2 /* ApiResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiResponse.swift; sourceTree = "<group>"; };
 		E3D12AAE1D9197AF008538B2 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E3EE820F1D92FBA6002EF06C /* NYTBCachingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NYTBCachingManager.swift; sourceTree = "<group>"; };
+		FF623C4A01FCB542F0C72557 /* Pods-BestBooks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BestBooks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BestBooks/Pods-BestBooks.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,18 +91,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA1EEB42DF2DC8EE92D535EC /* Pods_BestBooks.framework in Frameworks */,
+				24611CC9733E831B11FEC8CB /* Pods_BestBooks.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9A833F8779B91EADAAFE63EB /* Pods */ = {
+		7CC38657E145D05143C0FF2B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				E359F2391D93A8B600EF42DC /* Pods-BestBooks.debug.xcconfig */,
-				E359F23A1D93A8B600EF42DC /* Pods-BestBooks.release.xcconfig */,
+				FF623C4A01FCB542F0C72557 /* Pods-BestBooks.debug.xcconfig */,
+				E05C9B538F4CB38EB5B1EC2B /* Pods-BestBooks.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -208,8 +208,8 @@
 			children = (
 				E3D12A951D9192AA008538B2 /* NYT Best */,
 				E3D12A941D9192AA008538B2 /* Products */,
-				9A833F8779B91EADAAFE63EB /* Pods */,
-				F6054F9DD1ACD45F5E02930F /* Frameworks */,
+				7CC38657E145D05143C0FF2B /* Pods */,
+				FACE42F9A863DD82572AD57A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -280,10 +280,10 @@
 			path = MainList;
 			sourceTree = "<group>";
 		};
-		F6054F9DD1ACD45F5E02930F /* Frameworks */ = {
+		FACE42F9A863DD82572AD57A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				13CDD47D68F09EB840B55501 /* Pods_BestBooks.framework */,
+				7E9D5BB6964F3728DF715E97 /* Pods_BestBooks.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -295,12 +295,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E3D12AA51D9192AA008538B2 /* Build configuration list for PBXNativeTarget "BestBooks" */;
 			buildPhases = (
-				ABE667D0D9F4BC7A193A5814 /* Check Pods Manifest.lock */,
+				84F0E46159257ABE8C676969 /* [CP] Check Pods Manifest.lock */,
 				E3D12A8F1D9192AA008538B2 /* Sources */,
 				E3D12A901D9192AA008538B2 /* Frameworks */,
 				E3D12A911D9192AA008538B2 /* Resources */,
-				A870765238E13D9317238B8E /* Embed Pods Frameworks */,
-				7573D666A51CC0F839FF3AB5 /* Copy Pods Resources */,
+				AA6BEB81CBA4B8B5E90AD30B /* [CP] Embed Pods Frameworks */,
+				0BE4DBCA89D83268E95C60A5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -323,7 +323,7 @@
 				TargetAttributes = {
 					E3D12A921D9192AA008538B2 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = D78HHLK8B4;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -367,14 +367,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7573D666A51CC0F839FF3AB5 /* Copy Pods Resources */ = {
+		0BE4DBCA89D83268E95C60A5 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -382,34 +382,34 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BestBooks/Pods-BestBooks-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A870765238E13D9317238B8E /* Embed Pods Frameworks */ = {
+		84F0E46159257ABE8C676969 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		AA6BEB81CBA4B8B5E90AD30B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BestBooks/Pods-BestBooks-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		ABE667D0D9F4BC7A193A5814 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -559,39 +559,39 @@
 		};
 		E3D12AA61D9192AA008538B2 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E359F2391D93A8B600EF42DC /* Pods-BestBooks.debug.xcconfig */;
+			baseConfigurationReference = FF623C4A01FCB542F0C72557 /* Pods-BestBooks.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = D78HHLK8B4;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "NYT Best/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Ishan-Handa.NYT-Best";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		E3D12AA71D9192AA008538B2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E359F23A1D93A8B600EF42DC /* Pods-BestBooks.release.xcconfig */;
+			baseConfigurationReference = E05C9B538F4CB38EB5B1EC2B /* Pods-BestBooks.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = D78HHLK8B4;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "NYT Best/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Ishan-Handa.NYT-Best";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

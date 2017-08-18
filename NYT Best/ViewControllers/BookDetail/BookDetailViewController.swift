@@ -40,66 +40,66 @@ class BookDetailViewController: UIViewController {
         
         coverImageView.image = self.bookImage
         
-        bookTitle.text = book.title.uppercaseString
-        bookTitle.textColor = UIColor.flatWhiteColor()
+        bookTitle.text = book.title.uppercased()
+        bookTitle.textColor = UIColor.flatWhite
         bookTitle.font = UIFont(name: BBFonts.Cinzel_Bold.rawValue, size: 22)
         
         // Display author name label only if it exists in model.
         if let authorName = book.author {
-            authorLabel.hidden = false
-            authorLabel.textColor = UIColor.flatWhiteColor()
+            authorLabel.isHidden = false
+            authorLabel.textColor = UIColor.flatWhite
             authorLabel.font = UIFont(name: BBFonts.Cinzel_Bold.rawValue, size: 17)
             
             let author = "by"
             let authorString = "\(author) \(authorName)" as NSString
             let authorAttributedText = NSMutableAttributedString(string: authorString as String)
-            let range = authorString.rangeOfString(author)
-            authorAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.flatGrayColor(), range: range)
+            let range = authorString.range(of: author)
+            authorAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.flatGray, range: range)
             authorAttributedText.addAttribute(NSFontAttributeName, value: UIFont(name: BBFonts.JosefinSlab.rawValue, size: 16)!, range: range)
             self.authorLabel.attributedText = authorAttributedText
         } else {
-            authorLabel.hidden = true
+            authorLabel.isHidden = true
         }
         
         bookDescriptionLabel.text = book.description
-        bookDescriptionLabel.textColor = UIColor.lightGrayColor()
+        bookDescriptionLabel.textColor = UIColor.lightGray
         bookDescriptionLabel.font = UIFont(name: BBFonts.JosefinSlab_SemiBold.rawValue, size: 17)
         
         // Display amazon button only if link exists in model.
-        if let url = book.amazonProductURLString where url != "" {
-            amazonButton.tintColor = UIColor.flatOrangeColor()
+        if let url = book.amazonProductURLString, url != "" {
+            amazonButton.tintColor = UIColor.flatOrange
             amazonButton.titleLabel?.font = UIFont(name: BBFonts.JosefinSlab_SemiBold.rawValue, size: 14)
         } else {
-            amazonButton.hidden = true
+            amazonButton.isHidden = true
         }
         
         // Display Review button only if link exists in model.
         if (book.bookReviewURLString != nil && book.bookReviewURLString != "") || (book.sundayReviewURLSring != nil && book.bookReviewURLString != "") {
-            reviewButton.tintColor = UIColor.lightGrayColor()
+            reviewButton.tintColor = UIColor.lightGray
             reviewButton.titleLabel?.font = UIFont(name: BBFonts.JosefinSlab_SemiBold.rawValue, size: 14)
         } else {
-            reviewButton.hidden = true
+            reviewButton.isHidden = true
         }
         
-        view.backgroundColor = UIColor.blackColor()
+        view.backgroundColor = UIColor.black
         
         self.transitioningDelegate = detailViewControllerTransitioningDelegate
-        self.modalPresentationStyle = .Custom
+        self.modalPresentationStyle = .custom
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
     }
     
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
     }
     
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         if self.gradientLayer == nil {
@@ -110,7 +110,7 @@ class BookDetailViewController: UIViewController {
     }
     
     
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         
         if let layer = gradientLayer {
             layer.removeFromSuperlayer()
@@ -121,16 +121,16 @@ class BookDetailViewController: UIViewController {
     }
     
     
-    private func addGradient(width: CGFloat) {
+    fileprivate func addGradient(_ width: CGFloat) {
         gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [UIColor.blackColor().CGColor, UIColor.clearColor().CGColor]
+        gradientLayer.colors = [UIColor.black.cgColor, UIColor.clear.cgColor]
         gradientLayer.locations = [0.0 , 1.0]
         gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.3)
         gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
         gradientLayer.frame = CGRect(x: 0, y: 0, width: width, height: 80)
         
         view.layer.addSublayer(gradientLayer)
-        view.bringSubviewToFront(topHeaderView)
+        view.bringSubview(toFront: topHeaderView)
     }
     
     
@@ -148,36 +148,36 @@ class BookDetailViewController: UIViewController {
     
     // MARK: - Button Action Methods
     
-    @IBAction func closeButtonTapped(sender: AnyObject) {
+    @IBAction func closeButtonTapped(_ sender: AnyObject) {
         self.detailViewControllerTransitioningDelegate.animator.presenting = false
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     
-    @IBAction func nytButtonTapped(sender: AnyObject) {
-        if let url = NSURL(string: NYTIMES_LOGO_LINK) {
-            let safariVC = SFSafariViewController(URL: url, entersReaderIfAvailable: false)
-            presentViewController(safariVC, animated: true, completion: nil)
+    @IBAction func nytButtonTapped(_ sender: AnyObject) {
+        if let url = URL(string: NYTIMES_LOGO_LINK) {
+            let safariVC = SFSafariViewController(url: url, entersReaderIfAvailable: false)
+            present(safariVC, animated: true, completion: nil)
         }
     }
     
     
-    @IBAction func readReviewButtonTapped(sender: AnyObject) {
+    @IBAction func readReviewButtonTapped(_ sender: AnyObject) {
         // Showing either one of two reviews available
         var urlString = book.bookReviewURLString
         if urlString ==  nil { urlString = book.sundayReviewURLSring }
         
-        if let url = NSURL(string: urlString!) {
-            let safariVC = SFSafariViewController(URL: url, entersReaderIfAvailable: false)
-            presentViewController(safariVC, animated: true, completion: nil)
+        if let url = URL(string: urlString!) {
+            let safariVC = SFSafariViewController(url: url, entersReaderIfAvailable: false)
+            present(safariVC, animated: true, completion: nil)
         }
     }
     
     
-    @IBAction func buyButtonTapped(sender: AnyObject) {
-        if let url = NSURL(string: book.amazonProductURLString!) {
-            let safariVC = SFSafariViewController(URL: url, entersReaderIfAvailable: false)
-            presentViewController(safariVC, animated: true, completion: nil)
+    @IBAction func buyButtonTapped(_ sender: AnyObject) {
+        if let url = URL(string: book.amazonProductURLString!) {
+            let safariVC = SFSafariViewController(url: url, entersReaderIfAvailable: false)
+            present(safariVC, animated: true, completion: nil)
         }
     }
 }
@@ -186,11 +186,11 @@ class BookDetailViewController: UIViewController {
 // MARK: - Custom presentation
 extension BookDetailViewController {
 
-    func presentFromImageRect(imageframe: CGRect, fromVC: BestSellerBooksTableViewController, completion: (() -> Void)? ) {
+    func presentFromImageRect(_ imageframe: CGRect, fromVC: BestSellerBooksTableViewController, completion: (() -> Void)? ) {
         self.detailViewControllerTransitioningDelegate.animator.imageOriginFrame = imageframe
         self.detailViewControllerTransitioningDelegate.animator.presenting = true
         self.detailViewControllerTransitioningDelegate.animator.previousSelectedIndexPath = fromVC.tableView.indexPathForSelectedRow!
-        fromVC.presentViewController(self, animated: true) {
+        fromVC.present(self, animated: true) {
             if let givenCompletiton = completion {
                 givenCompletiton()
             }

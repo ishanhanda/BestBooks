@@ -21,15 +21,15 @@ class BookDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     var imageOriginFrame = CGRect.zero
     
     /// The index path of the book in the Best sellers list table
-    var previousSelectedIndexPath: NSIndexPath!
+    var previousSelectedIndexPath: IndexPath!
     
     
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return duration
     }
     
     
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         if presenting {
              presentingAnimation(transitionContext)
         } else {
@@ -39,21 +39,21 @@ class BookDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     
     /// Presentation for presenting the Detail view
-    private func presentingAnimation(transitionContext: UIViewControllerContextTransitioning) {
-        let containerView = transitionContext.containerView()
-        let toView = transitionContext.viewForKey(UITransitionContextToViewKey)!
+    fileprivate func presentingAnimation(_ transitionContext: UIViewControllerContextTransitioning) {
+        let containerView = transitionContext.containerView
+        let toView = transitionContext.view(forKey: UITransitionContextViewKey.to)!
         
-        let toVC = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey) as! BookDetailViewController
+        let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) as! BookDetailViewController
         
-        let fromVC = (transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey) as! UINavigationController).viewControllers.last as! BestSellerBooksTableViewController
+        let fromVC = (transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from) as! UINavigationController).viewControllers.last as! BestSellerBooksTableViewController
         
         let image = toVC.bookImage
         
-        let imageRect = AVMakeRectWithAspectRatioInsideRect(toVC.bookImage.size, toVC.coverImageView.frame)
-        var finalImageRect = toVC.coverImageView.superview!.convertRect(imageRect, toView: toVC.view)
+        let imageRect = AVMakeRect(aspectRatio: toVC.bookImage.size, insideRect: toVC.coverImageView.frame)
+        var finalImageRect = toVC.coverImageView.superview!.convert(imageRect, to: toVC.view)
         finalImageRect.origin.y += 70
         
-        finalImageRect.origin.x = (UIScreen.mainScreen().bounds.width - finalImageRect.size.width) / 2
+        finalImageRect.origin.x = (UIScreen.main.bounds.width - finalImageRect.size.width) / 2
         let transitioningImageView = UIImageView(image: image)
         transitioningImageView.frame = imageOriginFrame
         
@@ -62,10 +62,10 @@ class BookDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         
         containerView.addSubview(toView)
         containerView.addSubview(transitioningImageView)
-        let selectedCell = fromVC.tableView.cellForRowAtIndexPath(fromVC.tableView.indexPathForSelectedRow!) as! BestsellerTableViewCell
+        let selectedCell = fromVC.tableView.cellForRow(at: fromVC.tableView.indexPathForSelectedRow!) as! BestsellerTableViewCell
         selectedCell.coverImageView.alpha = 0
         
-        UIView.animateWithDuration(duration, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+        UIView.animate(withDuration: duration, delay: 0, options: UIViewAnimationOptions(), animations: {
             transitioningImageView.frame = finalImageRect
             toView.alpha = 1
             }, completion: { (finished) in
@@ -80,19 +80,19 @@ class BookDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     
     /// Presentation for dismissing the Detail view
-    private func dismissingAnimation(transitionContext: UIViewControllerContextTransitioning) {
-        let containerView = transitionContext.containerView()
-        let toView = transitionContext.viewForKey(UITransitionContextToViewKey)!
+    fileprivate func dismissingAnimation(_ transitionContext: UIViewControllerContextTransitioning) {
+        let containerView = transitionContext.containerView
+        let toView = transitionContext.view(forKey: UITransitionContextViewKey.to)!
         
-        let toVC = (transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)  as! UINavigationController).viewControllers.last as! BestSellerBooksTableViewController
+        let toVC = (transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)  as! UINavigationController).viewControllers.last as! BestSellerBooksTableViewController
         toView.frame = containerView.frame
         
-        let fromVC = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey) as! BookDetailViewController
+        let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from) as! BookDetailViewController
         
         let image = fromVC.bookImage
         
-        let imageRect = AVMakeRectWithAspectRatioInsideRect(fromVC.bookImage.size, fromVC.coverImageView.frame)
-        let originImageRect = fromVC.coverImageView.superview!.convertRect(imageRect, toView: toVC.view)
+        let imageRect = AVMakeRect(aspectRatio: fromVC.bookImage.size, insideRect: fromVC.coverImageView.frame)
+        let originImageRect = fromVC.coverImageView.superview!.convert(imageRect, to: toVC.view)
         
         let transitioningImageView = UIImageView(image: image)
         transitioningImageView.frame = originImageRect
@@ -104,15 +104,15 @@ class BookDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         containerView.addSubview(transitioningImageView)
         
         // Scroll table to selectedIndexPath so that the cellForRowAtIndexPath does not return nil
-        toVC.tableView.scrollToRowAtIndexPath(previousSelectedIndexPath, atScrollPosition: .Top, animated: false)
-        let selectedCell = toVC.tableView.cellForRowAtIndexPath(previousSelectedIndexPath) as! BestsellerTableViewCell
+        toVC.tableView.scrollToRow(at: previousSelectedIndexPath, at: .top, animated: false)
+        let selectedCell = toVC.tableView.cellForRow(at: previousSelectedIndexPath) as! BestsellerTableViewCell
         selectedCell.coverImageView.alpha = 0
         
         // Calculate final rect
-        let cellImageRect = AVMakeRectWithAspectRatioInsideRect(image.size, selectedCell.coverImageView.frame)
-        let finalImageRect = selectedCell.contentView.convertRect(cellImageRect, toView: toView)
+        let cellImageRect = AVMakeRect(aspectRatio: (image?.size)!, insideRect: selectedCell.coverImageView.frame)
+        let finalImageRect = selectedCell.contentView.convert(cellImageRect, to: toView)
             
-        UIView.animateWithDuration(duration, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+        UIView.animate(withDuration: duration, delay: 0, options: UIViewAnimationOptions(), animations: {
             transitioningImageView.frame = finalImageRect
             toView.alpha = 1
         }) { (finished) in

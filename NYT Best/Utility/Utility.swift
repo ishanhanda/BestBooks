@@ -16,13 +16,9 @@ import UIKit
  - parameter delay: Time in seconds
  - parameter closure: Closure to execute after delay
  */
-func delay(time delay:Double, closure:()->()) {
-    dispatch_after(
-        dispatch_time(
-            DISPATCH_TIME_NOW,
-            Int64(delay * Double(NSEC_PER_SEC))
-        ),
-        dispatch_get_main_queue(), closure)
+func delay(time delay:Double, closure:@escaping ()->()) {
+    DispatchQueue.main.asyncAfter(
+        deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
 }
 
 
@@ -36,51 +32,51 @@ extension UIViewController {
      - parameter buttonTitle: Title for Button
      - parameter action: block to execute on button click.
      */
-    func showSingleAlert(message: String?, title: String? = "Error", buttonTitle: String? = "OK", action: (Void -> Void)? = nil) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+    func showSingleAlert(_ message: String?, title: String? = "Error", buttonTitle: String? = "OK", action: ((Void) -> Void)? = nil) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        let okAction = UIAlertAction(title: buttonTitle, style: .Default) { (alertAction) -> Void in
+        let okAction = UIAlertAction(title: buttonTitle, style: .default) { (alertAction) -> Void in
             if let someAction = action { someAction() }
         }
         
         alert.addAction(okAction)
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
 
 // MARK: - UITableView extension helpers
 extension UITableView {
-    func indexPathForView(view: AnyObject) -> NSIndexPath? {
-        let originInTableView = self.convertPoint(CGPointZero, fromView: (view as! UIView))
-        return self.indexPathForRowAtPoint(originInTableView)
+    func indexPathForView(_ view: AnyObject) -> IndexPath? {
+        let originInTableView = self.convert(CGPoint.zero, from: (view as! UIView))
+        return self.indexPathForRow(at: originInTableView)
     }
 }
 
 
 // MARK: - User Default Helpers
 
-public func setUserDefault(key: String, value: AnyObject) {
-    let userDefaults = NSUserDefaults.standardUserDefaults()
+public func setUserDefault(_ key: String, value: AnyObject) {
+    let userDefaults = UserDefaults.standard
     userDefaults.setValue(value, forKey: key)
     userDefaults.synchronize()
 }
 
 
-public func setUserDefault(key: String, forBoolValue value: Bool) {
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    userDefaults.setBool(value, forKey: key)
+public func setUserDefault(_ key: String, forBoolValue value: Bool) {
+    let userDefaults = UserDefaults.standard
+    userDefaults.set(value, forKey: key)
     userDefaults.synchronize()
 }
 
 
-public func getUserDefault(key: String) -> AnyObject? {
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    return userDefaults.valueForKey(key)
+public func getUserDefault(_ key: String) -> AnyObject? {
+    let userDefaults = UserDefaults.standard
+    return userDefaults.value(forKey: key) as AnyObject
 }
 
 
-public func checkUserDefaultsForKey(key: String) -> Bool {
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    return userDefaults.boolForKey(key)
+public func checkUserDefaultsForKey(_ key: String) -> Bool {
+    let userDefaults = UserDefaults.standard
+    return userDefaults.bool(forKey: key)
 }

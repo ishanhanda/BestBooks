@@ -13,8 +13,8 @@ struct BookList {
     var displayName: String
     var listName: String
     var listNameEchoed: String
-    var newestPublishedDate: NSDate
-    var oldestPublishedDate: NSDate
+    var newestPublishedDate: Date
+    var oldestPublishedDate: Date
     var updated: String
 }
 
@@ -23,22 +23,22 @@ extension BookList: DictionaryInitializable {
     init?(dictionary: Dictionary<String, AnyObject>) {
         guard let
             displayName = dictionary["display_name"] as? String,
-            listName = dictionary["list_name"]as? String,
-            listNameEchoed = dictionary["list_name_encoded"] as? String,
-            newestPublishedDate = dictionary["newest_published_date"] as? String,
-            oldestPublishedDate = dictionary["oldest_published_date"] as? String,
-            updated = dictionary["updated"] as? String else {
+            let listName = dictionary["list_name"]as? String,
+            let listNameEchoed = dictionary["list_name_encoded"] as? String,
+            let newestPublishedDate = dictionary["newest_published_date"] as? String,
+            let oldestPublishedDate = dictionary["oldest_published_date"] as? String,
+            let updated = dictionary["updated"] as? String else {
             return nil
         }
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYYY-mm-dd"
         
         self.displayName = displayName
         self.listName = listName
         self.listNameEchoed = listNameEchoed
-        self.newestPublishedDate = dateFormatter.dateFromString(newestPublishedDate)!
-        self.oldestPublishedDate = dateFormatter.dateFromString(oldestPublishedDate)!
+        self.newestPublishedDate = dateFormatter.date(from: newestPublishedDate)!
+        self.oldestPublishedDate = dateFormatter.date(from: oldestPublishedDate)!
         self.updated = updated
     }
 }

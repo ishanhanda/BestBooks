@@ -19,7 +19,7 @@ extension ListResponse: DictionaryInitializable {
     init?(dictionary: Dictionary<String, AnyObject>) {
         guard let
             resultCount = dictionary["num_results"] as? Int,
-            results =  dictionary["results"] as? [Dictionary<String, AnyObject>] else {
+            let results =  dictionary["results"] as? [Dictionary<String, AnyObject>] else {
             return nil
         }
         
@@ -32,6 +32,6 @@ extension ListResponse: DictionaryInitializable {
             }
         }
         
-        lists.sortInPlace { $0.displayName < $1.displayName }
+        lists.sort { $0.displayName < $1.displayName }
     }
 }

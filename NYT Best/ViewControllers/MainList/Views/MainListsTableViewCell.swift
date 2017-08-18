@@ -15,7 +15,7 @@ class MainListsTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        self.textLabel?.textColor = UIColor.flatPlumColorDark()
+        self.textLabel?.textColor = UIColor.flatPlumDark
         self.textLabel?.font = UIFont(name: BBFonts.Cinzel_Regular.rawValue, size: 16)
     }
 }

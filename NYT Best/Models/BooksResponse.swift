@@ -19,7 +19,7 @@ extension BooksResponse: DictionaryInitializable {
     init?(dictionary: Dictionary<String, AnyObject>) {
         guard let
             resultCount = dictionary["num_results"] as? Int,
-            results =  dictionary["results"] as? [Dictionary<String, AnyObject>] else {
+            let results =  dictionary["results"] as? [Dictionary<String, AnyObject>] else {
                 return nil
         }
         

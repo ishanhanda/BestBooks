@@ -13,7 +13,7 @@ class NYTimesAPIWrapper  {
     static let sharedInstance = NYTimesAPIWrapper()
     
     var NYTIMES_API_KEY: String? {
-        guard let info = NSBundle.mainBundle().infoDictionary else {
+        guard let info = Bundle.main.infoDictionary else {
             return nil
         }
         
@@ -21,12 +21,12 @@ class NYTimesAPIWrapper  {
     }
     
     /// Base URL for the New York Times Books api.
-    private let baseURL = NYTIMES_BOOKS_API_BASE_URL
+    fileprivate let baseURL = NYTIMES_BOOKS_API_BASE_URL
 
-    typealias CompletionBlock = AlamofireAPIResponse -> Void
+    typealias CompletionBlock = (AlamofireAPIResponse) -> Void
     
-    private init() {
-        Alamofire.Manager.sharedInstance.startRequestsImmediately = false
+    fileprivate init() {
+        Alamofire.SessionManager.default.startRequestsImmediately = false
     }
 
     
@@ -35,14 +35,14 @@ class NYTimesAPIWrapper  {
      - parameter methodResponseBlock: Closure used to call the request.
      - returns: returns a common response block created by using the methodResponseBlock.
      */
-    private func commonResponseBlock(methodResponseBlock: CompletionBlock) -> (response: Response<AnyObject, NSError>) -> Void {
-        return { (response: Response<AnyObject, NSError>) -> Void in
-            print(response.request)
-            print(response.response)
+    fileprivate func commonResponseBlock(_ methodResponseBlock: @escaping CompletionBlock) -> (_ response: DataResponse<Any>) -> Void {
+        return { (response) -> Void in
+            print(response.request.debugDescription)
+            print(response.response.debugDescription)
             
             if let error = response.result.error {
                 print(error.localizedDescription)
-                let apiResponse = AlamofireAPIResponse.init(response: nil, errorCode: error.code, errorMessage: error.localizedDescription, successful: false)
+                let apiResponse = AlamofireAPIResponse.init(response: nil, errorCode: error._code, errorMessage: error.localizedDescription, successful: false)
                 methodResponseBlock(apiResponse)
             } else if let jsonValue = response.result.value {
                 print(jsonValue)
@@ -54,11 +54,11 @@ class NYTimesAPIWrapper  {
     
     
     /// Sets up and starts the request.
-    private func finishRequest(request: Request, responseBlock: CompletionBlock) {
-        let req = request.request!.mutableCopy() as! NSMutableURLRequest
-        req.HTTPShouldHandleCookies = false
+    fileprivate func finishRequest(_ request: Request, responseBlock: @escaping CompletionBlock) {
+        let req = (request.request! as NSURLRequest).mutableCopy() as! NSMutableURLRequest
+        req.httpShouldHandleCookies = false
         
-        let finalRequest = Alamofire.request(req)
+        let finalRequest = Alamofire.request(req as URLRequest)
         finalRequest.responseJSON(completionHandler: self.commonResponseBlock(responseBlock))
         finalRequest.resume()
     }
@@ -70,20 +70,20 @@ class NYTimesAPIWrapper  {
 extension NYTimesAPIWrapper {
     
     /// Get list names New York Times api.
-    func getListNames(completionBlock responseBlock: CompletionBlock) {
+    func getListNames(completionBlock responseBlock: @escaping CompletionBlock) {
         let urlString = NYTimesApiEndPoints.NamesList.rawValue
         print("Starting List Names request with URL String: \(urlString)")
         
         let params = [NYTIMES_API_KEY_PARAM: NYTIMES_API_KEY ?? ""]
         print("Parameters: \(params)")
         
-        let request = Alamofire.request(.GET, self.baseURL + urlString, parameters: params, encoding: .URL)
+        let request = Alamofire.request(self.baseURL + urlString, method: .get, parameters: params, encoding: URLEncoding.default)
         self.finishRequest(request, responseBlock: responseBlock)
     }
     
     
     /// Get list names New York Times api.
-    func getBestSellers(listName: String, completionBlock responseBlock: CompletionBlock) {
+    func getBestSellers(_ listName: String, completionBlock responseBlock: @escaping CompletionBlock) {
         let urlString = NYTimesApiEndPoints.BestSellers.rawValue
         print("Starting Best Seller request with URL String: \(urlString)")
         
@@ -93,7 +93,7 @@ extension NYTimesAPIWrapper {
         ]
         print("Parameters: \(params)")
         
-        let request = Alamofire.request(.GET, self.baseURL + urlString, parameters: params, encoding: .URL)
+        let request = Alamofire.request(self.baseURL + urlString, method: .get, parameters: params, encoding: URLEncoding.default)
         self.finishRequest(request, responseBlock: responseBlock)
     }
 }

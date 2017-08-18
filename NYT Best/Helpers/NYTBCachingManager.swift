@@ -16,32 +16,32 @@ class NYTBCachingManager: NSObject {
     let ALL_LISTS = "ALL_LISTS"
     
     static let namespace = "default"
-    var diskCachePath: NSURL!
+    var diskCachePath: URL!
     
-    let cacheDirectoryPath: NSURL = NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)[0].URLByAppendingPathComponent(namespace)!
+    let cacheDirectoryPath: URL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0].appendingPathComponent(namespace)
     
-    let fullNamespace = "com.Ishan-Handa.NYT-Best.JSONCache.".stringByAppendingString(namespace)
+    let fullNamespace = "com.Ishan-Handa.NYT-Best.JSONCache." + namespace
     
     let maxCacheAge: Double = 60 * 60 * 24 // 1 day
     
-    let ioQueue = dispatch_queue_create("com.Ishan-Handa.NYT-Best", DISPATCH_QUEUE_SERIAL)
+    let ioQueue = DispatchQueue(label: "com.Ishan-Handa.NYT-Best", attributes: [])
     
-    let fileManager = NSFileManager()
+    let fileManager = FileManager()
     
-    private override init() {
+    fileprivate override init() {
         super.init()
         self.diskCachePath = self.cacheDirectoryPath
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NYTBCachingManager.cleanDisk as (NYTBCachingManager) -> () -> ()), name: UIApplicationWillTerminateNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NYTBCachingManager.backgroundCleanDisk), name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(NYTBCachingManager.cleanDisk as (NYTBCachingManager) -> () -> ()), name: NSNotification.Name.UIApplicationWillTerminate, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(NYTBCachingManager.backgroundCleanDisk), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
     }
     
     
-    private func cacheJSON(listName: String, completion:(cached: Bool, bookResponseDict: Dictionary<String, AnyObject>?, error: NSError?) -> Void) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) { () -> Void in
-            if !self.fileManager.fileExistsAtPath((self.diskCachePath?.absoluteString)!) {
+    fileprivate func cacheJSON(_ listName: String, completion:@escaping (_ cached: Bool, _ bookResponseDict: Dictionary<String, AnyObject>?, _ error: NSError?) -> Void) {
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async { () -> Void in
+            if !self.fileManager.fileExists(atPath: (self.diskCachePath?.absoluteString)!) {
                 do {
-                    try self.fileManager.createDirectoryAtURL(self.diskCachePath!, withIntermediateDirectories: true, attributes: nil)
+                    try self.fileManager.createDirectory(at: self.diskCachePath!, withIntermediateDirectories: true, attributes: nil)
                 } catch {
                     print(error)
                 }
@@ -53,24 +53,24 @@ class NYTBCachingManager: NSObject {
                 if apiResponse.isSuccessful {
                     guard let responseDict = apiResponse.responseObject else {
                         print("Response Parse error. Could not create Dictionary object.")
-                        completion(cached: false, bookResponseDict: nil, error: NSError(domain: "ChacheError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Response Parse error. Could not create Dictionary object."]))
+                        completion(false, nil, NSError(domain: "ChacheError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Response Parse error. Could not create Dictionary object."]))
                         return
                     }
                     
-                    NSKeyedArchiver.archiveRootObject(responseDict, toFile: cachedURL.path!)
-                    completion(cached: true, bookResponseDict: responseDict, error: nil)
+                    NSKeyedArchiver.archiveRootObject(responseDict, toFile: cachedURL.path)
+                    completion(true, responseDict, nil)
                 } else {
-                    completion(cached: false, bookResponseDict: nil, error: NSError(domain: "ChacheError", code: -1, userInfo: [NSLocalizedDescriptionKey: apiResponse.errorMsg ?? "Failed to fetch data."]))
+                    completion(false, nil, NSError(domain: "ChacheError", code: -1, userInfo: [NSLocalizedDescriptionKey: apiResponse.errorMsg ?? "Failed to fetch data."]))
                 }
             }
         }
     }
     
     
-    private func cachedJSONURL(listName: String?) -> NSURL? {
+    fileprivate func cachedJSONURL(_ listName: String?) -> URL? {
         let fileURL = self.createCacheURL(listName)
         
-        if NSFileManager.defaultManager().fileExistsAtPath((fileURL.path)!) {
+        if FileManager.default.fileExists(atPath: (fileURL.path)) {
             return fileURL
         } else {
             return nil
@@ -78,8 +78,8 @@ class NYTBCachingManager: NSObject {
     }
     
     
-    private func createCacheURL(listName: String?) -> NSURL {
-        return  self.diskCachePath.URLByAppendingPathComponent((listName?.stringByReplacingOccurrencesOfString("/", withString: "_"))!)!
+    fileprivate func createCacheURL(_ listName: String?) -> URL {
+        return  self.diskCachePath.appendingPathComponent((listName?.replacingOccurrences(of: "/", with: "_"))!)
     }
     
     
@@ -88,30 +88,30 @@ class NYTBCachingManager: NSObject {
     }
     
     
-    private func cleanDisk(completion: (Void -> Void)?) {
+    fileprivate func cleanDisk(_ completion: ((Void) -> Void)?) {
         let diskCacheURL = self.diskCachePath
-        let resourceKeys = [NSURLIsDirectoryKey, NSURLContentModificationDateKey, NSURLTotalFileAllocatedSizeKey]
+        let resourceKeys = [URLResourceKey.isDirectoryKey, URLResourceKey.contentModificationDateKey, URLResourceKey.totalFileAllocatedSizeKey]
         
-        let fileEnumerator = self.fileManager.enumeratorAtURL(diskCacheURL!, includingPropertiesForKeys: resourceKeys, options: NSDirectoryEnumerationOptions.SkipsHiddenFiles, errorHandler: nil)
+        let fileEnumerator = self.fileManager.enumerator(at: diskCacheURL!, includingPropertiesForKeys: resourceKeys, options: FileManager.DirectoryEnumerationOptions.skipsHiddenFiles, errorHandler: nil)
         
-        let expirationDate = NSDate(timeIntervalSinceNow: -self.maxCacheAge)
+        let expirationDate = Date(timeIntervalSinceNow: -self.maxCacheAge)
         
         // Enumerate all of the files in the cache directory.
         // Removing files that are older than the expiration date.
-        var urlsToDelete: [NSURL] = []
+        var urlsToDelete: [URL] = []
         
-        while let fileURL = fileEnumerator?.nextObject() as? NSURL {
+        while let fileURL = fileEnumerator?.nextObject() as? URL {
             do {
-                let resourceValues = try fileURL.resourceValuesForKeys(resourceKeys)
+                let resourceValues = try (fileURL as NSURL).resourceValues(forKeys: resourceKeys)
                 
                 // Skip directories.
-                if (resourceValues[NSURLIsDirectoryKey]!.boolValue!) {
+                if ((resourceValues[URLResourceKey.isDirectoryKey]! as AnyObject).boolValue!) {
                     continue
                 }
                 
                 // Remove files that are older than the expiration date;
-                let modificationDate = resourceValues[NSURLContentModificationDateKey] as! NSDate
-                if (modificationDate.laterDate(expirationDate).isEqualToDate(expirationDate)) {
+                let modificationDate = resourceValues[URLResourceKey.contentModificationDateKey] as! Date
+                if ((modificationDate as NSDate).laterDate(expirationDate) == expirationDate) {
                     urlsToDelete.append(fileURL)
                     continue
                 }
@@ -123,7 +123,7 @@ class NYTBCachingManager: NSObject {
         
         urlsToDelete.forEach { (fileURL) -> () in
             do {
-                try self.fileManager.removeItemAtURL(fileURL)
+                try self.fileManager.removeItem(at: fileURL)
                 print("Removed cached file at url \(fileURL)")
             } catch {
                 print(error)
@@ -131,7 +131,7 @@ class NYTBCachingManager: NSObject {
         }
         
         if (completion != nil) {
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            DispatchQueue.main.async(execute: { () -> Void in
                 completion!()
             })
         }
@@ -139,14 +139,14 @@ class NYTBCachingManager: NSObject {
     
     
     func backgroundCleanDisk() {
-        let application = UIApplication.sharedApplication()
+        let application = UIApplication.shared
         
         var bgTask: UIBackgroundTaskIdentifier? = nil
         
-        bgTask = application.beginBackgroundTaskWithExpirationHandler { () -> Void in
+        bgTask = application.beginBackgroundTask (expirationHandler: { () -> Void in
             application.endBackgroundTask(bgTask!)
             bgTask = UIBackgroundTaskInvalid
-        }
+        })
         
         self.cleanDisk { Void -> Void in
             application.endBackgroundTask(bgTask!)
@@ -156,7 +156,7 @@ class NYTBCachingManager: NSObject {
     
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -164,32 +164,32 @@ class NYTBCachingManager: NSObject {
 
 // MARK: - Public methods Book Response
 extension NYTBCachingManager {
-    func bookResponse(listName: String, completion: (bookResposne: BooksResponse?, error: NSError?, isResponseFromCache: Bool) -> ()) {
+    func bookResponse(_ listName: String, completion: @escaping (_ bookResposne: BooksResponse?, _ error: NSError?, _ isResponseFromCache: Bool) -> ()) {
         if let url = self.cachedJSONURL(listName) {
-            let dict = NSKeyedUnarchiver.unarchiveObjectWithFile(url.path!) as! Dictionary<String, AnyObject>
+            let dict = NSKeyedUnarchiver.unarchiveObject(withFile: url.path) as! Dictionary<String, AnyObject>
             let bookResponse = BooksResponse(dictionary: dict)
-            return completion(bookResposne: bookResponse, error: nil, isResponseFromCache: true)
+            return completion(bookResponse, nil, true)
         } else {
             self.cacheJSON(listName, completion: { (cached, bookRepsonse, error) in
                 
-                if let dict = bookRepsonse where error == nil {
+                if let dict = bookRepsonse, error == nil {
                     let bookResponse = BooksResponse(dictionary: dict)
-                    return completion(bookResposne: bookResponse, error: nil, isResponseFromCache: false)
+                    return completion(bookResponse, nil, false)
                 } else {
-                    completion(bookResposne: nil, error: error, isResponseFromCache: false)
+                    completion(nil, error, false)
                 }
             })
         }
     }
     
-    func updateCacheForBook(listName: String, completion: (bookResposne: BooksResponse?, error: NSError?) -> ()) {
+    func updateCacheForBook(_ listName: String, completion: @escaping (_ bookResposne: BooksResponse?, _ error: NSError?) -> ()) {
         self.cacheJSON(listName, completion: { (cached, bookRepsonse, error) in
             
-            if let dict = bookRepsonse where error == nil {
+            if let dict = bookRepsonse, error == nil {
                 let bookResponse = BooksResponse(dictionary: dict)
-                return completion(bookResposne: bookResponse, error: nil)
+                return completion(bookResponse, nil)
             } else {
-                completion(bookResposne: nil, error: error)
+                completion(nil, error)
             }
         })
     }
@@ -198,56 +198,56 @@ extension NYTBCachingManager {
 
 // MARK: - Lists Response caching and public methods
 extension NYTBCachingManager {
-    private func createAllListsCacheURL() -> NSURL {
-        return  self.diskCachePath.URLByAppendingPathComponent(ALL_LISTS)!
+    fileprivate func createAllListsCacheURL() -> URL {
+        return  self.diskCachePath.appendingPathComponent(ALL_LISTS)
     }
     
     
-    private func cachedListsURL() -> NSURL? {
+    fileprivate func cachedListsURL() -> URL? {
         let fileURL = self.createAllListsCacheURL()
         
-        if NSFileManager.defaultManager().fileExistsAtPath((fileURL.path)!) {
+        if FileManager.default.fileExists(atPath: (fileURL.path)) {
             return fileURL
         } else {
             return nil
         }
     }
     
-    func listsResponse(completion: (listsResponse: ListResponse?, error: NSError?, isResponseFromCache: Bool) -> ()) {
+    func listsResponse(_ completion: @escaping (_ listsResponse: ListResponse?, _ error: NSError?, _ isResponseFromCache: Bool) -> ()) {
         if let url = self.cachedListsURL() {
-            let dict = NSKeyedUnarchiver.unarchiveObjectWithFile(url.path!) as! Dictionary<String, AnyObject>
+            let dict = NSKeyedUnarchiver.unarchiveObject(withFile: url.path) as! Dictionary<String, AnyObject>
             let listsResponse = ListResponse(dictionary: dict)
-            return completion(listsResponse: listsResponse, error: nil, isResponseFromCache: true)
+            return completion(listsResponse, nil, true)
         } else {
             self.cacheAllLists({ (cached, listsResponseDict, error) in
-                if let dict = listsResponseDict where error == nil {
+                if let dict = listsResponseDict, error == nil {
                     let listsResponse = ListResponse(dictionary: dict)
-                    return completion(listsResponse: listsResponse, error: nil, isResponseFromCache: false)
+                    return completion(listsResponse, nil, false)
                 } else {
-                    completion(listsResponse: nil, error: error, isResponseFromCache: false)
+                    completion(nil, error, false)
                 }
             })
         }
     }
     
     
-    func updateCacheForLists(completion: (listsResponse: ListResponse?, error: NSError?) -> ()) {
+    func updateCacheForLists(_ completion: @escaping (_ listsResponse: ListResponse?, _ error: NSError?) -> ()) {
         self.cacheAllLists { (cached, listsResponseDict, error) in
-            if let dict = listsResponseDict where error == nil {
+            if let dict = listsResponseDict, error == nil {
                 let listsResponse = ListResponse(dictionary: dict)
-                return completion(listsResponse: listsResponse, error: nil)
+                return completion(listsResponse, nil)
             } else {
-                completion(listsResponse: nil, error: error)
+                completion(nil, error)
             }
         }
     }
     
     
-    private func cacheAllLists(completion:(cached: Bool, listsResponseDict: Dictionary<String, AnyObject>?, error: NSError?) -> Void) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) { () -> Void in
-            if !self.fileManager.fileExistsAtPath((self.diskCachePath?.absoluteString)!) {
+    fileprivate func cacheAllLists(_ completion:@escaping (_ cached: Bool, _ listsResponseDict: Dictionary<String, AnyObject>?, _ error: NSError?) -> Void) {
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async { () -> Void in
+            if !self.fileManager.fileExists(atPath: (self.diskCachePath?.absoluteString)!) {
                 do {
-                    try self.fileManager.createDirectoryAtURL(self.diskCachePath!, withIntermediateDirectories: true, attributes: nil)
+                    try self.fileManager.createDirectory(at: self.diskCachePath!, withIntermediateDirectories: true, attributes: nil)
                 } catch {
                     print(error)
                 }
@@ -259,14 +259,14 @@ extension NYTBCachingManager {
                 if apiResponse.isSuccessful {
                     guard let responseDict = apiResponse.responseObject else {
                         print("Response Parse error. Could not create Dictionary object.")
-                        completion(cached: false, listsResponseDict: nil, error: NSError(domain: "ChacheError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Response Parse error. Could not create Dictionary object."]))
+                        completion(false, nil, NSError(domain: "ChacheError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Response Parse error. Could not create Dictionary object."]))
                         return
                     }
                     
-                    NSKeyedArchiver.archiveRootObject(responseDict, toFile: cachedURL.path!)
-                    completion(cached: true, listsResponseDict: responseDict, error: nil)
+                    NSKeyedArchiver.archiveRootObject(responseDict, toFile: cachedURL.path)
+                    completion(true, responseDict, nil)
                 } else {
-                    completion(cached: false, listsResponseDict: nil, error: NSError(domain: "ChacheError", code: -1, userInfo: [NSLocalizedDescriptionKey: apiResponse.errorMsg ?? "Failed to fetch data."]))
+                    completion(false, nil, NSError(domain: "ChacheError", code: -1, userInfo: [NSLocalizedDescriptionKey: apiResponse.errorMsg ?? "Failed to fetch data."]))
                 }
             })
         }
